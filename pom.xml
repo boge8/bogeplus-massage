@@ -21,12 +21,27 @@
         <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
+        <swagger.version>2.7.0</swagger.version>
     </properties>
 
 
 
     <dependencyManagement>
         <dependencies>
+                <!-- Springfox Swagger2 依赖 -->
+                <dependency>
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-swagger2</artifactId>
+                    <version>${swagger.version}</version>
+                </dependency>
+
+                <!-- Springfox Swagger UI 依赖 -->
+                <dependency>
+                    <groupId>io.springfox</groupId>
+                    <artifactId>springfox-swagger-ui</artifactId>
+                    <version>${swagger.version}</version>
+
+                </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
