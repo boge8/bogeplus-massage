@@ -1,0 +1,33 @@
+server:
+  port: 8101
+spring:
+  application:
+    name: bogeplus-user
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost
+        port: 8848
+# mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://119.3.230.36:3306/massage?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: rw_user
+    password: 12345678
+
+# redis
+  redis:
+    host: 119.3.230.36
+    port: 6379
+    password: Aa123123123 # 如果 Redis 没有设置密码，可以省略这一行
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+    timeout: 3000ms
+
+
+# mybatisPlus
+# 稍后将mapper的 debug日志放在这里

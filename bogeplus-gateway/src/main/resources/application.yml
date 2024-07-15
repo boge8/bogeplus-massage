@@ -1,0 +1,15 @@
+server:
+  port: 80
+spring:
+  application:
+    name: bogeplus-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost
+        port: 8848
+
+#      discovery:
+#        server-addr:
+#      config:
+#        server-addr:
