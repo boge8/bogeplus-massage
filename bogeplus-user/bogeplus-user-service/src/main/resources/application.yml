@@ -1,6 +1,12 @@
 server:
   port: 8101
 spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
   application:
     name: bogeplus-user
   cloud:
@@ -28,6 +34,18 @@ spring:
     timeout: 3000ms
 
 
-
 # mybatisPlus
 # 稍后将mapper的 debug日志放在这里
+# 滑块验证码配置， 详细请看 cloud.tianai.captcha.autoconfiguration.ImageCaptchaProperties 类
+captcha:
+  expire:
+    default: 100000
+    # 文字点选验证码 过期时间设置大一点
+    WORD_IMAGE_CLICK: 60000
+  secondary:
+    enabled: false
+  # 初始化默认模板文件
+  init-default-resource: true
+  local-cache-enabled: true
+  local-cache-size: 20
+

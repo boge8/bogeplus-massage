@@ -9,6 +9,7 @@
         <module>bogeplus-common</module>
         <module>bogeplus-user</module>
         <module>bogeplus-gateway</module>
+        <module>bogeplus-generator</module>
     </modules>
     <name>bogeplus-massage</name>
     <description>bogeplus-massage</description>
@@ -22,13 +23,20 @@
         <spring-cloud.version>2021.0.5</spring-cloud.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <swagger.version>2.7.0</swagger.version>
+        <tianai-captcha.version>1.5.0</tianai-captcha.version>
     </properties>
 
 
 
     <dependencyManagement>
         <dependencies>
-                <!-- Springfox Swagger2 依赖 -->
+            <dependency>
+                <groupId>cloud.tianai.captcha</groupId>
+                <artifactId>tianai-captcha-springboot-starter</artifactId>
+                <version>${tianai-captcha.version}</version>
+            </dependency>
+
+            <!-- Springfox Swagger2 依赖 -->
                 <dependency>
                     <groupId>io.springfox</groupId>
                     <artifactId>springfox-swagger2</artifactId>

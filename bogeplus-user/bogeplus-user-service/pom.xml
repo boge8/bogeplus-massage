@@ -12,6 +12,13 @@
     <description>bogeplus-user-service</description>
 
     <dependencies>
+
+        <dependency>
+            <groupId>cloud.tianai.captcha</groupId>
+            <artifactId>tianai-captcha-springboot-starter</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>com.bogeplus</groupId>
             <artifactId>bogeplus-common</artifactId>
@@ -21,10 +28,7 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -76,7 +80,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.bogeplus.user.BogeplusUserServiceApplication</mainClass>
+                    <mainClass>com.bogeplus.massage.user.BogeplusUserServiceApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
