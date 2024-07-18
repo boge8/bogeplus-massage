@@ -52,6 +52,15 @@ public class Result<T> {
         tResult.setMsg("操作成功");
         return tResult;
     }
+
+       public static <T> Result status(boolean status) {
+        if(status){
+            return success();
+        }
+        return faild();
+    }
+
+
     public static <T> Result faild(String msg, Integer code, T data) {
         Result<T> tResult = new Result<>();
         tResult.setCode(code);

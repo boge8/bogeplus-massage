@@ -17,44 +17,44 @@ import java.util.List;
 public class SendSmsRequest {
     @ApiModelProperty(value = "手机号",example = "18888888888",required = true)
     private String phoneNum;
-    @ApiModelProperty(value = "滑块验证码",example = "asf23423ddasfs233",required = false)
-    private String imageCode;
-
-    /** 背景图片宽度. */
-    @ApiModelProperty(value = "背景图片宽度",example = "300",required = false)
-    private Integer bgImageWidth;
-    /** 背景图片高度. */
-    @ApiModelProperty(value = "背景图片高度",example = "300",required = false)
-    private Integer bgImageHeight;
-    /** 模板图片宽度. */
-    @ApiModelProperty(value = "模板图片宽度",example = "300",required = false)
-    private Integer templateImageWidth;
-    /** 模板图片高度. */
-    @ApiModelProperty(value = "模板图片高度",example = "300",required = false)
-    private Integer templateImageHeight;
-    /** 滑动开始时间. */
-    @ApiModelProperty(value = "滑动开始时间",example = "2021-01-01 00:00:00",required = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date startTime;
-    /** 滑动结束时间. */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @ApiModelProperty(value = "滑动结束时间",example = "2021-01-01 00:00:00",required = false)
-    private Date stopTime;
-
-    //横坐标
-    @ApiParam(name = "left", value = "横坐标", required = true)
-    private Integer left;
-
-    //纵坐标
-    @ApiParam(name = "top", value = "纵坐标", required = true)
-    private Integer top;
-    /** 滑动的轨迹. */
-    @ApiModelProperty(value = "滑动的轨迹",example = "asf23423ddasfs233",required = false)
-    private List<ImageCaptchaTrack.Track> trackList;
-    /** 扩展数据，用户传输加密数据等.*/
-    @ApiModelProperty(value = "扩展数据，用户传输加密数据等",example = "asf23423ddasfs233",required = false)
-    private Object data;
+//    @ApiModelProperty(value = "滑块验证码",example = "asf23423ddasfs233",required = false)
+//    private String imageCode;
+//
+//    /** 背景图片宽度. */
+//    @ApiModelProperty(value = "背景图片宽度",example = "300",required = false)
+//    private Integer bgImageWidth;
+//    /** 背景图片高度. */
+//    @ApiModelProperty(value = "背景图片高度",example = "300",required = false)
+//    private Integer bgImageHeight;
+//    /** 模板图片宽度. */
+//    @ApiModelProperty(value = "模板图片宽度",example = "300",required = false)
+//    private Integer templateImageWidth;
+//    /** 模板图片高度. */
+//    @ApiModelProperty(value = "模板图片高度",example = "300",required = false)
+//    private Integer templateImageHeight;
+//    /** 滑动开始时间. */
+//    @ApiModelProperty(value = "滑动开始时间",example = "2021-01-01 00:00:00",required = false)
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    private Date startTime;
+//    /** 滑动结束时间. */
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @ApiModelProperty(value = "滑动结束时间",example = "2021-01-01 00:00:00",required = false)
+//    private Date stopTime;
+//
+//    //横坐标
+//    @ApiParam(name = "left", value = "横坐标", required = true)
+//    private Integer left;
+//
+//    //纵坐标
+//    @ApiParam(name = "top", value = "纵坐标", required = true)
+//    private Integer top;
+//    /** 滑动的轨迹. */
+//    @ApiModelProperty(value = "滑动的轨迹",example = "asf23423ddasfs233",required = false)
+//    private List<ImageCaptchaTrack.Track> trackList;
+//    /** 扩展数据，用户传输加密数据等.*/
+//    @ApiModelProperty(value = "扩展数据，用户传输加密数据等",example = "asf23423ddasfs233",required = false)
+//    private Object data;
 
 }

@@ -1,0 +1,35 @@
+sms:
+  smsSignId: 2e65b1bb3d054466b82f0c9d125465e2
+  templateId: 908e94ccf08b4476ba6c876d13f084ad
+  host: "https://gyytz.market.alicloudapi.com"
+  path: "/sms/smsSend"
+  appCode: 32418fc392fa4980934ebf348bcb0beb
+server:
+  port: 8201
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+
+  application:
+    name: bogeplus-message
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost
+
+  # redis
+  redis:
+    host: 119.3.230.36
+    port: 6379
+    password: Aa123123123 # 如果 Redis 没有设置密码，可以省略这一行
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+    timeout: 3000ms
+

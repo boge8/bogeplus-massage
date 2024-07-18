@@ -15,6 +15,12 @@ spring:
             - Path=/user/**
           filters:
             - StripPrefix=1
+        - id: bogeplus-message
+          uri: lb://bogeplus-message
+          predicates:
+            - Path=/message/**
+          filters:
+            - StripPrefix=1
 
 #      discovery:
 #        server-addr:

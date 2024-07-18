@@ -1,5 +1,6 @@
 package com.bogeplus.common.enums;
 
+import javafx.scene.input.KeyCodeCombination;
 import lombok.Data;
 import lombok.Getter;
 
@@ -30,10 +31,13 @@ public enum ServiceCode {
     //用户不存在
     USER_NOT_EXIST("用户不存在", 100401),
     IMAGE_CODE_ERROR( "图形验证码错误",100402 ),
+    SMS_CODE_ERROR( "短信验证码错误",100502 ),
+    SMS_CODE_NOT_EXIST( "短信验证码不存在",100503 ),
      SMS_SEND_OVERDUE  ("短信发送过于频繁，请明天再试！",100502 ),
-     IMAGE_CODE_NOT_EXIST ("图形验证码不存在",100403 );
+     SMS_SEND_REPEAT  ("短信5分钟内有效，1分钟内不可重复发送！",100503 ),
+     IMAGE_CODE_NOT_EXIST ("图形验证码不存在",100403 ),
 
-
+    SMS_SEND_FAILD ("短信发送失败！",200501 ) ;
     private String msg;
     private Integer code;
 

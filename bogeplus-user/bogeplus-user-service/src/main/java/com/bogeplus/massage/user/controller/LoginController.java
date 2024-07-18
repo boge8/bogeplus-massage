@@ -11,7 +11,11 @@ import com.bogeplus.common.enums.ServiceCode;
 import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.RedisUtil;
 import com.bogeplus.common.util.Result;
+import com.bogeplus.massage.user.controller.request.LoginRequest;
 import com.bogeplus.massage.user.controller.request.SendSmsRequest;
+import com.bogeplus.massage.user.service.IUserInfoService;
+import com.bogeplus.message.dto.SmsDTO;
+import com.bogeplus.message.feign.SmsFeign;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -23,6 +27,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -30,6 +35,10 @@ import java.util.Collections;
 public class LoginController {
     @Autowired
     private ImageCaptchaApplication application;
+
+    @Autowired
+    private IUserInfoService userInfoService;
+
 
     /**
      * 发送手机短信验证码接口
@@ -41,39 +50,9 @@ public class LoginController {
     @PostMapping("/sendSms")
     @ApiOperation(value = "发送手机短信验证码接口", notes = "发送手机短信验证码接口详细描述")
     public Result sendSms(@RequestBody SendSmsRequest sendSmsRequest) {
-        log.info("phoneNum:{},imageCode:{}", sendSmsRequest.getPhoneNum(), sendSmsRequest.getImageCode());
-        //1、查询redis 该手机号当日发送短信总次数
-        String userCountSms = RedisConstant.format(RedisConstant.USER_SMS_CODE_COUNT, sendSmsRequest.getPhoneNum());
-       Object countSmsObject = RedisUtil.get(userCountSms);
-       Integer count = 0;
-       if(countSmsObject!=null){
-           count = (Integer) countSmsObject;
-       }
-        //2、如果>10次，则返回当日已经超出发送次数，明日再试
-        if(count>10){
-            throw new BizException(ServiceCode.SMS_SEND_OVERDUE.getCode(), ServiceCode.SMS_SEND_OVERDUE.getMsg());
-        }
-        //3、如果>3次，则查询redis 该手机号当前滑块验证码，并进行校验
-//        if (count >= 3) {
-//            ApiResponse<?> response = null;
-//            try {
-//                ImageCaptchaTrack imageCaptchaTrack = new ImageCaptchaTrack();
-//                BeanUtils.copyProperties(sendSmsRequest,imageCaptchaTrack);
-//                response = application.matching(sendSmsRequest.getImageCode(), imageCaptchaTrack);
-//            } catch (RuntimeException e) {
-//                throw new BizException(ServiceCode.IMAGE_CODE_NOT_EXIST.getCode(), ServiceCode.IMAGE_CODE_NOT_EXIST.getMsg());
-//            }
-//            if (!response.isSuccess()) {
-//        //3.2 如果校验不正确，则返回校验失败
-//                return Result.faild(ServiceCode.IMAGE_CODE_ERROR.getMsg(), ServiceCode.IMAGE_CODE_ERROR.getCode());
-//            }
-//        }
-        //4、发送短信验证码
-        log.info("发送验证码：123123");
-        //5、redis 记录该手机号当日发送短信总次数+1，清除缓存中的滑块验证码key
-        RedisUtil.incr(userCountSms, 1);
-        //6、返回成功
-        return Result.success();
+        log.info("phoneNum:{}", sendSmsRequest.getPhoneNum());
+        Boolean bool = userInfoService.sendSms(sendSmsRequest);
+        return Result.status(bool);
     }
 
     /**
@@ -90,5 +69,12 @@ public class LoginController {
         log.info("res1:{}", res1);
         return Result.success(res1);
 
+    }
+
+    @PostMapping("/login")
+    @ApiOperation(value = "登录接口", notes = "用户端登录")
+    public Result login(@RequestBody LoginRequest loginRequest) {
+        Result<Map<String,String>> result = userInfoService.login(loginRequest);
+        return result;
     }
 }

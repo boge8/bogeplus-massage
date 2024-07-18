@@ -16,7 +16,7 @@ spring:
   # mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.3.230.36:3306/massage?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://119.3.230.36:3306/massage_user?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: rw_user
     password: 12345678
 
