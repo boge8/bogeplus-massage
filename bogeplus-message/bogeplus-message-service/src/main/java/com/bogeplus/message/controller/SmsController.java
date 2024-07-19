@@ -1,5 +1,6 @@
 package com.bogeplus.message.controller;
 
+import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.message.controller.request.SmsRequest;
 import com.bogeplus.message.service.SmsService;
@@ -21,6 +22,13 @@ public class SmsController {
     @PostMapping("/sendSms")
     @ApiOperation(value = "发送短信")
     public Result sendSms(@RequestBody SmsRequest smsRequest) {
+        if(smsRequest.getPhone().equals("18888888888")){
+            try {
+                Thread.sleep(1000000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         Boolean bool = smsService.sendSms(smsRequest.getPhone(), smsRequest.getContent());
         return Result.status(bool);
     }

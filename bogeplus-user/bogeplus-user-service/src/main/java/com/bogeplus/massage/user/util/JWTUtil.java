@@ -23,6 +23,7 @@ public class JWTUtil {
     // 生成 Token
     public static String generateToken(UserInfo user) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id", user.getId());
         claims.put("headImg", user.getHeadImg());
         claims.put("account", user.getAccount());
         claims.put("userNickname", user.getUserNickname());

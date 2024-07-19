@@ -6,10 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(
-    contextId = "smsFeign",
-    name = "bogeplus-message",
-    path="/sms")
+
 public interface SmsFeign {
     @PostMapping("/sendSms")
     public Result sendSms(@RequestBody SmsDTO smsDTO) ;

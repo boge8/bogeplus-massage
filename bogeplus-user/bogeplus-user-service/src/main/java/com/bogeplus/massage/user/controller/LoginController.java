@@ -11,6 +11,7 @@ import com.bogeplus.common.enums.ServiceCode;
 import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.RedisUtil;
 import com.bogeplus.common.util.Result;
+import com.bogeplus.common.util.UserUtil;
 import com.bogeplus.massage.user.controller.request.LoginRequest;
 import com.bogeplus.massage.user.controller.request.SendSmsRequest;
 import com.bogeplus.massage.user.service.IUserInfoService;
@@ -76,5 +77,15 @@ public class LoginController {
     public Result login(@RequestBody LoginRequest loginRequest) {
         Result<Map<String,String>> result = userInfoService.login(loginRequest);
         return result;
+    }
+
+
+    @ApiOperation(value = "test", notes = "test")
+    @GetMapping("/test1")
+    public String test1(){
+        String account = UserUtil.getAccount();
+        String id = UserUtil.getId();
+        log.info("account:{},id:{}",account,id);
+        return "test1";
     }
 }

@@ -18,7 +18,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://119.3.230.36:3306/massage_user?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: rw_user
-    password: 12345678
+    password: 123123123
 
 # redis
   redis:
@@ -48,4 +48,22 @@ captcha:
   init-default-resource: true
   local-cache-enabled: true
   local-cache-size: 20
+# 配置openfeign 调用超时时间
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
 
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: is_deleted # 全局逻辑删除字段名
+      logic-delete-value: 1 # 逻辑已删除值
+      logic-not-delete-value: 0 # 逻辑未删除值
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    com.bogeplus.user.mapper: debug
