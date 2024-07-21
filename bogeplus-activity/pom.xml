@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>bogeplus-activity</artifactId>
+    <packaging>pom</packaging>
     <modules>
         <module>bogeplus-activity-api</module>
         <module>bogeplus-activity-domain</module>
