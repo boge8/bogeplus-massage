@@ -21,6 +21,25 @@ spring:
             - Path=/message/**
           filters:
             - StripPrefix=1
+        - id: bogeplus-activity
+          uri: lb://bogeplus-activity
+          predicates:
+            - Path=/activity/**
+          filters:
+            - StripPrefix=1
+        - id: bogeplus-order
+          uri: lb://bogeplus-order
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix=1
+        - id: bogeplus-pay
+          uri: lb://bogeplus-pay
+          predicates:
+            - Path=/pay/**
+          filters:
+            - StripPrefix=1
+
 
 #      discovery:
 #        server-addr:
