@@ -11,6 +11,7 @@
         <module>bogeplus-gateway</module>
         <module>bogeplus-generator</module>
         <module>bogeplus-message</module>
+        <module>bogeplus-activity</module>
     </modules>
     <name>bogeplus-massage</name>
     <description>bogeplus-massage</description>
