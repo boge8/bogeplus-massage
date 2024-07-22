@@ -10,15 +10,15 @@ import java.util.Collections;
 
 public class Main {
         public static void main(String[] args) {
-            String url="jdbc:mysql://119.3.230.36:3306/massage_user?characterEncoding=utf8&useSSL=false&serverTimezone=UTC";
+            String url="jdbc:mysql://119.3.230.36:3306/massage_activity?characterEncoding=utf8&useSSL=false&serverTimezone=UTC";
             String username="rw_user";
-            String password="12345678";
+            String password="Qq123123";
 
             FastAutoGenerator.create( url,username,password)
                     .globalConfig(builder -> {
                         builder.author("bogeplus") // 设置作者
                                 .enableSwagger() // 开启 swagger 模式
-                                .outputDir("D:\\java_workspace\\bogeplus-massage\\bogeplus-massage\\bogeplus-user\\bogeplus-user-service\\src\\main\\java"); // 指定输出目录
+                                .outputDir("E:\\bgPlus\\bogeplus-massage\\bogeplus-activity\\bogeplus-activity-service\\src\\main\\java"); // 指定输出目录
                     })
                     .dataSourceConfig(builder ->
                             builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {
@@ -31,9 +31,9 @@ public class Main {
                             })
                     )
                     .packageConfig(builder ->
-                            builder.parent("com.bogeplus.massage") // 设置父包名
-                                    .moduleName("user") // 设置父包模块名
-                                    .pathInfo(Collections.singletonMap(OutputFile.xml, "D:\\java_workspace\\bogeplus-massage\\bogeplus-massage\\bogeplus-user\\bogeplus-user-service\\src\\main\\resources\\mapper")) // 设置mapperXml生成路径
+                            builder.parent("com.bogeplus") // 设置父包名
+                                    .moduleName("activity") // 设置父包模块名
+                                    .pathInfo(Collections.singletonMap(OutputFile.xml, "E:\\bgPlus\\bogeplus-massage\\bogeplus-activity\\bogeplus-activity-service\\src\\main\\resources\\mapper")) // 设置mapperXml生成路径
                     )
                     .strategyConfig(builder ->
                             builder
