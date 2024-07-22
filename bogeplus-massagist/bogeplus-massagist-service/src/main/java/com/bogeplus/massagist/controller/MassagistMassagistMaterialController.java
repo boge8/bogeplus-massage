@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
  * @since 2024-07-22
  */
 @Controller
-@RequestMapping("/massagist/massagistMassagistMaterial")
+@RequestMapping("/massagistMassagistMaterial")
 public class MassagistMassagistMaterialController {
 
 }
