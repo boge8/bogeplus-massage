@@ -2,6 +2,7 @@ package com.bogeplus.activity.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -11,8 +12,8 @@ import org.springframework.stereotype.Controller;
  * @author bogeplus
  * @since 2024-07-22
  */
-@Controller
-@RequestMapping("/activity/couponsInfo")
+@RestController
+@RequestMapping("/couponsInfo")
 public class CouponsInfoController {
 
 }
