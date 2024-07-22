@@ -12,7 +12,7 @@ public class Main {
         public static void main(String[] args) {
             String url="jdbc:mysql://119.3.230.36:3306/massage_activity?characterEncoding=utf8&useSSL=false&serverTimezone=UTC";
             String username="rw_user";
-            String password="Qq123123";
+            String password="123123123";
 
             FastAutoGenerator.create( url,username,password)
                     .globalConfig(builder -> {
