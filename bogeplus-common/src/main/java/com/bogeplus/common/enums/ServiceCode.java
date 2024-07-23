@@ -26,6 +26,10 @@ public enum ServiceCode {
         前三位数字：表示业务模块
         后三位数字：表示业务状态，2开头表示正常，4、5开头表示异常
      */
+    /*优惠券模块*/
+    COUPONS_LESS_THAN_ZERO("优惠券价格小于0,请输入正确的价格",300401),
+    COUPONS_LESS_THAN_TODAY("优惠券过期时间小于今天",300402),
+
     //用户已注册
     USER_ALREADY_REGISTERED("用户已注册", 100501),
     //用户不存在
@@ -36,7 +40,6 @@ public enum ServiceCode {
      SMS_SEND_OVERDUE  ("短信发送过于频繁，请明天再试！",100502 ),
      SMS_SEND_REPEAT  ("短信5分钟内有效，1分钟内不可重复发送！",100503 ),
      IMAGE_CODE_NOT_EXIST ("图形验证码不存在",100403 ),
-
     SMS_SEND_FAILD ("短信发送失败！",200501 ) ;
     private String msg;
     private Integer code;
