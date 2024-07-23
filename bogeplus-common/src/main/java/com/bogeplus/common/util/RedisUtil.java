@@ -51,6 +51,16 @@ public class RedisUtil implements ApplicationContextAware {
         }
     }
 
+    public static boolean zadd(String key, double score, Serializable value) {
+        try {
+            redisTemplate.opsForZSet().add(key, value, score);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     // 获取值
     public static Object get(String key) {
         return key == null ? null : redisTemplate.opsForValue().get(key);
