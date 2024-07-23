@@ -39,12 +39,6 @@ spring:
             - Path=/pay/**
           filters:
             - StripPrefix=1
-        - id: bogeplus-user
-          uri: lb://bogeplus-user
-          predicates:
-            - Path=/user/**
-          filters:
-            - StripPrefix=1
 
 
 #      discovery:

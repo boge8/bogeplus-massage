@@ -52,7 +52,6 @@ public class UserInfoController {
     @GetMapping("/page")
     public Result getUserPage(@ApiParam(value = "页码", defaultValue = "1") @RequestParam(defaultValue = "1") int page,
                               @ApiParam(value = "每页大小", defaultValue = "5") @RequestParam(defaultValue = "5") int size) {
-        // 假设getUserPage返回的是一个分页对象，这里使用Object代替，具体类型需要您根据实际情况替换
         Object userPage = userInfoService.getUserPage(page, size);
         return Result.success(userPage);
     }
