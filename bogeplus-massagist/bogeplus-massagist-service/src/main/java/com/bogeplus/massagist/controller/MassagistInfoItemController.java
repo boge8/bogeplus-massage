@@ -1,6 +1,8 @@
 package com.bogeplus.massagist.controller;
 
 import com.bogeplus.common.util.Result;
+import com.bogeplus.massagist.service.MassagistAssociationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,27 +20,31 @@ import org.springframework.stereotype.Controller;
 @Controller
 @RequestMapping("/massagistInfoItem")
 public class MassagistInfoItemController {
+
+    @Autowired
+    private MassagistAssociationService massagistAssociationService;
+
     //查找该技师未被分配的项目
     @GetMapping("/getUnassignedItems")
-    public Result getUnassignedItemsByMassagistId() {
+    public Result getUnassignedItems() {
         return null;
     }
 
     //查找该项目未被分配的技师
     @GetMapping("/getUnassignedMassagists")
-    public Result getUnassignedMassagistsByItemId() {
+    public Result getUnassignedMassagists() {
         return null;
     }
 
     //查询已被分配技师的项目
     @GetMapping("/getAssignedItems")
-    public Result getUnassignedItems() {
+    public Result getAssignedItems() {
         return null;
     }
 
     //查询已被分配项目的技师
     @GetMapping("/getAssignedMassagists")
-    public Result getUnassignedMassagists() {
+    public Result getAssignedMassagists() {
         return null;
     }
 

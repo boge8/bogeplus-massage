@@ -68,7 +68,12 @@
         </dependency>
         <dependency>
             <groupId>com.bogeplus</groupId>
-            <artifactId>bogeplus-message-api</artifactId>
+            <artifactId>bogeplus-massagist-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bogeplus</groupId>
+            <artifactId>bogeplus-massagist-domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
