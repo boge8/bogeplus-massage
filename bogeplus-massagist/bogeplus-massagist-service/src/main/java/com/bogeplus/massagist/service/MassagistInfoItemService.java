@@ -1,7 +1,8 @@
 package com.bogeplus.massagist.service;
 
 import com.bogeplus.common.util.Result;
-import com.bogeplus.massagist.dto.AssignmentDTO;
+import com.bogeplus.massagist.dto.GetListDTO;
+import com.bogeplus.massagist.dto.OperationDTO;
 
 import java.util.List;
 
@@ -10,10 +11,10 @@ import java.util.List;
  * @Date 2021/10/8 15:00
  * @Description 实现技师与项目关系的分配和取消分配
  */
-public interface MassagistAssociationService {
+public interface MassagistInfoItemService {
     //查询该项目已被分配的技师
-    Result getList(int type, long objId, int status);
+    Result getList(GetListDTO dto);
 
     //取消技师与项目分配关系
-    Result ChangeAssignment(int operation, int type, Long objId, List<Long> objIdList);
+    Result ChangeAssignment(OperationDTO dto);
 }

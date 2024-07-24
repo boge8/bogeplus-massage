@@ -1,13 +1,12 @@
 package com.bogeplus.massagist.controller;
 
 import com.bogeplus.common.util.Result;
-import com.bogeplus.massagist.dto.AssignmentRequestDTO;
-import com.bogeplus.massagist.service.MassagistAssociationService;
+import com.bogeplus.massagist.dto.GetListDTO;
+import com.bogeplus.massagist.dto.OperationDTO;
+import com.bogeplus.massagist.service.MassagistInfoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-
-import java.util.List;
 
 /**
  * <p>
@@ -22,15 +21,15 @@ import java.util.List;
 public class MassagistInfoItemController {
 
     @Autowired
-    private MassagistAssociationService massagistAssociationService;
+    private MassagistInfoItemService massagistAssociationService;
 
     @GetMapping("/getList")
-    public Result getList(@RequestParam int type, @RequestParam int status,@RequestParam long id){
-        return massagistAssociationService.getList(type,id,status);
+    public Result getList(@RequestParam GetListDTO dto){
+        return massagistAssociationService.getList(dto);
     }
 
     @PostMapping("/changeAssignment")
-    public Result changeAssignment(@RequestBody AssignmentRequestDTO dto){
-        return massagistAssociationService.ChangeAssignment(dto.getOperation(),dto.getType(),dto.getObjId(),dto.getObjIdList());
+    public Result changeAssignment(@RequestBody OperationDTO dto){
+        return massagistAssociationService.ChangeAssignment(dto);
     }
 }
