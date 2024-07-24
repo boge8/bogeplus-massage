@@ -15,6 +15,8 @@
         <module>bogeplus-order</module>
         <module>bogeplus-activity</module>
         <module>bogeplus-massagist</module>
+        <module>bogeplus-pay</module>
+        <module>bogeplus-order</module>
     </modules>
     <name>bogeplus-massage</name>
     <description>bogeplus-massage</description>
