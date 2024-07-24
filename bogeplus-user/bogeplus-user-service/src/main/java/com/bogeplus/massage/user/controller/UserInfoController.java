@@ -27,24 +27,21 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @ApiOperation(value = "更新用户信息", notes = "根据用户ID更新用户信息")
-    @PutMapping("/{id}")
+    @PutMapping("/update")
     public Result updateUser(@ApiParam(value = "用户信息", required = true) @RequestBody UserInfo userInfo) {
-        boolean updated = userInfoService.updateUser(userInfo);
-        return Result.status(updated);
+        return Result.status(userInfoService.updateUser(userInfo));
     }
 
     @ApiOperation(value = "删除用户", notes = "根据用户ID删除用户")
-    @DeleteMapping("/{id}")
-    public Result deleteUser(@ApiParam(value = "用户ID", required = true) @PathVariable Long id) {
-        boolean deleted = userInfoService.deleteUser(id);
-        return Result.status(deleted);
+    @DeleteMapping("/delete")
+    public Result deleteUser(@ApiParam(value = "用户信息", required = true) @RequestBody UserInfo userInfo) {
+        return Result.status(userInfoService.deleteUser(userInfo.getId()));
     }
 
     @ApiOperation(value = "获取用户信息", notes = "根据用户ID获取用户信息")
-    @GetMapping("/{id}")
-    public Result getUserById(@ApiParam(value = "用户ID", required = true) @PathVariable Long id) {
-        UserInfo user = userInfoService.getUserById(id);
-        return Result.success(user);
+    @GetMapping("/query/{id}")
+    public Result<UserInfo> getUserById(@PathVariable("id") Long id) {
+        return Result.success(userInfoService.getUserById(id));
     }
 
     @ApiOperation(value = "获取用户分页信息", notes = "根据页码和每页大小获取用户分页信息")

@@ -169,6 +169,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
      * @return 删除是否成功
      */
     public boolean deleteUser(Long id) {
+
         return userInfoMapper.deleteById(id) > 0;
     }
 
