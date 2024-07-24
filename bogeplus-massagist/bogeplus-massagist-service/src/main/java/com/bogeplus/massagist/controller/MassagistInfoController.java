@@ -27,6 +27,11 @@ public class MassagistInfoController {
     @Autowired
     private IMassagistInfoService massagistInfoService;
 
+    /**
+     * 新增或修改技师
+     * @param massagistInfoDTO
+     * @return
+     */
     @ApiModelProperty(value = "新增或修改技师")
     @RequestMapping("/saveOrUpdate")
     public Result saveOrUpdateMassagist(@RequestBody MassagistInfoDTO massagistInfoDTO){

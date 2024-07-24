@@ -14,5 +14,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMassagistInfoService extends IService<MassagistInfo> {
 
+    /**
+     * 新增或修改技师
+     * @param massagistInfoDTO
+     */
     void saveOrUpdate(MassagistInfoDTO massagistInfoDTO);
 }
