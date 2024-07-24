@@ -1,12 +1,7 @@
 package com.bogeplus.massagist.service;
 
 import com.bogeplus.common.util.Result;
-import com.bogeplus.massagist.controller.requestBody.GetlistRequest;
 import com.bogeplus.massagist.controller.requestBody.OperationRequest;
-import com.bogeplus.massagist.dto.GetListDTO;
-import com.bogeplus.massagist.dto.OperationDTO;
-
-import java.util.List;
 
 /**
  * @Author bin
@@ -15,7 +10,7 @@ import java.util.List;
  */
 public interface MassagistInfoItemService {
     //查询该项目已被分配的技师
-    Result getList(GetlistRequest request);
+    Result getList(int type, int status, long objId);
 
     //取消技师与项目分配关系
     Result changeAssignment(OperationRequest request);

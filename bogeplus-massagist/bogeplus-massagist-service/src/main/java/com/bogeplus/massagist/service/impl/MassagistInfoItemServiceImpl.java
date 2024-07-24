@@ -4,7 +4,6 @@ import cn.hutool.core.util.IdUtil;
 import com.bogeplus.common.constant.massagist.AssignmentConstant;
 import com.bogeplus.common.util.Result;
 
-import com.bogeplus.massagist.controller.requestBody.GetlistRequest;
 import com.bogeplus.massagist.controller.requestBody.OperationRequest;
 import com.bogeplus.massagist.mapper.MassagistInfoItemMapper;
 import com.bogeplus.massagist.service.MassagistInfoItemService;
@@ -29,15 +28,14 @@ public class MassagistInfoItemServiceImpl implements MassagistInfoItemService {
     private MassagistInfoItemMapper massagistInfoItemMapper;
 
     /**
-     * 查询列表，查询技师或项目的分配情况
-     * @param request 请求体
+     * 查询列表
+     * @param type 传入对象类型 1:技师 2:项目 ps：传入对象则查询的是技师，反之亦然
+     * @param status 查询类型 1:已分配 2:未分配
+     * @param objId 对象id（项目或技师）
      * @return
      */
     @Override
-    public Result getList(GetlistRequest request) {
-        int type = request.getType();        //传入对象类型 1:技师 2:项目 ps：传入对象则查询的是技师，反之亦然
-        long objId = request.getObjId();     //对象id（项目或技师）
-        int status = request.getStatus();    //查询类型 1:已分配 2:未分配
+    public Result getList(int type, int status, long objId) {
         List objList;                        //返回的对象列表,初始化
         if (type == AssignmentConstant.MASSAGIST) {    //传入对象为技师，查询项目列表
             if (status == AssignmentConstant.ASSIGNED) { //查询已分配项目列表

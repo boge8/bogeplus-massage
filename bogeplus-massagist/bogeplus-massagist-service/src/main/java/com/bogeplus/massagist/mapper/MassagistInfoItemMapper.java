@@ -7,7 +7,7 @@ import com.bogeplus.massagist.entity.MassagistInfoItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bogeplus.massagist.vo.ItemVO;
 import com.bogeplus.massagist.vo.MassagistVO;
-import feign.Param;
+import org.apache.ibatis.annotations.Param;
 import org.mapstruct.Mapper;
 
 import java.util.List;

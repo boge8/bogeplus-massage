@@ -1,17 +1,14 @@
 package com.bogeplus.massagist.controller;
 
 import com.bogeplus.common.util.Result;
-import com.bogeplus.massagist.controller.requestBody.GetlistRequest;
 import com.bogeplus.massagist.controller.requestBody.OperationRequest;
-import com.bogeplus.massagist.dto.GetListDTO;
-import com.bogeplus.massagist.dto.OperationDTO;
 import com.bogeplus.massagist.service.MassagistInfoItemService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
+
 
 /**
  * <p>
@@ -32,8 +29,8 @@ public class MassagistInfoItemController {
 
     @GetMapping("/getList")
     @ApiOperation(value = "获取分配列表", notes = "获取分配列表描述")
-    public Result getList(@RequestParam GetlistRequest request){
-        return massagistAssociationService.getList(request);
+    public Result getList(@RequestParam int type, @RequestParam int status, @RequestParam long objId){
+        return massagistAssociationService.getList(type,status,objId);
     }
 
     @PostMapping("/changeAssignment")
