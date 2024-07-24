@@ -155,12 +155,10 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     /**
      * 更新用户信息
      *
-     * @param id       用户ID
      * @param userInfo 新的用户信息
      * @return 更新是否成功
      */
-    public boolean updateUser(Long id, UserInfo userInfo) {
-        userInfo.setId(id); // 确保 userInfo 中的 id 是正确的
+    public boolean updateUser(UserInfo userInfo) {
         return userInfoMapper.updateById(userInfo) > 0;
     }
 

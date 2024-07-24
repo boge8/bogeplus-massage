@@ -25,11 +25,10 @@ public interface UserInfoService extends IService<UserInfo> {
     /**
      * 更新用户信息
      *
-     * @param id       用户ID
      * @param userInfo 新的用户信息
      * @return 更新是否成功
      */
-    boolean updateUser(Long id, UserInfo userInfo);
+    boolean updateUser(UserInfo userInfo);
 
     /**
      * 删除用户

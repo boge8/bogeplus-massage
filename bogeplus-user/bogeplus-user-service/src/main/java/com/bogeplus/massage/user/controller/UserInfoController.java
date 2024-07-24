@@ -28,17 +28,16 @@ public class UserInfoController {
 
     @ApiOperation(value = "更新用户信息", notes = "根据用户ID更新用户信息")
     @PutMapping("/{id}")
-    public Result updateUser(@ApiParam(value = "用户ID", required = true) @PathVariable Long id,
-                             @ApiParam(value = "用户信息", required = true) @RequestBody UserInfo userInfo) {
-        boolean updated = userInfoService.updateUser(id, userInfo);
-        return Result.success(updated);
+    public Result updateUser(@ApiParam(value = "用户信息", required = true) @RequestBody UserInfo userInfo) {
+        boolean updated = userInfoService.updateUser(userInfo);
+        return Result.status(updated);
     }
 
     @ApiOperation(value = "删除用户", notes = "根据用户ID删除用户")
     @DeleteMapping("/{id}")
     public Result deleteUser(@ApiParam(value = "用户ID", required = true) @PathVariable Long id) {
         boolean deleted = userInfoService.deleteUser(id);
-        return Result.success(deleted);
+        return Result.status(deleted);
     }
 
     @ApiOperation(value = "获取用户信息", notes = "根据用户ID获取用户信息")
