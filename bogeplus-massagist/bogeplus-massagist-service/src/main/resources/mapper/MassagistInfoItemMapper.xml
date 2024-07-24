@@ -40,39 +40,75 @@
         and a.is_deleted = 0
     </select>
 
-    <insert id="doAssign" parameterType="com.bogeplus.massagist.dto.AssignmentDTO" useGeneratedKeys="false">
+<!--    <insert id="doAssign" parameterType="com.bogeplus.massagist.dto.AssignmentDTO" useGeneratedKeys="false">-->
+<!--        insert into massage_massagist_info_item-->
+<!--            (id,masseur_id, item_id)-->
+<!--        values-->
+<!--            <choose>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).MASSAGIST">-->
+<!--                    <foreach collection="dtos" item="dto" separator=",">-->
+<!--                        (#{dto.id}, #{dto.objId}, #{dto.obj2Id})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).ITEM">-->
+<!--                    <foreach collection="dtos" item="dto" separator=",">-->
+<!--                        (#{dto.id}, #{dto.obj2Id}, #{dto.objId})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--            </choose>-->
+<!--    </insert>-->
+
+<!--    <delete id="doUnassign" parameterType="com.bogeplus.massagist.dto.CancelAssignmentDTO">-->
+<!--        delete-->
+<!--        from massage_massagist_info_item-->
+<!--        where-->
+<!--            <choose>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).MASSAGIST">-->
+<!--                    <foreach collection="dtos" item="dto" separator="or">-->
+<!--                        (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).ITEM">-->
+<!--                    <foreach collection="dtos" item="dto" separator="or">-->
+<!--                        (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--            </choose>-->
+<!--    </delete>-->
+
+    <insert id="assignMassagists" useGeneratedKeys="false">
         insert into massage_massagist_info_item
-            (id,masseur_id, item_id)
+            (id, masseur_id, item_id)
         values
-            <choose>
-                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).MASSAGIST">
-                    <foreach collection="dtos" item="dto" separator=",">
-                        (#{dto.id}, #{dto.objId}, #{dto.obj2Id})
-                    </foreach>
-                </when>
-                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).ITEM">
-                    <foreach collection="dtos" item="dto" separator=",">
-                        (#{dto.id}, #{dto.obj2Id}, #{dto.objId})
-                    </foreach>
-                </when>
-            </choose>
+        <foreach collection="dtos" item="dto" separator=",">
+            (#{dto.id},#{dto.obj2Id}, #{dto.objId})
+        </foreach>
     </insert>
 
-    <delete id="doUnassign" parameterType="com.bogeplus.massagist.dto.CancelAssignmentDTO">
+    <insert id="assignItems" useGeneratedKeys="false">
+        insert into massage_massagist_info_item
+            (id, masseur_id, item_id)
+        values
+        <foreach collection="dtos" item="dto" separator=",">
+            (#{dto.id},#{dto.objId}, #{dto.obj2Id})
+        </foreach>
+    </insert>
+
+    <delete id="unassignMassagists">
         delete
         from massage_massagist_info_item
         where
-            <choose>
-                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).MASSAGIST">
-                    <foreach collection="dtos" item="dto" separator="or">
-                        (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})
-                    </foreach>
-                </when>
-                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).ITEM">
-                    <foreach collection="dtos" item="dto" separator="or">
-                        (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})
-                    </foreach>
-                </when>
-            </choose>
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})
+        </foreach>
+    </delete>
+
+    <delete id="unassignItems">
+        delete
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})
+        </foreach>
     </delete>
 </mapper>

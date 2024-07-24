@@ -1,6 +1,8 @@
 package com.bogeplus.massagist.controller;
 
 import com.bogeplus.common.util.Result;
+import com.bogeplus.massagist.controller.requestBody.GetlistRequest;
+import com.bogeplus.massagist.controller.requestBody.OperationRequest;
 import com.bogeplus.massagist.dto.GetListDTO;
 import com.bogeplus.massagist.dto.OperationDTO;
 import com.bogeplus.massagist.service.MassagistInfoItemService;
@@ -30,13 +32,13 @@ public class MassagistInfoItemController {
 
     @GetMapping("/getList")
     @ApiOperation(value = "获取分配列表", notes = "获取分配列表描述")
-    public Result getList(@RequestParam GetListDTO dto){
-        return massagistAssociationService.getList(dto);
+    public Result getList(@RequestParam GetlistRequest request){
+        return massagistAssociationService.getList(request);
     }
 
     @PostMapping("/changeAssignment")
     @ApiOperation(value = "修改分配关系", notes = "修改分配关系描述")
-    public Result changeAssignment(@RequestBody OperationDTO dto){
-        return massagistAssociationService.ChangeAssignment(dto);
+    public Result changeAssignment(@RequestBody OperationRequest request){
+        return massagistAssociationService.changeAssignment(request);
     }
 }

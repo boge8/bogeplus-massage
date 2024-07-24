@@ -1,5 +1,6 @@
 package com.bogeplus.massagist.mapper;
 
+
 import com.bogeplus.massagist.dto.AssignmentDTO;
 import com.bogeplus.massagist.dto.CancelAssignmentDTO;
 import com.bogeplus.massagist.entity.MassagistInfoItem;
@@ -34,9 +35,15 @@ public interface MassagistInfoItemMapper extends BaseMapper<MassagistInfoItem> {
     //获取未分配项目列表
     List<ItemVO> getUnassignedItems(Long massagistId);
 
-    //批量新增分配关系
-    void doAssign(int type, @Param("dtos") List<AssignmentDTO> dtos);
+    //为技师分配项目
+    void assignItems(@Param("dtos") List<AssignmentDTO> dtos);
 
-    //批量删除分配关系
-    void doUnassign(int type, List<CancelAssignmentDTO> dtos);
+    //为项目分配技师
+    void assignMassagists(@Param("dtos") List<AssignmentDTO> dtos);
+
+    //取消已分配项目
+    void unassignItems(@Param("dtos") List<CancelAssignmentDTO> dtos);
+
+    //取消已分配技师
+    void unassignMassagists(@Param("dtos") List<CancelAssignmentDTO> dtos);
 }
