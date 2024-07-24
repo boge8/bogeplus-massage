@@ -29,6 +29,11 @@ public enum ServiceCode {
     /*优惠券模块*/
     COUPONS_LESS_THAN_ZERO("优惠券价格小于0,请输入正确的价格",300401),
     COUPONS_LESS_THAN_TODAY("优惠券过期时间小于今天",300402),
+    COUPONS_NOT_EXIST("优惠券不存在",300403),
+    COUPONS_NOT_expiryDate("过期时间不存在",300404),
+
+    /*优惠券订单关联*/
+    ORDER_NOT_EXIST("订单id不存在",300405),
 
     //用户已注册
     USER_ALREADY_REGISTERED("用户已注册", 100501),

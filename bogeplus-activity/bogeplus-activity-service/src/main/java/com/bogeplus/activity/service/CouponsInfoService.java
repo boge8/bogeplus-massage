@@ -5,6 +5,7 @@ import com.bogeplus.activity.entity.CouponsInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bogeplus.common.util.Result;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,4 +24,10 @@ public interface CouponsInfoService extends IService<CouponsInfo> {
     Result addCoupons(CouponsDto couponsDto);
 
     List<CouponsInfo> listCoupons(Long userId);
+
+    Result setTime(Long id, LocalDateTime expiryDate);
+
+    Result dispatchForUser(Long id, Long userId);
+
+    Result dispatchForOrder(Long id, Long orderId);
 }

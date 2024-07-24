@@ -98,42 +98,4 @@ public class RedisUtil implements ApplicationContextAware {
         }
     }
 
-    // 为每个元素设置过期时间并存储到列表中
-    public static boolean setListWithIndividualExpire(String listKey, List<Serializable> list, long expireSeconds) {
-        try {
-            // 确保列表中的元素都是可序列化的
-            for (Serializable obj : list) {
-                if (obj == null || !(obj instanceof Serializable)) {
-                    throw new IllegalArgumentException("List elements must be serializable");
-                }
-            }
-
-            // 为每个元素设置过期时间并存储
-            for (int i = 0; i < list.size(); i++) {
-                Serializable element = list.get(i);
-                String elementKey = listKey + ":" + i;
-                redisTemplate.opsForValue().set(elementKey, element);
-                redisTemplate.expire(elementKey, expireSeconds, TimeUnit.SECONDS);
-            }
-
-            // 将所有元素的键存储到列表中
-            redisTemplate.opsForList().leftPushAll(listKey, list.stream().map(Serializable::toString).toArray(String[]::new));
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // 获取列表中的所有元素
-    public static List<Serializable> getList(String listKey) {
-        try {
-            List<Serializable> elementKeys = redisTemplate.opsForList().range(listKey, 0, -1);
-            return elementKeys.stream().map(key -> (Serializable) redisTemplate.opsForValue().get(key)).collect(Collectors.toList());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
 }

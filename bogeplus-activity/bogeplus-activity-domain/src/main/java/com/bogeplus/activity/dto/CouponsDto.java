@@ -1,6 +1,7 @@
 package com.bogeplus.activity.dto;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
+@ApiModel(value = "优惠券实体类", description = "用于优惠券中使用")
 @NoArgsConstructor
 public class CouponsDto {
 
@@ -23,8 +25,5 @@ public class CouponsDto {
 
     @ApiModelProperty("满减金额")
     private BigDecimal reductionPrice;
-
-    @ApiModelProperty("过期时间")
-    private LocalDateTime expiryDate;
 
 }
