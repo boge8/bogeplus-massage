@@ -1,5 +1,6 @@
 package com.bogeplus.massagist.service;
 
+import com.bogeplus.massagist.dto.MassagistInfoDTO;
 import com.bogeplus.massagist.entity.MassagistInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMassagistInfoService extends IService<MassagistInfo> {
 
+    void saveOrUpdate(MassagistInfoDTO massagistInfoDTO);
 }

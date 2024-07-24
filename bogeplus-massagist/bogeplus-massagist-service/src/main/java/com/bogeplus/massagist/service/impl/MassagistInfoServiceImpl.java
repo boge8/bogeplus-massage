@@ -1,5 +1,6 @@
 package com.bogeplus.massagist.service.impl;
 
+import com.bogeplus.massagist.dto.MassagistInfoDTO;
 import com.bogeplus.massagist.entity.MassagistInfo;
 import com.bogeplus.massagist.mapper.MassagistInfoMapper;
 import com.bogeplus.massagist.service.IMassagistInfoService;
@@ -17,4 +18,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, MassagistInfo> implements IMassagistInfoService {
 
+    @Override
+    public void saveOrUpdate(MassagistInfoDTO massagistInfoDTO) {
+
+    }
 }

@@ -1,6 +1,5 @@
 package com.bogeplus.common.enums;
 
-import javafx.scene.input.KeyCodeCombination;
 import lombok.Data;
 import lombok.Getter;
 
