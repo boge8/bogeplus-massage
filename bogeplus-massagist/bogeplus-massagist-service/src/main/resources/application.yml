@@ -67,3 +67,12 @@ mybatis-plus:
 logging:
   level:
     com.bogeplus.pay.mapper: debug
+
+# 阿里云oss配置
+aliyun:
+  oss:
+    endpoint: "your-oss-endpoint"
+    accessKeyId: "your-access-key-id"
+    accessKeySecret: "your-access-key-secret"
+    roleArn: "your-role-arn"
+    bucketName: "your-bucket-name"
