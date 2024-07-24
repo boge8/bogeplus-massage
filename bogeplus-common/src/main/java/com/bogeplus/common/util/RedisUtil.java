@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -60,6 +61,17 @@ public class RedisUtil implements ApplicationContextAware {
             return false;
         }
     }
+
+    public static Set<Serializable> zrange(String key, long start, long end) {
+        try {
+
+            return redisTemplate.opsForZSet().range(key, start, end);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     // 获取值
     public static Object get(String key) {
