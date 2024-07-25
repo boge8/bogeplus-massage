@@ -16,9 +16,9 @@ spring:
   # mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.3.230.36:3306/massage_pay?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://119.3.230.36:3306/massage_massagist?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: rw_user
-    password: 123123123
+    password: Qq123123
 
   # redis
   redis:
@@ -66,4 +66,4 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   level:
-    com.bogeplus.pay.mapper: debug
+    com.bogeplus.massagist.mapper: debug
