@@ -42,4 +42,20 @@ public class MassagistAppointmentController {
                 request.getAppointmentDate()));
     }
 
+    @PostMapping("/removeAppointment")
+    @ApiOperation(value = "移除技师预约")
+    public Result removeAppointment(@RequestBody MassagistAppointmentRequest request) {
+        if (request.getAppointmentDate().isBefore(LocalDate.now())) {
+            return Result.faild("预约日期不能小于当前日期");
+        }
+        if (request.getAppointmentDate().isAfter(LocalDate.now().plusDays(3))) {
+            return Result.faild("预约日期只能是未来三天以内");
+        }
+        if (request.getAppointmentHour() < 8) {
+            return Result.faild("预约时间只能是8~24点");
+        }
+
+        return Result.success(massagistAppointmentService.removeAppointment(request.getMassagistId(),
+                request.getAppointmentDate(), request.getAppointmentHour()));
+    }
 }

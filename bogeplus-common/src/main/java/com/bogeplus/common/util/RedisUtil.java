@@ -64,7 +64,6 @@ public class RedisUtil implements ApplicationContextAware {
 
     public static Set<Serializable> zrange(String key, long start, long end) {
         try {
-
             return redisTemplate.opsForZSet().range(key, start, end);
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,6 +71,16 @@ public class RedisUtil implements ApplicationContextAware {
         }
     }
 
+    //从zset中删除指定元素
+    public static boolean zrem(String key, Serializable value) {
+        try {
+            redisTemplate.opsForZSet().remove(key, value);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     // 获取值
     public static Object get(String key) {

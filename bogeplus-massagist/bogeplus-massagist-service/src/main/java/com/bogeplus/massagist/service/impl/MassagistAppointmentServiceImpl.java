@@ -16,7 +16,7 @@ import java.util.Set;
 @Service
 public class MassagistAppointmentServiceImpl implements IMassagistAppointmentService {
     @Override
-    public Boolean saveAppointment(long massagistId, LocalDate date, int hour) {
+    public boolean saveAppointment(long massagistId, LocalDate date, int hour) {
         String massagistAppointmentKey = RedisConstant.format(RedisConstant.MASSAGIST_APPOINTMENT_HOUR, massagistId, date);
         boolean isFirstTime = !RedisUtil.exist(massagistAppointmentKey);
 
@@ -66,5 +66,10 @@ public class MassagistAppointmentServiceImpl implements IMassagistAppointmentSer
         }
 
         return list;
+    }
+
+    @Override
+    public boolean removeAppointment(long massagistId, LocalDate date, int hour) {
+        return RedisUtil.zrem(RedisConstant.format(RedisConstant.MASSAGIST_APPOINTMENT_HOUR, massagistId, date), hour);
     }
 }
