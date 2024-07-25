@@ -12,8 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bogeplus.massagist.dto.CancelAssignmentDTO;
 import com.bogeplus.massagist.dto.AssignmentDTO;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 /**
  * @Author bin
@@ -66,36 +70,48 @@ public class MassagistInfoItemServiceImpl implements MassagistInfoItemService {
      * @param request 请求体
      * @return
      */
+    @Transactional
     @Override
     public Result changeAssignment(OperationRequest request) {
-        int operation = request.getOperation();     //操作类型 1:分配 2:取消分配
-        int type = request.getType();               //传入对象类型 1:技师 2:项目 ps：传入对象则查询的是技师，反之亦然
-        long objId = request.getObjId();            //对象id
-        List<Long> objIdList = request.getObjIdList();  //操作对象id列表
-        if (operation == AssignmentConstant.ASSIGN) {
-            List<AssignmentDTO> dtos = new ArrayList<>();
-            objIdList.stream().forEach(id ->
-                    dtos.add(new AssignmentDTO(
-                            IdUtil.getSnowflake(1, 1).nextId(), objId, id)));
-            if (type == AssignmentConstant.MASSAGIST) {
-                massagistInfoItemMapper.assignItems(dtos);
-            }else if (type == AssignmentConstant.ITEM){
-                massagistInfoItemMapper.assignMassagists(dtos);
-            }else {
-                Result.faild("传入type类型错误", 500);
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try {
+            int operation = request.getOperation();     //操作类型 1:分配 2:取消分配
+            int type = request.getType();               //传入对象类型 1:技师 2:项目 ps：传入对象则查询的是技师，反之亦然
+            long objId = request.getObjId();            //对象id
+            List<Long> objIdList = request.getObjIdList();  //操作对象id列表
+
+            if (operation == AssignmentConstant.ASSIGN) {
+                List<AssignmentDTO> dtos = objIdList.stream()
+                        .map(id -> new AssignmentDTO(IdUtil.getSnowflake(1, 1).nextId(), objId, id))
+                        .collect(Collectors.toList());
+
+                if (type == AssignmentConstant.MASSAGIST) {
+                    massagistInfoItemMapper.assignItems(dtos);
+                } else if (type == AssignmentConstant.ITEM) {
+                    massagistInfoItemMapper.assignMassagists(dtos);
+                } else {
+                    return Result.faild("传入type类型错误", 500);
+                }
+            } else if (operation == AssignmentConstant.UNASSIGN) {
+                List<CancelAssignmentDTO> dtos = objIdList.stream()
+                        .map(id -> new CancelAssignmentDTO(objId, id))
+                        .collect(Collectors.toList());
+
+                if (type == AssignmentConstant.MASSAGIST) {
+                    massagistInfoItemMapper.unassignItems(dtos);
+                } else if (type == AssignmentConstant.ITEM) {
+                    massagistInfoItemMapper.unassignMassagists(dtos);
+                } else {
+                    return Result.faild("传入type类型错误", 500);
+                }
+            } else {
+                return Result.faild("传入operation类型错误", 500);
             }
-        } else if (operation == AssignmentConstant.UNASSIGN) {
-            List<CancelAssignmentDTO> dtos = new ArrayList<>();
-            objIdList.stream().forEach(id ->
-                    dtos.add(new CancelAssignmentDTO(objId, id)));
-            if (type == AssignmentConstant.MASSAGIST) {
-                massagistInfoItemMapper.unassignItems(dtos);
-            }else if (type == AssignmentConstant.ITEM){
-                massagistInfoItemMapper.unassignMassagists(dtos);
-            }else {
-                Result.faild("传入type类型错误", 500);
-            }
+
+            return Result.success();
+        } finally {
+            lock.unlock();
         }
-        return Result.success();
     }
 }
