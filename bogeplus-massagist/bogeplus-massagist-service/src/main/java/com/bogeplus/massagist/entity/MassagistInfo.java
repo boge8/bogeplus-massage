@@ -1,19 +1,16 @@
 package com.bogeplus.massagist.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.segments.MergeSegments;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -27,8 +24,8 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("massage_massagist_info")
-@ApiModel(value = "MassagistInfo对象", description = "技师表")
-public class MassagistInfo extends Wrapper<MassagistInfo> implements Serializable {
+@ApiModel(value = "技师信息", description = "技师表")
+public class MassagistInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +34,9 @@ public class MassagistInfo extends Wrapper<MassagistInfo> implements Serializabl
 
     @ApiModelProperty("技师姓名")
     private String name;
+
+    @ApiModelProperty(value = "技师性别",notes = "0：女，1：男")
+    private Boolean gender;
 
     @ApiModelProperty("技师头像")
     private String profilePicture;
@@ -93,25 +93,6 @@ public class MassagistInfo extends Wrapper<MassagistInfo> implements Serializabl
     private String updateUser;
 
     @ApiModelProperty("逻辑删除 0未删除：1已删除")
+    @TableLogic
     private Boolean isDeleted;
-
-    @Override
-    public MassagistInfo getEntity() {
-        return null;
-    }
-
-    @Override
-    public MergeSegments getExpression() {
-        return null;
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public String getSqlSegment() {
-        return "";
-    }
 }

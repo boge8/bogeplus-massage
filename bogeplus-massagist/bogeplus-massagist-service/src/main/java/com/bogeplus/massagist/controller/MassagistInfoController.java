@@ -1,15 +1,14 @@
 package com.bogeplus.massagist.controller;
 
 import com.bogeplus.common.util.Result;
-import com.bogeplus.massagist.dto.MassagistInfoDTO;
-import com.bogeplus.massagist.entity.MassagistInfo;
+import com.bogeplus.massagist.dto.MassagistInfoInsertDTO;
+import com.bogeplus.massagist.dto.MassagistInfoUpdateDTO;
 import com.bogeplus.massagist.service.IMassagistInfoService;
-import io.swagger.annotations.ApiModelProperty;
+import com.bogeplus.massagist.vo.MassagistInfoVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -21,67 +20,44 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/massagistInfo")
+@Api(value = "技师信息", tags = "技师信息")
 public class MassagistInfoController {
 
     @Autowired
     private IMassagistInfoService massagistInfoService;
 
-    /**
-     * 新增技师
-     * @param massagistInfoDTO
-     * @return
-     */
-    @ApiModelProperty(value = "新增技师")
+    @ApiOperation(value = "新增技师")
     @PostMapping("/save")
-    public Result saveMassagist(@RequestBody MassagistInfoDTO massagistInfoDTO){
-        massagistInfoService.save(massagistInfoDTO);
+    public Result save(@RequestBody MassagistInfoInsertDTO massagistInfoInsertDTO){
+        massagistInfoService.save(massagistInfoInsertDTO);
         return Result.success();
     }
 
-    /**
-     * 修改技师
-     * @param massagistInfoDTO
-     * @return
-     * @throws Exception
-     */
-    @ApiModelProperty(value = "修改技师")
+    @ApiOperation(value = "修改技师")
     @PostMapping("/update")
-    public Result update(@RequestBody MassagistInfoDTO massagistInfoDTO) throws Exception {
-        massagistInfoService.update(massagistInfoDTO);
+    public Result update(@RequestBody MassagistInfoUpdateDTO massagistInfoUpdateDTO) throws Exception {
+        massagistInfoService.update(massagistInfoUpdateDTO);
         return Result.success();
     }
 
-    /**
-     * 分页查询技师
-     *
-     * @return
-     */
-    /*@ApiModelProperty(value = "分页查询技师")
+    /*@ApiOperation(value = "分页查询技师")
     @GetMapping("/page")
-    public Result<PageResult> page(@RequestParam Integer page, @RequestParam Integer pageSize) {
-        PageResult pageResult = massagistInfoService.pageQuery(page,pageSize);
-        return Result.success(pageResult);
+    public Result<IPage<MassagistInfoVO>> page(@RequestParam Integer page, @RequestParam Integer pageSize) {
+        IPage<MassagistInfoVO> iPage = massagistInfoService.pageQuery(page,pageSize);
+        return Result.success(iPage);
     }*/
 
-    /**
-     * 根据id查询技师
-     * @param id
-     */
-    @ApiModelProperty(value = "根据id查询技师")
-    @PostMapping("/getById")
-    public Result<MassagistInfo> getById(Long id) {
-        MassagistInfo massagistInfo = massagistInfoService.getById(id);
-        return Result.success(massagistInfo);
+    @ApiOperation(value = "根据id查询技师")
+    @GetMapping("/getById")
+    public Result<MassagistInfoVO> getById(Long id) {
+        MassagistInfoVO massagistInfoVO = massagistInfoService.getById(id);
+        return Result.success(massagistInfoVO);
     }
 
-    /**
-     * 根据id删除技师
-     * @param id
-     */
-    @ApiModelProperty(value = "根据id删除技师")
-    @PostMapping("/removeById")
-    public Result removeById(Long id) {
-        massagistInfoService.deleteById(id);
+    @ApiOperation(value = "根据id删除技师")
+    @DeleteMapping("/deleteById")
+    public Result deleteById(Long id) {
+        massagistInfoService.removeById(id);
         return Result.success();
     }
 }

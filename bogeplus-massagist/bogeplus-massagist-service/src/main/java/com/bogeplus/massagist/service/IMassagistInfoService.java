@@ -1,8 +1,10 @@
 package com.bogeplus.massagist.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bogeplus.massagist.dto.MassagistInfoDTO;
+import com.bogeplus.massagist.dto.MassagistInfoInsertDTO;
+import com.bogeplus.massagist.dto.MassagistInfoUpdateDTO;
 import com.bogeplus.massagist.entity.MassagistInfo;
+import com.bogeplus.massagist.vo.MassagistInfoVO;
 
 /**
  * <p>
@@ -16,16 +18,16 @@ public interface IMassagistInfoService extends IService<MassagistInfo> {
 
     /**
      * 新增技师
-     * @param massagistInfoDTO
+     * @param massagistInfoInsertDTO
      */
-    void save(MassagistInfoDTO massagistInfoDTO);
+    void save(MassagistInfoInsertDTO massagistInfoInsertDTO);
 
     /**
      * 更新技师坐标
-     * @param massagistInfoDTO
+     * @param massagistInfoUpdateDTO
      * @return
      */
-    void update(MassagistInfoDTO massagistInfoDTO) throws Exception;
+    void update(MassagistInfoUpdateDTO massagistInfoUpdateDTO) throws Exception;
 
     /**
      * 分页查询
@@ -33,18 +35,15 @@ public interface IMassagistInfoService extends IService<MassagistInfo> {
      * @param pageSize
      * @return
      */
-   /* PageResult pageQuery(Integer page, Integer pageSize);*/
+/*
+    IPage<MassagistInfoVO> pageQuery(Integer page, Integer pageSize);
+*/
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-    MassagistInfo getById(Long id);
+    MassagistInfoVO getById(Long id);
 
-    /**
-     * 根据id删除
-     * @param id
-     */
-    void deleteById(Long id);
 }
