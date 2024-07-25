@@ -85,7 +85,7 @@ public class Result<T> {
     public static <T> Result faild(T data) {
         Result<T> tResult = new Result<>();
         tResult.setCode(500);
-        tResult.setMsg("操作成功");
+        tResult.setMsg("操作失败");
         tResult.setData(data);
         return tResult;
     }
@@ -93,7 +93,7 @@ public class Result<T> {
     public static <T> Result faild() {
         Result<T> tResult = new Result<>();
         tResult.setCode(500);
-        tResult.setMsg("操作成功");
+        tResult.setMsg("操作失败");
         return tResult;
     }
 
