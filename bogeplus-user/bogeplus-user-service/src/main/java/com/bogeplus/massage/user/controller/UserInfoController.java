@@ -19,7 +19,7 @@ import org.springframework.stereotype.Controller;
  * @author bogeplus
  * @since 2024-07-16
  */
-@Api(tags = "用户信息管理接口")
+@Api(tags = "用户接口")
 @RestController
 @RequestMapping("/userInfo")
 public class UserInfoController {
@@ -33,9 +33,9 @@ public class UserInfoController {
     }
 
     @ApiOperation(value = "删除用户", notes = "根据用户ID删除用户")
-    @DeleteMapping("/delete")
-    public Result deleteUser(@ApiParam(value = "用户信息", required = true) @RequestBody UserInfo userInfo) {
-        return Result.status(userInfoService.deleteUser(userInfo.getId()));
+    @DeleteMapping("/{delete}")
+    public Result deleteUser(@PathVariable("id") Long id) {
+        return Result.status(userInfoService.deleteUser(id));
     }
 
     @ApiOperation(value = "获取用户信息", notes = "根据用户ID获取用户信息")
