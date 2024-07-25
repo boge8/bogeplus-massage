@@ -39,7 +39,7 @@ public class UserInfoController {
     }
 
     @ApiOperation(value = "获取用户信息", notes = "根据用户ID获取用户信息")
-    @GetMapping("/query/{id}")
+    @GetMapping("/{id}")
     public Result<UserInfo> getUserById(@PathVariable("id") Long id) {
         return Result.success(userInfoService.getUserById(id));
     }
