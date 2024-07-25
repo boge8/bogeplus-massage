@@ -6,7 +6,7 @@ import java.util.List;
 public interface IMassagistAppointmentService {
     boolean saveAppointment(long massagistId, LocalDate date, int hour);
 
-    List<Integer> getAppointment(long massagistId, LocalDate date);
+    List<Integer> getAppointments(long massagistId, LocalDate date);
 
     boolean removeAppointment(long massagistId, LocalDate date, int hour);
 }

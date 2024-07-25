@@ -44,7 +44,7 @@ public class MassagistAppointmentServiceImpl implements IMassagistAppointmentSer
         return duration.getSeconds();
     }
 
-    public List<Integer> getAppointment(long massagistId, LocalDate date) {
+    public List<Integer> getAppointments(long massagistId, LocalDate date) {
         String massagistAppointmentKey = RedisConstant.format(RedisConstant.MASSAGIST_APPOINTMENT_HOUR, massagistId, date);
         Set<Serializable> set = RedisUtil.zrange(massagistAppointmentKey, 0, -1);
         if (set != null) {

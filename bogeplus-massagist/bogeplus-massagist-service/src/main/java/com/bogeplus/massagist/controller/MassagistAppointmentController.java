@@ -1,8 +1,10 @@
 package com.bogeplus.massagist.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import com.bogeplus.common.util.Result;
-import com.bogeplus.massagist.controller.request.MassagistAppointmentRequest;
+import com.bogeplus.massagist.dto.MassagistAppointmentDTO;
 import com.bogeplus.massagist.service.IMassagistAppointmentService;
+import com.bogeplus.massagist.vo.MassagistAppointmentVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,43 +21,48 @@ public class MassagistAppointmentController {
 
     @PostMapping("/saveAppointment")
     @ApiOperation(value = "保存技师预约")
-    public Result saveAppointment(@RequestBody MassagistAppointmentRequest request) {
-        if (request.getAppointmentDate().isBefore(LocalDate.now())) {
+    public Result saveAppointment(@RequestBody MassagistAppointmentDTO appointmentDTO) {
+        if (appointmentDTO.getAppointmentDate().isBefore(LocalDate.now())) {
             return Result.faild("预约日期不能小于当前日期");
         }
-        if (request.getAppointmentDate().isAfter(LocalDate.now().plusDays(3))) {
+        if (appointmentDTO.getAppointmentDate().isAfter(LocalDate.now().plusDays(3))) {
             return Result.faild("预约日期只能是未来三天以内");
         }
-        if (request.getAppointmentHour() < 8) {
+        if (appointmentDTO.getAppointmentHour() < 8) {
             return Result.faild("预约时间只能是8~24点");
         }
 
-        Boolean bool = massagistAppointmentService.saveAppointment(request.getMassagistId(),
-                request.getAppointmentDate(), request.getAppointmentHour());
+        Boolean bool = massagistAppointmentService.saveAppointment(appointmentDTO.getMassagistId(),
+                appointmentDTO.getAppointmentDate(), appointmentDTO.getAppointmentHour());
         return Result.success(bool);
     }
 
-    @PostMapping("/getAppointment")
+    @PostMapping("/getAppointments")
     @ApiOperation(value = "获取技师预约")
-    public Result getAppointment(@RequestBody MassagistAppointmentRequest request) {
-        return Result.success(massagistAppointmentService.getAppointment(request.getMassagistId(),
-                request.getAppointmentDate()));
+    public Result getAppointments(@RequestBody MassagistAppointmentDTO appointmentDTO) {
+        MassagistAppointmentVO massagistAppointmentVO = new MassagistAppointmentVO();
+        massagistAppointmentVO.setAppointments(massagistAppointmentService.getAppointments(appointmentDTO.getMassagistId(),
+                appointmentDTO.getAppointmentDate()));
+        if (CollUtil.isEmpty(massagistAppointmentVO.getAppointments())) {
+            return Result.faild("该技师当天没有预约");
+        }
+        return Result.success(massagistAppointmentVO);
     }
 
     @PostMapping("/removeAppointment")
     @ApiOperation(value = "移除技师预约")
-    public Result removeAppointment(@RequestBody MassagistAppointmentRequest request) {
-        if (request.getAppointmentDate().isBefore(LocalDate.now())) {
+    public Result removeAppointment(@RequestBody MassagistAppointmentDTO appointmentDTO) {
+        if (appointmentDTO.getAppointmentDate().isBefore(LocalDate.now())) {
             return Result.faild("预约日期不能小于当前日期");
         }
-        if (request.getAppointmentDate().isAfter(LocalDate.now().plusDays(3))) {
+        if (appointmentDTO.getAppointmentDate().isAfter(LocalDate.now().plusDays(3))) {
             return Result.faild("预约日期只能是未来三天以内");
         }
-        if (request.getAppointmentHour() < 8) {
+        if (appointmentDTO.getAppointmentHour() < 8) {
             return Result.faild("预约时间只能是8~24点");
         }
 
-        return Result.success(massagistAppointmentService.removeAppointment(request.getMassagistId(),
-                request.getAppointmentDate(), request.getAppointmentHour()));
+        return Result.success(massagistAppointmentService.removeAppointment(appointmentDTO.getMassagistId(),
+                appointmentDTO.getAppointmentDate(), appointmentDTO.getAppointmentHour()));
     }
 }
