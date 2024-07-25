@@ -18,7 +18,7 @@ public class MassagistAppointmentServiceImpl implements IMassagistAppointmentSer
     @Override
     public Boolean saveAppointment(long massagistId, LocalDate date, int hour) {
         String massagistAppointmentKey = RedisConstant.format(RedisConstant.MASSAGIST_APPOINTMENT_HOUR, massagistId, date);
-        boolean isFirstTime = RedisUtil.exist(massagistAppointmentKey);
+        boolean isFirstTime = !RedisUtil.exist(massagistAppointmentKey);
 
         if (!RedisUtil.zadd(massagistAppointmentKey, hour, hour)) {
             return false;
@@ -47,7 +47,7 @@ public class MassagistAppointmentServiceImpl implements IMassagistAppointmentSer
     public List<Integer> getAppointment(long massagistId, LocalDate date) {
         String massagistAppointmentKey = RedisConstant.format(RedisConstant.MASSAGIST_APPOINTMENT_HOUR, massagistId, date);
         Set<Serializable> set = RedisUtil.zrange(massagistAppointmentKey, 0, -1);
-        if (set == null) {
+        if (set != null) {
             return convertSetToList(set);
         }
         return null;

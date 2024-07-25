@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 描述: [技师模块-启动类]
@@ -13,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@ComponentScan(basePackages = {"com.bogeplus"})
 @MapperScan("com.bogeplus.massagist.mapper")
 public class BogeplusMassagistServiceApplication {
 
