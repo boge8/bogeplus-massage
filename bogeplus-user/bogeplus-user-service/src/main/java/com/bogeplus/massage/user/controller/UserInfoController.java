@@ -3,6 +3,8 @@ package com.bogeplus.massage.user.controller;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massage.user.entity.UserInfo;
 import com.bogeplus.massage.user.service.UserInfoService;
+import com.bogeplus.message.dto.UserDto;
+import com.bogeplus.message.vo.UserVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,15 +23,15 @@ import org.springframework.stereotype.Controller;
  */
 @Api(tags = "用户接口")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/userInfo")
 public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
 
     @ApiOperation(value = "更新用户信息", notes = "根据用户ID更新用户信息")
     @PutMapping("/update")
-    public Result updateUser(@ApiParam(value = "用户信息", required = true) @RequestBody UserInfo userInfo) {
-        return Result.status(userInfoService.updateUser(userInfo));
+    public Result updateUser(@ApiParam(value = "用户信息", required = true) @RequestBody UserDto userDto) {
+        return Result.status(userInfoService.updateUser(userDto));
     }
 
     @ApiOperation(value = "删除用户", notes = "根据用户ID删除用户")
@@ -40,7 +42,7 @@ public class UserInfoController {
 
     @ApiOperation(value = "获取用户信息", notes = "根据用户ID获取用户信息")
     @GetMapping("/{id}")
-    public Result<UserInfo> getUserById(@PathVariable("id") Long id) {
+    public Result<UserVo> getUserById(@PathVariable("id") Long id) {
         return Result.success(userInfoService.getUserById(id));
     }
 

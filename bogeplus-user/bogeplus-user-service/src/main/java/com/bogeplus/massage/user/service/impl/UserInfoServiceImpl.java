@@ -17,8 +17,11 @@ import com.bogeplus.massage.user.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.massage.user.util.JWTUtil;
 import com.bogeplus.message.dto.SmsDTO;
+import com.bogeplus.message.dto.UserDto;
 import com.bogeplus.message.feign.SmsFeign;
+import com.bogeplus.message.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,8 +41,7 @@ import java.util.Map;
 @Slf4j
 public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserInfoService {
 
-    @Autowired
-    private SmsFeign smsFeign;
+
 
     @Autowired
     UserInfoMapper userInfoMapper;
@@ -154,11 +156,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
     /**
      * 更新用户信息
      *
-     * @param userInfo 新的用户信息
+     * @param userDto 新的用户信息
      * @return 更新是否成功
      */
     @Override
-    public boolean updateUser(UserInfo userInfo) {
+    public boolean updateUser(UserDto userDto) {
+        UserInfo userInfo = new UserInfo();
+        BeanUtils.copyProperties(userDto,userInfo);
         return userInfoMapper.updateById(userInfo) > 0;
     }
 
@@ -181,8 +185,11 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
      * @return 用户信息
      */
     @Override
-    public UserInfo getUserById(Long id) {
-        return userInfoMapper.selectById(id);
+    public UserVo getUserById(Long id) {
+        UserInfo userInfo = userInfoMapper.selectById(id);
+        UserVo userVo = new UserVo();
+        BeanUtils.copyProperties(userInfo,userVo);
+        return userVo;
     }
 
     /**
