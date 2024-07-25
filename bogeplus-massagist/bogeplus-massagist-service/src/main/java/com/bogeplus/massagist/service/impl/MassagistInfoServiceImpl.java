@@ -1,5 +1,6 @@
 package com.bogeplus.massagist.service.impl;
 
+import com.bogeplus.common.exception.BizException;
 import com.bogeplus.massagist.entity.MassagistInfo;
 import com.bogeplus.massagist.mapper.MassagistInfoMapper;
 import com.bogeplus.massagist.service.IMassagistInfoService;
@@ -19,18 +20,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, MassagistInfo> implements IMassagistInfoService {
     @Override
     @Transactional
-    public void saveOrUpdateProfilePicture(Integer id, String profilePicture) {
+    public void updateProfilePicture(Integer id, String profilePicture) {
         MassagistInfo massagistInfo = getById(id);
         if (massagistInfo == null) {
-            // 新增操作
-            massagistInfo = new MassagistInfo();
-            massagistInfo.setId(id);
-            massagistInfo.setProfilePicture(profilePicture);
-            save(massagistInfo);
-        } else {
-            // 修改操作
-            massagistInfo.setProfilePicture(profilePicture);
-            updateById(massagistInfo);
+            throw new BizException("技师信息不存在，无法更新头像");
         }
+        massagistInfo.setProfilePicture(profilePicture);
+        updateById(massagistInfo);
+    }
+
+    @Override
+    @Transactional
+    public void addProfilePicture(Integer id, String profilePicture) {
+        MassagistInfo massagistInfo = getById(id);
+        if (massagistInfo != null && massagistInfo.getProfilePicture() != null) {
+            throw new BizException("技师头像已存在，无法新增");
+        }
+        massagistInfo.setProfilePicture(profilePicture);
+        updateById(massagistInfo);
     }
 }

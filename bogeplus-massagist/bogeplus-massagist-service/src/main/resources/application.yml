@@ -71,8 +71,8 @@ logging:
 # 阿里云oss配置
 aliyun:
   oss:
-    endpoint: "your-oss-endpoint"
+    endpoint: "oss-cn-chengdu.aliyuncs.com"
     accessKeyId: "your-access-key-id"
     accessKeySecret: "your-access-key-secret"
-    roleArn: "your-role-arn"
-    bucketName: "your-bucket-name"
+    bucketName: "ajunoss"
+    role-arn: "acs:ram::1015866010693963:role/ajun"

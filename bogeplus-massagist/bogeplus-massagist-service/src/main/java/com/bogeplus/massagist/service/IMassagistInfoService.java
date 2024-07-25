@@ -13,6 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMassagistInfoService extends IService<MassagistInfo> {
 
-    void saveOrUpdateProfilePicture(Integer id, String profilePicture);
+    void updateProfilePicture(Integer id, String profilePicture);
+    void addProfilePicture(Integer id, String profilePicture);
 
 }

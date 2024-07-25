@@ -1,7 +1,6 @@
 package com.bogeplus.common.exception;
 
 import lombok.Data;
-import org.omg.SendingContext.RunTime;
 
 @Data
 public class BizException extends RuntimeException {

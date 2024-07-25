@@ -25,16 +25,17 @@ public class OssUtil {
     @Value("${aliyun.oss.accessKeySecret}")
     private String accessKeySecret;
 
-    @Value("${aliyun.oss.roleArn}")
-    private String roleArn;
-
     @Value("${aliyun.oss.bucketName}")
     private String bucketName;
+
+    @Value("${aliyun.oss.role-arn}")
+    private String roleArn;
+
 
     public String getOssToken() throws ClientException {
         // 创建STS客户端
         DefaultProfile profile = DefaultProfile.getProfile(
-                "cn-hangzhou", accessKeyId, accessKeySecret);
+                "cn-chengdu", accessKeyId, accessKeySecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
         // 构造请求

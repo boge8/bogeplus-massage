@@ -1,19 +1,21 @@
 package com.bogeplus.massagist.controller;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.bogeplus.common.enums.ServiceCode;
+import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massagist.util.OssUtil;
 import com.bogeplus.massagist.service.IMassagistInfoService;
-import com.aliyuncs.exceptions.ClientException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-@Api(tags = "新增或修改技师头像接口")
+
 @RestController
 @RequestMapping("/massagistInfo")
+@Api(value = "新增和修改技师头像接口",tags = "新增和修改技师头像接口")
 public class MassagistProfilePicController {
 
     @Autowired
@@ -25,22 +27,35 @@ public class MassagistProfilePicController {
     @ApiOperation(value = "获取OSS Token")
     @GetMapping("/token")
     public Result<String> getOssToken() {
+
+        String result = null;
         try {
-            String result = ossUtil.getOssToken();
-            return Result.success(result,ServiceCode.SUCCESS);
+            result = ossUtil.getOssToken();
         } catch (ClientException e) {
-            return Result.faild("获取token失败",ServiceCode.FAILED);
+            throw new RuntimeException(e);
+        }
+        return Result.success(result,ServiceCode.SUCCESS);
+    }
+
+    @ApiOperation(value = "更新技师头像")
+    @PutMapping("/updateProfilePicture")
+    public Result<String> updateProfilePicture(@RequestParam Integer id, @RequestParam String profilePicture) {
+        try {
+            massagistInfoService.updateProfilePicture(id, profilePicture);
+            return Result.success("技师头像更新成功！", ServiceCode.SUCCESS);
+        } catch (BizException e) {
+            return Result.faild(e.getMsg(), ServiceCode.FAILED);
         }
     }
 
-    @ApiOperation(value = "保存或更新按摩师头像")
-    @PostMapping("/saveOrUpdateProfilePicture")
-    public Result<String> saveOrUpdateProfilePicture(@RequestParam Integer id, @RequestParam String profilePicture) {
+    @ApiOperation(value = "新增技师头像")
+    @PostMapping("/addProfilePicture")
+    public Result<String> addProfilePicture(@RequestParam Integer id, @RequestParam String profilePicture) {
         try {
-            massagistInfoService.saveOrUpdateProfilePicture(id, profilePicture);
-            return Result.success("技师头像新增或修改成功！",ServiceCode.SUCCESS);
-        } catch (Exception e) {
-            return Result.faild("技师头像新增或修改失败！",ServiceCode.FAILED);
+            massagistInfoService.addProfilePicture(id, profilePicture);
+            return Result.success("技师头像新增成功！", ServiceCode.SUCCESS);
+        } catch (BizException e) {
+            return Result.faild(e.getMsg(), ServiceCode.FAILED);
         }
     }
 }
