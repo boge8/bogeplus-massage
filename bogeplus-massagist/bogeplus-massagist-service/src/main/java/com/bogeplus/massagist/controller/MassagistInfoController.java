@@ -1,5 +1,6 @@
 package com.bogeplus.massagist.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massagist.dto.MassagistInfoInsertDTO;
 import com.bogeplus.massagist.dto.MassagistInfoUpdateDTO;
@@ -40,12 +41,12 @@ public class MassagistInfoController {
         return Result.success();
     }
 
-    /*@ApiOperation(value = "分页查询技师")
+    @ApiOperation(value = "分页查询技师")
     @GetMapping("/page")
     public Result<IPage<MassagistInfoVO>> page(@RequestParam Integer page, @RequestParam Integer pageSize) {
         IPage<MassagistInfoVO> iPage = massagistInfoService.pageQuery(page,pageSize);
         return Result.success(iPage);
-    }*/
+    }
 
     @ApiOperation(value = "根据id查询技师")
     @GetMapping("/getById")

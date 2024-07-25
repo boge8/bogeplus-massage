@@ -1,5 +1,6 @@
 package com.bogeplus.massagist.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bogeplus.massagist.dto.MassagistInfoInsertDTO;
 import com.bogeplus.massagist.dto.MassagistInfoUpdateDTO;
@@ -35,9 +36,7 @@ public interface IMassagistInfoService extends IService<MassagistInfo> {
      * @param pageSize
      * @return
      */
-/*
     IPage<MassagistInfoVO> pageQuery(Integer page, Integer pageSize);
-*/
 
     /**
      * 根据id查询

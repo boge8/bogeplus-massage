@@ -2,6 +2,9 @@ package com.bogeplus.massagist.service.impl;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.common.util.UserUtil;
 import com.bogeplus.massagist.api.GaodeApiService;
@@ -98,11 +101,13 @@ public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, M
      * @param pageSize
      * @return
      */
-//    @Override
-//    public IPage<MassagistInfoVO> pageQuery(Integer page, Integer pageSize) {
-//        Page<MassagistInfoVO> massagistInfoVOPage = new Page<>(page, pageSize);
-//        return massagistInfoVOPage;
-//    }
+    @Override
+    public IPage<MassagistInfoVO> pageQuery(Integer page, Integer pageSize) {
+        IPage<MassagistInfoVO> massagistInfoVOPage = new Page<MassagistInfoVO>(page, pageSize);
+
+
+        return ;
+    }
 
 
     /**
