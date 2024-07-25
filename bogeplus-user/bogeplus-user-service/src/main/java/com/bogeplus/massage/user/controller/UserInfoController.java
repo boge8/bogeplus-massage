@@ -21,7 +21,7 @@ import org.springframework.stereotype.Controller;
  */
 @Api(tags = "用户接口")
 @RestController
-@RequestMapping
+@RequestMapping("/user")
 public class UserInfoController {
     @Autowired
     private UserInfoService userInfoService;
