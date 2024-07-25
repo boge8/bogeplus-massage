@@ -103,10 +103,17 @@ public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, M
      */
     @Override
     public IPage<MassagistInfoVO> pageQuery(Integer page, Integer pageSize) {
-        IPage<MassagistInfoVO> massagistInfoVOPage = new Page<MassagistInfoVO>(page, pageSize);
+        IPage<MassagistInfo> massagistInfoPage = new Page<MassagistInfo>(page, pageSize);
 
+        massagistInfoMapper.selectPage(massagistInfoPage, null);
 
-        return ;
+        IPage<MassagistInfoVO> iPage = massagistInfoPage.convert(massagistInfo -> {
+            MassagistInfoVO massagistInfoVO = new MassagistInfoVO();
+            BeanUtils.copyProperties(massagistInfo, massagistInfoVO);
+            return massagistInfoVO;
+        });
+
+        return iPage;
     }
 
 
