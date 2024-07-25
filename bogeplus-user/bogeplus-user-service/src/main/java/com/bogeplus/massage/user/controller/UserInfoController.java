@@ -33,9 +33,9 @@ public class UserInfoController {
     }
 
     @ApiOperation(value = "删除用户", notes = "根据用户ID删除用户")
-    @DeleteMapping("/{delete}")
+    @DeleteMapping("/{id}")
     public Result deleteUser(@PathVariable("id") Long id) {
-        return Result.status(userInfoService.deleteUser(id));
+        return Result.status(userInfoService.deleteUseById(id));
     }
 
     @ApiOperation(value = "获取用户信息", notes = "根据用户ID获取用户信息")

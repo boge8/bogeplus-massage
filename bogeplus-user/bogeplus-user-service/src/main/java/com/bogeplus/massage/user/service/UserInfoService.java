@@ -36,7 +36,7 @@ public interface UserInfoService extends IService<UserInfo> {
      * @param id 用户ID
      * @return 删除是否成功
      */
-    boolean deleteUser(Long id);
+    boolean deleteUseById(Long id);
 
     /**
      * 根据用户ID获取用户信息

@@ -144,7 +144,6 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         if (bool) RedisUtil.incr(userCountSms, 1);
         return bool;
     }
-
     public static void main(String[] args) {
         String s = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXNzYWdlIiwiaGVhZEltZyI6Imh0dHA6Ly94eHh4LmNvbS94eHguanBnIiwidXNlck5pY2tuYW1lIjoi55So5oi3MTY2MDExMjU2MjMiLCJleHAiOjE3MjE5MTY5MTksImlhdCI6MTcyMTMxMjExOSwiYWNjb3VudCI6IjE2NjAxM1I1NjIzIn0.X2N1pxy9qYLReAGn-DPSGESWPRJKfv8RSh2Go3iHGBA";
         UserInfo userInfo = JWTUtil.parseToken(s);
@@ -158,6 +157,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
      * @param userInfo 新的用户信息
      * @return 更新是否成功
      */
+    @Override
     public boolean updateUser(UserInfo userInfo) {
         return userInfoMapper.updateById(userInfo) > 0;
     }
@@ -168,7 +168,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
      * @param id 用户ID
      * @return 删除是否成功
      */
-    public boolean deleteUser(Long id) {
+    @Override
+    public boolean deleteUseById(Long id) {
 
         return userInfoMapper.deleteById(id) > 0;
     }
@@ -179,6 +180,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
      * @param id 用户ID
      * @return 用户信息
      */
+    @Override
     public UserInfo getUserById(Long id) {
         return userInfoMapper.selectById(id);
     }
@@ -190,6 +192,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
      * @param size 每页大小
      * @return 用户分页信息
      */
+    @Override
     public Object getUserPage(int page, int size) {
         // 创建分页对象
         Page<UserInfo> userPage = new Page<>(page, size);
