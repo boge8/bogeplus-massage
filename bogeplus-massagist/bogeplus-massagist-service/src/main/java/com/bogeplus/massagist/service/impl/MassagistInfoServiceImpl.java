@@ -2,13 +2,12 @@ package com.bogeplus.massagist.service.impl;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
-import com.bogeplus.common.util.Result;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.massagist.api.GaodeApiService;
 import com.bogeplus.massagist.dto.MassagistInfoDTO;
 import com.bogeplus.massagist.entity.MassagistInfo;
 import com.bogeplus.massagist.mapper.MassagistInfoMapper;
 import com.bogeplus.massagist.service.IMassagistInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, M
      * @param massagistInfoDTO
      */
     @Override
-    public Result save(MassagistInfoDTO massagistInfoDTO) {
+    public void save(MassagistInfoDTO massagistInfoDTO) {
         //将DTO对象转换为实体对象
         MassagistInfo massagistInfo = new MassagistInfo();
         BeanUtils.copyProperties(massagistInfoDTO, massagistInfo);
@@ -74,18 +73,16 @@ public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, M
         //保存或更新实体对象
         log.info("新增技师信息：{}", massagistInfo);
         massagistInfoMapper.insert(massagistInfo);
-
-        return Result.success("技师新增成功");
     }
 
     /**
      * 修改技师信息
      * @param massagistInfoDTO
      */
-    public Result update(MassagistInfoDTO massagistInfoDTO) throws Exception {
+    public void update(MassagistInfoDTO massagistInfoDTO) throws Exception {
         //id不能为空
         if (massagistInfoDTO.getId() == null) {
-            return Result.faild("技师id不能为空");
+            return;
         }
 
         //将DTO对象转换为实体对象
@@ -105,7 +102,50 @@ public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, M
 
         //修改技师信息
         massagistInfoMapper.update(massagistInfo);
+    }
 
-        return Result.success("修改技师信息成功");
+    /**
+     * 分页查询
+     * @param page
+     * @param pageSize
+     * @return
+    @Override
+    public PageResult pageQuery(Integer page, Integer pageSize) {
+        //分页开始
+        PageHelper.startPage(page,pageSize);
+
+        //分页查询
+        List<MassagistInfo> massagistInfos = massagistInfoMapper.selectList(null);
+
+        return (PageResult) PageResult.success(massagistInfos);
+
+    }*/
+
+    /**
+     * 根据id查询技师
+     * @param id
+     * @return
+     */
+    @Override
+    public MassagistInfo getById(Long id) {
+        MassagistInfo massagistInfo = this.getById(id);
+        return massagistInfo;
+    }
+
+    /**
+     * 根据id删除技师
+     * @param id
+     */
+    @Override
+    public void deleteById(Long id) {
+        //逻辑删除
+        MassagistInfo massagistInfo = new MassagistInfo();
+        massagistInfo.setId(id);
+        massagistInfo.setIsDeleted(true);
+
+        //修改更新时间,更新者
+        massagistInfo.setUpdateTime(LocalDateTime.now());
+        massagistInfo.setUpdateUser("bogeplus");
+        this.update(massagistInfo);
     }
 }

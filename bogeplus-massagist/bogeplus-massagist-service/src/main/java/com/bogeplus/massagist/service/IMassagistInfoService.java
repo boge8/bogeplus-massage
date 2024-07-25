@@ -1,9 +1,8 @@
 package com.bogeplus.massagist.service;
 
-import com.bogeplus.common.util.Result;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.bogeplus.massagist.dto.MassagistInfoDTO;
 import com.bogeplus.massagist.entity.MassagistInfo;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
@@ -19,12 +18,33 @@ public interface IMassagistInfoService extends IService<MassagistInfo> {
      * 新增技师
      * @param massagistInfoDTO
      */
-    Result save(MassagistInfoDTO massagistInfoDTO);
+    void save(MassagistInfoDTO massagistInfoDTO);
 
     /**
      * 更新技师坐标
      * @param massagistInfoDTO
      * @return
      */
-    Result update(MassagistInfoDTO massagistInfoDTO) throws Exception;
+    void update(MassagistInfoDTO massagistInfoDTO) throws Exception;
+
+    /**
+     * 分页查询
+     * @param page
+     * @param pageSize
+     * @return
+     */
+   /* PageResult pageQuery(Integer page, Integer pageSize);*/
+
+    /**
+     * 根据id查询
+     * @param id
+     * @return
+     */
+    MassagistInfo getById(Long id);
+
+    /**
+     * 根据id删除
+     * @param id
+     */
+    void deleteById(Long id);
 }

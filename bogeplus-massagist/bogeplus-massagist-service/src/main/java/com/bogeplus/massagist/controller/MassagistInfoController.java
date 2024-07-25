@@ -1,16 +1,15 @@
 package com.bogeplus.massagist.controller;
 
-import com.bogeplus.common.util.PageResult;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massagist.dto.MassagistInfoDTO;
 import com.bogeplus.massagist.entity.MassagistInfo;
 import com.bogeplus.massagist.service.IMassagistInfoService;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -35,7 +34,8 @@ public class MassagistInfoController {
     @ApiModelProperty(value = "新增技师")
     @PostMapping("/save")
     public Result saveMassagist(@RequestBody MassagistInfoDTO massagistInfoDTO){
-        return massagistInfoService.save(massagistInfoDTO);
+        massagistInfoService.save(massagistInfoDTO);
+        return Result.success();
     }
 
     /**
@@ -47,8 +47,41 @@ public class MassagistInfoController {
     @ApiModelProperty(value = "修改技师")
     @PostMapping("/update")
     public Result update(@RequestBody MassagistInfoDTO massagistInfoDTO) throws Exception {
-        return massagistInfoService.update(massagistInfoDTO);
+        massagistInfoService.update(massagistInfoDTO);
+        return Result.success();
     }
 
+    /**
+     * 分页查询技师
+     *
+     * @return
+     */
+    /*@ApiModelProperty(value = "分页查询技师")
+    @GetMapping("/page")
+    public Result<PageResult> page(@RequestParam Integer page, @RequestParam Integer pageSize) {
+        PageResult pageResult = massagistInfoService.pageQuery(page,pageSize);
+        return Result.success(pageResult);
+    }*/
 
+    /**
+     * 根据id查询技师
+     * @param id
+     */
+    @ApiModelProperty(value = "根据id查询技师")
+    @PostMapping("/getById")
+    public Result<MassagistInfo> getById(Long id) {
+        MassagistInfo massagistInfo = massagistInfoService.getById(id);
+        return Result.success(massagistInfo);
+    }
+
+    /**
+     * 根据id删除技师
+     * @param id
+     */
+    @ApiModelProperty(value = "根据id删除技师")
+    @PostMapping("/removeById")
+    public Result removeById(Long id) {
+        massagistInfoService.deleteById(id);
+        return Result.success();
+    }
 }
