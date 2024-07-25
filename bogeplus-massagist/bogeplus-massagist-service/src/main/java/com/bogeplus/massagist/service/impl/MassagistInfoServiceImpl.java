@@ -33,8 +33,11 @@ public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, M
     @Transactional
     public void addProfilePicture(Integer id, String profilePicture) {
         MassagistInfo massagistInfo = getById(id);
-        if (massagistInfo != null && massagistInfo.getProfilePicture() != null) {
-            throw new BizException("技师头像已存在，无法新增");
+        if (massagistInfo == null){
+            throw new BizException("技师信息不存在，无法新增头像");
+        }
+        if (massagistInfo.getProfilePicture() != null){
+            throw new BizException("技师头像已经存在，无法新增");
         }
         massagistInfo.setProfilePicture(profilePicture);
         updateById(massagistInfo);
