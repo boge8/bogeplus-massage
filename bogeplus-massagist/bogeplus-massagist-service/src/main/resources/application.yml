@@ -6,7 +6,6 @@ spring:
     time-zone: GMT+8
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
-
   application:
     name: bogeplus-massagist
   cloud:
@@ -16,10 +15,9 @@ spring:
   # mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.3.230.36:3306/massage_pay?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://119.3.230.36:3306/massage_massagist?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: rw_user
-    password: 123123123
-
+    password: Qq123123
   # redis
   redis:
     host: 119.3.230.36
@@ -33,21 +31,19 @@ spring:
         max-wait: -1ms
     timeout: 3000ms
 
+## 滑块验证码配置， 详细请看 cloud.tianai.captcha.autoconfiguration.ImageCaptchaProperties 类
+#captcha:
+#  expire:
+#    default: 100000
+#    # 文字点选验证码 过期时间设置大一点
+#    WORD_IMAGE_CLICK: 60000
+#  secondary:
+#    enabled: false
+#  # 初始化默认模板文件
+#  init-default-resource: true
+#  local-cache-enabled: true
+#  local-cache-size: 20
 
-# mybatisPlus
-# 稍后将mapper的 debug日志放在这里
-# 滑块验证码配置， 详细请看 cloud.tianai.captcha.autoconfiguration.ImageCaptchaProperties 类
-captcha:
-  expire:
-    default: 100000
-    # 文字点选验证码 过期时间设置大一点
-    WORD_IMAGE_CLICK: 60000
-  secondary:
-    enabled: false
-  # 初始化默认模板文件
-  init-default-resource: true
-  local-cache-enabled: true
-  local-cache-size: 20
 # 配置openfeign 调用超时时间
 feign:
   client:
@@ -56,6 +52,7 @@ feign:
         connectTimeout: 10000
         readTimeout: 10000
 
+# mybatisPlus
 mybatis-plus:
   global-config:
     db-config:
@@ -64,6 +61,8 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# mapper的debug日志
 logging:
   level:
     com.bogeplus.pay.mapper: debug

@@ -65,7 +65,7 @@ public class MassagistInfoDTO implements Serializable {
     private Boolean realNameVerified;
 
     @ApiModelProperty("经纬度")
-    private String longtitudeLatitude;
+    private String Coordinates;
 
     @ApiModelProperty("接单地址")
     private String receiveAddress;
@@ -75,18 +75,6 @@ public class MassagistInfoDTO implements Serializable {
 
     @ApiModelProperty("可预约时间段")
     private String availableTimeSlots;
-
-    @ApiModelProperty("创建时间")
-    private LocalDateTime createTime;
-
-    @ApiModelProperty("修改时间")
-    private LocalDateTime updateTime;
-
-    @ApiModelProperty("创建者")
-    private String createUser;
-
-    @ApiModelProperty("更新者")
-    private String updateUser;
 
     @ApiModelProperty("逻辑删除 0未删除：1已删除")
     private Boolean isDeleted;
