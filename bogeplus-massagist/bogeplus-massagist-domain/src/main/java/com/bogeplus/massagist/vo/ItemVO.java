@@ -1,5 +1,7 @@
 package com.bogeplus.massagist.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(description = "项目列表")
 public class ItemVO {
-    //id
+
+    @ApiModelProperty(value = "主键id")
     private Long id;
-    //项目名称
+
+    @ApiModelProperty(value = "项目名称")
     private String name;
-    //项目图片
+
+    @ApiModelProperty(value = "项目图片")
     private String img;
 }

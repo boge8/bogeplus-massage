@@ -46,4 +46,10 @@ public interface MassagistInfoItemMapper extends BaseMapper<MassagistInfoItem> {
 
     //取消已分配技师
     void unassignMassagists(@Param("dtos") List<CancelAssignmentDTO> dtos);
+
+    //检查分配的项目
+    List<AssignmentDTO> checkItems(@Param("dtos") List<AssignmentDTO> dtos);
+
+    //检查分配的技师
+    List<AssignmentDTO> checkMassagists(@Param("dtos") List<AssignmentDTO> dtos);
 }

@@ -1,5 +1,7 @@
 package com.bogeplus.massagist.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(description = "技师列表")
 public class MassagistVO {
-    //id
+
+    @ApiModelProperty(value = "主键id")
     private Long id;
-    //姓名
+
+    @ApiModelProperty(value = "技师名称")
     private String name;
-    //头像
+
+    @ApiModelProperty(value = "技师头像")
     private String headImg;
 }

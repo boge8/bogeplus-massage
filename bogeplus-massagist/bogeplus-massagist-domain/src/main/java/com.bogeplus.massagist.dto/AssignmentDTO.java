@@ -1,5 +1,7 @@
 package com.bogeplus.massagist.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ApiModel(description = "分配参数")
 public class AssignmentDTO {
-    /* 关系id */
+
+    @ApiModelProperty(value = "主键id", required = true)
     private Long id;
-    /* 对象id */
+
+    @ApiModelProperty(value = "传入对象id", required = true)
     private Long objId;
-    /* 操作对象id集合 */
+
+    @ApiModelProperty(value = "分配对象id", required = true)
     private Long obj2Id;
 }
