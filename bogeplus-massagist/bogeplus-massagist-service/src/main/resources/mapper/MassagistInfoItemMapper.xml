@@ -2,4 +2,150 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bogeplus.massagist.mapper.MassagistInfoItemMapper">
 
+    <select id="getAssignedMassagists" resultType="com.bogeplus.massagist.vo.MassagistVO">
+        select a.id, b.name, b.profile_picture
+        from massage_massagist_info_item a
+                 left join massage_massagist_info b
+                           on a.masseur_id = b.id
+        where b.real_name_verified = 1
+          and b.massagist_verified = 1
+          and a.is_deleted = 0
+          and b.is_deleted = 0
+          and a.item_id = #{itemId}
+    </select>
+
+    <select id="getUnassignedMassagists" resultType="com.bogeplus.massagist.vo.MassagistVO">
+        select a.id, a.name, a.profile_picture
+        from massage_massagist_info a
+        where not exists(select 1 from massage_massagist_info_item b where a.id = b.masseur_id and b.item_id = #{itemId}  and a.is_deleted = 0)
+          and a.real_name_verified = 1
+          and a.massagist_verified = 1
+          and a.is_deleted = 0
+    </select>
+
+    <select id="getAssignedItems" resultType="com.bogeplus.massagist.vo.ItemVO">
+        select a.id, b.name, b.image
+        from massage_massagist_info_item a
+                 left join massage_massagist_item b
+                           on a.masseur_id = b.id
+        where a.is_deleted = 0
+          and b.is_deleted = 0
+          and a.masseur_id = #{massagistId}
+    </select>
+
+    <select id="getUnassignedItems" resultType="com.bogeplus.massagist.vo.ItemVO">
+        select a.id, a.name, a.image
+        from massage_massagist_item a
+        where not exists(select 1 from massage_massagist_info_item b where a.id = b.item_id and b.masseur_id = #{massagistId} and a.is_deleted = 0)
+        and a.is_deleted = 0
+    </select>
+
+<!--    <insert id="doAssign" parameterType="com.bogeplus.massagist.dto.AssignmentDTO" useGeneratedKeys="false">-->
+<!--        insert into massage_massagist_info_item-->
+<!--            (id,masseur_id, item_id)-->
+<!--        values-->
+<!--            <choose>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).MASSAGIST">-->
+<!--                    <foreach collection="dtos" item="dto" separator=",">-->
+<!--                        (#{dto.id}, #{dto.objId}, #{dto.obj2Id})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).ITEM">-->
+<!--                    <foreach collection="dtos" item="dto" separator=",">-->
+<!--                        (#{dto.id}, #{dto.obj2Id}, #{dto.objId})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--            </choose>-->
+<!--    </insert>-->
+
+<!--    <delete id="doUnassign" parameterType="com.bogeplus.massagist.dto.CancelAssignmentDTO">-->
+<!--        delete-->
+<!--        from massage_massagist_info_item-->
+<!--        where-->
+<!--            <choose>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).MASSAGIST">-->
+<!--                    <foreach collection="dtos" item="dto" separator="or">-->
+<!--                        (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--                <when test="type == T(com.bogeplus.common.constant.massagist.AssignmentConstant).ITEM">-->
+<!--                    <foreach collection="dtos" item="dto" separator="or">-->
+<!--                        (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--            </choose>-->
+<!--    </delete>-->
+
+    <insert id="assignMassagists" useGeneratedKeys="false">
+        insert into massage_massagist_info_item
+            (id, masseur_id, item_id)
+        values
+        <foreach collection="dtos" item="dto" separator=",">
+            (#{dto.id},#{dto.obj2Id}, #{dto.objId})
+        </foreach>
+    </insert>
+
+    <insert id="assignItems" useGeneratedKeys="false">
+        insert into massage_massagist_info_item
+            (id, masseur_id, item_id)
+        values
+        <foreach collection="dtos" item="dto" separator=",">
+            (#{dto.id},#{dto.objId}, #{dto.obj2Id})
+        </foreach>
+    </insert>
+
+    <delete id="unassignMassagists">
+        delete
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})
+        </foreach>
+    </delete>
+
+    <delete id="unassignItems">
+        delete
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})
+        </foreach>
+    </delete>
+
+    <select id="checkItems" resultType="com.bogeplus.massagist.vo.CheckItemsVO">
+        select id
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})
+        </foreach>
+    </select>
+
+    <select id="checkItemsCancel" resultType="com.bogeplus.massagist.vo.CheckItemsVO">
+        select id
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})
+        </foreach>
+    </select>
+
+    <select id="checkMassagists" resultType="com.bogeplus.massagist.vo.CheckMassagistsVO">
+        select id
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})
+        </foreach>
+    </select>
+
+    <select id="checkMassagistsCancel" resultType="com.bogeplus.massagist.vo.CheckMassagistsVO">
+        select id
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})
+        </foreach>
+    </select>
+
 </mapper>
