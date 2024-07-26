@@ -7,10 +7,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 @Component
 public class RedisUtil implements ApplicationContextAware {
@@ -47,6 +45,36 @@ public class RedisUtil implements ApplicationContextAware {
             } else {
                 set(key, value);
             }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean zadd(String key, double score, Serializable value) {
+        try {
+            redisTemplate.opsForZSet().add(key, value, score);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static Set<Serializable> zrange(String key, long start, long end) {
+        try {
+            return redisTemplate.opsForZSet().range(key, start, end);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //从zset中删除指定元素
+    public static boolean zrem(String key, Serializable value) {
+        try {
+            redisTemplate.opsForZSet().remove(key, value);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
