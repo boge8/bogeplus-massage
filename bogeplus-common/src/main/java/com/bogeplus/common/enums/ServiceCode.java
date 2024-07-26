@@ -32,11 +32,16 @@ public enum ServiceCode {
     IMAGE_CODE_ERROR( "图形验证码错误",100402 ),
     SMS_CODE_ERROR( "短信验证码错误",100502 ),
     SMS_CODE_NOT_EXIST( "短信验证码不存在",100503 ),
-     SMS_SEND_OVERDUE  ("短信发送过于频繁，请明天再试！",100502 ),
-     SMS_SEND_REPEAT  ("短信5分钟内有效，1分钟内不可重复发送！",100503 ),
-     IMAGE_CODE_NOT_EXIST ("图形验证码不存在",100403 ),
+    SMS_SEND_OVERDUE  ("短信发送过于频繁，请明天再试！",100502 ),
+    SMS_SEND_REPEAT  ("短信5分钟内有效，1分钟内不可重复发送！",100503 ),
+    IMAGE_CODE_NOT_EXIST ("图形验证码不存在",100403 ),
 
-    SMS_SEND_FAILD ("短信发送失败！",200501 ) ;
+    SMS_SEND_FAILD ("短信发送失败！",200501 ) ,
+
+    //技师相关状态码
+    MASSAGIST_NOT_EXIST("技师不存在",300401),
+    MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST("技师头像已存在",300402);
+
     private String msg;
     private Integer code;
 

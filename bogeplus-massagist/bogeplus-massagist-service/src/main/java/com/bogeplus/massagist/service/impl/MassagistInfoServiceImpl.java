@@ -1,10 +1,12 @@
 package com.bogeplus.massagist.service.impl;
 
+import com.bogeplus.common.enums.ServiceCode;
 import com.bogeplus.common.exception.BizException;
 import com.bogeplus.massagist.entity.MassagistInfo;
 import com.bogeplus.massagist.mapper.MassagistInfoMapper;
 import com.bogeplus.massagist.service.IMassagistInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bogeplus.massagist.dto.MassagistProfilePicDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,28 +20,41 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, MassagistInfo> implements IMassagistInfoService {
+
     @Override
     @Transactional
-    public void updateProfilePicture(Integer id, String profilePicture) {
+    public MassagistProfilePicDTO updateProfilePicture(Long id, String profilePicture) {
         MassagistInfo massagistInfo = getById(id);
         if (massagistInfo == null) {
-            throw new BizException("技师信息不存在，无法更新头像");
+            throw new BizException(ServiceCode.MASSAGIST_NOT_EXIST.getCode(),ServiceCode.MASSAGIST_NOT_EXIST.getMsg());
         }
         massagistInfo.setProfilePicture(profilePicture);
         updateById(massagistInfo);
+
+        ////创建并返回DTO对象
+        MassagistProfilePicDTO massagistProfilePicDTO = new MassagistProfilePicDTO();
+        massagistProfilePicDTO.setId(massagistInfo.getId());
+        massagistProfilePicDTO.setProfilePicture(massagistInfo.getProfilePicture());
+        return massagistProfilePicDTO;
     }
 
     @Override
     @Transactional
-    public void addProfilePicture(Integer id, String profilePicture) {
+    public MassagistProfilePicDTO addProfilePicture(Long id, String profilePicture) {
         MassagistInfo massagistInfo = getById(id);
         if (massagistInfo == null){
-            throw new BizException("技师信息不存在，无法新增头像");
+            throw new BizException(ServiceCode.MASSAGIST_NOT_EXIST.getCode(),ServiceCode.MASSAGIST_NOT_EXIST.getMsg());
         }
         if (massagistInfo.getProfilePicture() != null){
-            throw new BizException("技师头像已经存在，无法新增");
+            throw new BizException(ServiceCode.MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST.getCode(), ServiceCode.MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST.getMsg());
         }
         massagistInfo.setProfilePicture(profilePicture);
         updateById(massagistInfo);
+
+        // 创建并返回DTO对象
+        MassagistProfilePicDTO massagistProfilePicDTO = new MassagistProfilePicDTO();
+        massagistProfilePicDTO.setId(massagistInfo.getId());
+        massagistProfilePicDTO.setProfilePicture(massagistInfo.getProfilePicture());
+        return massagistProfilePicDTO;
     }
 }

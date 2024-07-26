@@ -7,35 +7,42 @@ import com.aliyuncs.auth.sts.AssumeRoleResponse;
 import com.aliyuncs.exceptions.ClientException;
 import cn.hutool.json.JSONUtil;
 import com.aliyuncs.profile.DefaultProfile;
-import org.springframework.beans.factory.annotation.Value;
+import com.bogeplus.massagist.config.AliyunOssConfig;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 工具类：提供获取阿里云 OSS 临时凭证的功能
+ */
 @Component
-public class OssUtil {
+public class AliyunOssUtil implements InitializingBean {
 
-    @Value("${aliyun.oss.endpoint}")
-    private String endpoint;
+    private static String endpoint;
+    private static String accessKeyId;
+    private static String accessKeySecret;
+    private static String bucketName;
+    private static String roleArn;
 
-    @Value("${aliyun.oss.accessKeyId}")
-    private String accessKeyId;
+    @Autowired
+    private AliyunOssConfig aliyunOssConfig;
 
-    @Value("${aliyun.oss.accessKeySecret}")
-    private String accessKeySecret;
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        //从配置类中获取并初始化静态字段的值
+        endpoint = aliyunOssConfig.getEndpoint();
+        accessKeyId = aliyunOssConfig.getAccessKeyId();
+        accessKeySecret = aliyunOssConfig.getAccessKeySecret();
+        bucketName = aliyunOssConfig.getBucketName();
+        roleArn = aliyunOssConfig.getRoleArn();
+    }
 
-    @Value("${aliyun.oss.bucketName}")
-    private String bucketName;
-
-    @Value("${aliyun.oss.role-arn}")
-    private String roleArn;
-
-
-    public String getOssToken() throws ClientException {
+    public static Map<String, String> getOssToken() throws ClientException {
         // 创建STS客户端
-        DefaultProfile profile = DefaultProfile.getProfile(
-                "cn-chengdu", accessKeyId, accessKeySecret);
+        DefaultProfile profile = DefaultProfile.getProfile("cn-chengdu", accessKeyId, accessKeySecret);
         IAcsClient client = new DefaultAcsClient(profile);
 
         // 构造请求
@@ -55,7 +62,6 @@ public class OssUtil {
         result.put("bucketName", bucketName);
         result.put("endpoint", endpoint);
 
-        // 使用 Hutool 的 JSONUtil 将 Map 转换为 JSON 字符串
-        return JSONUtil.toJsonStr(result);
+        return result;
     }
 }

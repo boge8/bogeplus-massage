@@ -2,6 +2,7 @@ package com.bogeplus.massagist.service;
 
 import com.bogeplus.massagist.entity.MassagistInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bogeplus.massagist.dto.MassagistProfilePicDTO;
 
 /**
  * <p>
@@ -13,7 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IMassagistInfoService extends IService<MassagistInfo> {
 
-    void updateProfilePicture(Integer id, String profilePicture);
-    void addProfilePicture(Integer id, String profilePicture);
+    MassagistProfilePicDTO updateProfilePicture(Long id, String profilePicture);
+    MassagistProfilePicDTO addProfilePicture(Long id, String profilePicture);
 
 }

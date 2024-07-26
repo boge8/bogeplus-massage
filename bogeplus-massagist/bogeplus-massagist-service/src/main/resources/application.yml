@@ -16,9 +16,9 @@ spring:
   # mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://119.3.230.36:3306/massage_pay?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://119.3.230.36:3306/massage_massagist?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: rw_user
-    password: 123123123
+    password: Qq123123
 
   # redis
   redis:
@@ -72,7 +72,7 @@ logging:
 aliyun:
   oss:
     endpoint: "oss-cn-chengdu.aliyuncs.com"
-    accessKeyId: "your-access-key-id"
-    accessKeySecret: "your-access-key-secret"
+    accessKeyId: "id"
+    accessKeySecret: "secret"
     bucketName: "ajunoss"
     role-arn: "acs:ram::1015866010693963:role/ajun"
