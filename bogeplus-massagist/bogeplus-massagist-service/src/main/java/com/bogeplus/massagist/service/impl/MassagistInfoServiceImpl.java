@@ -125,7 +125,7 @@ public class MassagistInfoServiceImpl extends ServiceImpl<MassagistInfoMapper, M
         if (massagistInfo.getReceiveAddress() != null) {
             //通过接单地址获取技师经纬度坐标
             String coordinates = gaodeApiService.getCoordinates(massagistInfo.getReceiveAddress());
-            massagistInfo.setCoordinates(coordinates);
+            massagistInfo.setLongtitudeLatitude(coordinates);
         }
 
         //修改更新时间,更新者

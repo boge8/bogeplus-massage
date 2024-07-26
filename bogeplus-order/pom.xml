@@ -10,15 +10,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-
     <artifactId>bogeplus-order</artifactId>
     <modules>
         <module>bogeplus-order-api</module>
         <module>bogeplus-order-domain</module>
         <module>bogeplus-order-service</module>
     </modules>
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 </project>

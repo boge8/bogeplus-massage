@@ -47,6 +47,6 @@ public interface IMassagistInfoService extends IService<MassagistInfo> {
      * @param id
      * @return
      */
-    MassagistInfoVO getById(Long id);
+    MassagistInfoVO selectById(Long id);
 
 }

@@ -51,7 +51,7 @@ public class MassagistInfoController {
     @ApiOperation(value = "根据id查询技师")
     @GetMapping("/getById")
     public Result<MassagistInfoVO> getById(Long id) {
-        MassagistInfoVO massagistInfoVO = massagistInfoService.getById(id);
+        MassagistInfoVO massagistInfoVO = massagistInfoService.selectById(id);
         return Result.success(massagistInfoVO);
     }
 
