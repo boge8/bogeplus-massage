@@ -82,6 +82,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
             userInfo.setUpdateTime(new Date());
             userInfo.setIsDeleted(false);
             userInfo.setHeadImg("http://xxxx.com/xxx.jpg");
+            userInfoMapper.insert(userInfo);
 
         }
         //5、封装访问令牌、刷新令牌
