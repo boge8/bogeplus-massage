@@ -1,7 +1,5 @@
-package com.bogeplus.massagist.entity;
+package com.bogeplus.massagist.vo;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -23,9 +21,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("massage_massagist_info")
-@ApiModel(value = "技师信息", description = "技师表")
-public class MassagistInfo implements Serializable {
+@ApiModel(value = "技师信息VO", description = "技师表")
+public class MassagistInfoVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -91,9 +88,4 @@ public class MassagistInfo implements Serializable {
 
     @ApiModelProperty("更新者")
     private String updateUser;
-
-    @ApiModelProperty("逻辑删除 0未删除：1已删除")
-    @TableLogic
-    private Boolean isDeleted;
-
 }

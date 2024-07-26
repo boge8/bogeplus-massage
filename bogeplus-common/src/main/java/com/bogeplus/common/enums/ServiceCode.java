@@ -1,5 +1,6 @@
 package com.bogeplus.common.enums;
 
+import lombok.Data;
 import lombok.Getter;
 
 @Getter
@@ -47,7 +48,7 @@ public enum ServiceCode {
     //技师相关状态码
     MASSAGIST_NOT_EXIST("技师不存在",300401),
     MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST("技师头像已存在",300402);
-
+ ;
     private String msg;
     private Integer code;
 
