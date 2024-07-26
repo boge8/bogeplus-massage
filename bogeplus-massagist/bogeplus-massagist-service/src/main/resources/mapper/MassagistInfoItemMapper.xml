@@ -113,18 +113,39 @@
     </delete>
 
     <select id="checkItems" resultType="com.bogeplus.massagist.vo.CheckItemsVO">
-        select name
+        select id
         from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})
+        </foreach>
+    </select>
+
+    <select id="checkItemsCancel" resultType="com.bogeplus.massagist.vo.CheckItemsVO">
+        select id
+        from massage_massagist_info_item
+        where
         <foreach collection="dtos" item="dto" separator="or">
             (masseur_id = #{dto.objId} and item_id = #{dto.obj2Id})
         </foreach>
     </select>
 
     <select id="checkMassagists" resultType="com.bogeplus.massagist.vo.CheckMassagistsVO">
-        select name
+        select id
         from massage_massagist_info_item
+        where
         <foreach collection="dtos" item="dto" separator="or">
             (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})
         </foreach>
     </select>
+
+    <select id="checkMassagistsCancel" resultType="com.bogeplus.massagist.vo.CheckMassagistsVO">
+        select id
+        from massage_massagist_info_item
+        where
+        <foreach collection="dtos" item="dto" separator="or">
+            (masseur_id = #{dto.obj2Id} and item_id = #{dto.objId})
+        </foreach>
+    </select>
+
 </mapper>

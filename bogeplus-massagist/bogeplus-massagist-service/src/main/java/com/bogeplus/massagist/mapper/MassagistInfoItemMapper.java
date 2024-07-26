@@ -5,6 +5,8 @@ import com.bogeplus.massagist.dto.AssignmentDTO;
 import com.bogeplus.massagist.dto.CancelAssignmentDTO;
 import com.bogeplus.massagist.entity.MassagistInfoItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.bogeplus.massagist.vo.CheckItemsVO;
+import com.bogeplus.massagist.vo.CheckMassagistsVO;
 import com.bogeplus.massagist.vo.ItemVO;
 import com.bogeplus.massagist.vo.MassagistVO;
 import org.apache.ibatis.annotations.Param;
@@ -48,8 +50,15 @@ public interface MassagistInfoItemMapper extends BaseMapper<MassagistInfoItem> {
     void unassignMassagists(@Param("dtos") List<CancelAssignmentDTO> dtos);
 
     //检查分配的项目
-    List<AssignmentDTO> checkItems(@Param("dtos") List<AssignmentDTO> dtos);
+    List<CheckItemsVO> checkItems(@Param("dtos") List<AssignmentDTO> dtos);
+
+    //检查取消分配的项目
+    List<CheckItemsVO> checkItemsCancel(@Param("dtos") List<CancelAssignmentDTO> dtos);
 
     //检查分配的技师
-    List<AssignmentDTO> checkMassagists(@Param("dtos") List<AssignmentDTO> dtos);
+    List<CheckMassagistsVO> checkMassagists(@Param("dtos") List<AssignmentDTO> dtos);
+
+    //检查取消分配的项目
+    List<CheckMassagistsVO> checkMassagistsCancel(@Param("dtos") List<CancelAssignmentDTO> dtos);
+
 }

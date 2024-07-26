@@ -72,59 +72,54 @@ public class MassagistInfoItemServiceImpl implements MassagistInfoItemService {
     @Transactional
     @Override
     public Result changeAssignment(OperationRequest request) {
-        ReentrantLock lock = new ReentrantLock();
-        lock.lock();
-        try {
-            int operation = request.getOperation();     //操作类型 1:分配 2:取消分配
-            int type = request.getType();               //传入对象类型 1:技师 2:项目 ps：传入对象则查询的是技师，反之亦然
-            long objId = request.getObjId();            //对象id
-            List<Long> objIdList = request.getObjIdList();  //操作对象id列表
+        int operation = request.getOperation();     //操作类型 1:分配 2:取消分配
+        int type = request.getType();               //传入对象类型 1:技师 2:项目 ps：传入对象则查询的是技师，反之亦然
+        long objId = request.getObjId();            //对象id
+        List<Long> objIdList = request.getObjIdList();  //操作对象id列表
 
-            if (operation == AssignmentConstant.ASSIGN) {
-                List<AssignmentDTO> dtos = objIdList.stream()
-                        .map(id -> new AssignmentDTO(IdUtil.getSnowflake(1, 1).nextId(), objId, id))
-                        .collect(Collectors.toList());
+        if (operation == AssignmentConstant.ASSIGN) {
+            List<AssignmentDTO> dtos = objIdList.stream()
+                    .map(id -> new AssignmentDTO(IdUtil.getSnowflake(1, 1).nextId(), objId, id))
+                    .collect(Collectors.toList());
 
-                if (type == AssignmentConstant.MASSAGIST) {
-                    if (isExisted(type,dtos)) {
-                        return Result.faild("请刷新数据", 500);
-                    }
-                    massagistInfoItemMapper.assignItems(dtos);
-                } else if (type == AssignmentConstant.ITEM) {
-                    if (isExisted(type,dtos)) {
-                        return Result.faild("请刷新数据", 500);
-                    }
-                    massagistInfoItemMapper.assignMassagists(dtos);
-                } else {
-                    return Result.faild("传入type类型错误", 500);
+            if (type == AssignmentConstant.MASSAGIST) {
+                if (isExisted(type,dtos)) {
+                    return Result.faild("请刷新数据", 500);
                 }
-            } else if (operation == AssignmentConstant.UNASSIGN) {
-                List<CancelAssignmentDTO> dtos = objIdList.stream()
-                        .map(id -> new CancelAssignmentDTO(objId, id))
-                        .collect(Collectors.toList());
-
-                if (type == AssignmentConstant.MASSAGIST) {
-                    if (isDeleted(type,dtos)) {
-                        return Result.faild("请刷新数据", 500);
-                    }
-                    massagistInfoItemMapper.unassignItems(dtos);
-                } else if (type == AssignmentConstant.ITEM) {
-                    if (isDeleted(type,dtos)) {
-                        return Result.faild("请刷新数据", 500);
-                    }
-                    massagistInfoItemMapper.unassignMassagists(dtos);
-                } else {
-                    return Result.faild("传入type类型错误", 500);
+                massagistInfoItemMapper.assignItems(dtos);
+            } else if (type == AssignmentConstant.ITEM) {
+                if (isExisted(type,dtos)) {
+                    return Result.faild("请刷新数据", 500);
                 }
+                massagistInfoItemMapper.assignMassagists(dtos);
             } else {
-                return Result.faild("传入operation类型错误", 500);
+                return Result.faild("传入type类型错误", 500);
             }
+        } else if (operation == AssignmentConstant.UNASSIGN) {
+            List<CancelAssignmentDTO> dtos = objIdList.stream()
+                    .map(id -> new CancelAssignmentDTO(objId, id))
+                    .collect(Collectors.toList());
 
-            return Result.success();
-        } finally {
-            lock.unlock();
+            if (type == AssignmentConstant.MASSAGIST) {
+                if (isDeleted(type,dtos)) {
+                    return Result.faild("请刷新数据", 500);
+                }
+                massagistInfoItemMapper.unassignItems(dtos);
+            } else if (type == AssignmentConstant.ITEM) {
+                if (isDeleted(type,dtos)) {
+                    return Result.faild("请刷新数据", 500);
+                }
+                massagistInfoItemMapper.unassignMassagists(dtos);
+            } else {
+                return Result.faild("传入type类型错误", 500);
+            }
+        } else {
+            return Result.faild("传入operation类型错误", 500);
         }
+
+        return Result.success();
     }
+
 
     private boolean isExisted(int type, List<AssignmentDTO> dtos) {
         if (type == AssignmentConstant.MASSAGIST) {
@@ -136,9 +131,9 @@ public class MassagistInfoItemServiceImpl implements MassagistInfoItemService {
 
     private boolean isDeleted(int type, List<CancelAssignmentDTO> dtos) {
         if (type == AssignmentConstant.MASSAGIST) {
-            return massagistInfoItemMapper.checkItems(dtos).size() == 0;
+            return massagistInfoItemMapper.checkItemsCancel(dtos).size() == 0;
         } else {
-            return massagistInfoItemMapper.checkMassagists(dtos).size() == 0;
+            return massagistInfoItemMapper.checkMassagistsCancel(dtos).size() == 0;
         }
     }
 }
