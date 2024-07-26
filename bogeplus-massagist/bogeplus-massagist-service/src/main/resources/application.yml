@@ -67,3 +67,12 @@ mybatis-plus:
 logging:
   level:
     com.bogeplus.massagist.mapper: debug
+
+# 阿里云oss配置
+aliyun:
+  oss:
+    endpoint: "oss-cn-chengdu.aliyuncs.com"
+    accessKeyId: "id"
+    accessKeySecret: "secret"
+    bucketName: "ajunoss"
+    role-arn: "acs:ram::1015866010693963:role/ajun"
