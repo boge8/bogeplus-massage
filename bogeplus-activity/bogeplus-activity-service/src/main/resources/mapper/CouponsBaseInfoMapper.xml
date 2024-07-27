@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bogeplus.activity.mapper.CouponsBaseInfoMapper">
+
+    <!--返回优惠券表中的过期时间-->
+    <select id="selectByExpiryDateAndNum" resultType="com.bogeplus.activity.vo.CouponsExpiryDateNumber">
+        select expiry_date,number from massage_coupons_base_info
+        where id = #{id}
+    </select>
+</mapper>
