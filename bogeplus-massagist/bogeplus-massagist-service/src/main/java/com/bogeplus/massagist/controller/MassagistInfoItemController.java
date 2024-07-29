@@ -4,10 +4,10 @@ import com.bogeplus.common.util.Result;
 import com.bogeplus.massagist.controller.requestBody.OperationRequest;
 import com.bogeplus.massagist.service.MassagistInfoItemService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +28,7 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 @Api(tags = "技师项目分配",value = "技师项目分配相关接口" )
 @RequestMapping("/massagistInfoItem")
+@Validated
 public class MassagistInfoItemController {
 
     @Autowired
@@ -38,7 +39,7 @@ public class MassagistInfoItemController {
     public Result<?> getAssignedList(@Max(value = 2, message = "传入类型参数错误")
                                      @Min(value = 1, message = "传入类型参数错误")
                                      @NotNull(message = "类型不能为空")
-                                     @RequestParam int type,
+                                     @RequestParam Integer type,
                                      @NotNull(message = "对象id不能为空")
                                      @RequestParam Long objId) {
         return massagistAssociationService.getAssignedList(type, objId);
@@ -49,7 +50,7 @@ public class MassagistInfoItemController {
     public Result<?> getUnassignedList(@Max(value = 2, message = "传入类型参数错误")
                                        @Min(value = 1, message = "传入类型参数错误")
                                        @NotNull(message = "类型不能为空")
-                                       @RequestParam int type,
+                                       @RequestParam Integer type,
                                        @NotNull(message = "对象id不能为空")
                                        @RequestParam Long objId) {
         return massagistAssociationService.getUnassignedList(type, objId);

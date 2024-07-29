@@ -12,9 +12,9 @@ import com.bogeplus.massagist.entity.MassagistInfoItem;
  */
 public interface MassagistInfoItemService extends IService<MassagistInfoItem> {
 
-    Result<?> getAssignedList(int type, Long objId);
+    Result<?> getAssignedList(Integer type, Long objId);
 
-    Result<?> getUnassignedList(int type, Long objId);
+    Result<?> getUnassignedList(Integer type, Long objId);
 
     //建立分配关系
     Result addAssignment(OperationRequest request);

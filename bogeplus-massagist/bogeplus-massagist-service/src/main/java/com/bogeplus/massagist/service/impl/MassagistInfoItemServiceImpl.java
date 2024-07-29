@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.common.constant.massagist.AssignmentConstant;
 import com.bogeplus.common.enums.ServiceCode;
+import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massagist.controller.requestBody.OperationRequest;
 
@@ -35,7 +36,7 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
      * @param objId 对象id
      * @return 响应体
      */
-    public Result<?> getAssignedList(int type, Long objId) {
+    public Result<?> getAssignedList(Integer type, Long objId) {
         List<?> assignedList =
                 type == AssignmentConstant.MASSAGIST
                 ? massagistInfoItemMapper.getAssignedItems(objId)
@@ -49,7 +50,7 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
      * @param objId 对象id
      * @return 响应体
      */
-    public Result<?> getUnassignedList(int type,Long objId){
+    public Result<?> getUnassignedList(Integer type,Long objId){
         List<?> unAssignedList =
                 type == AssignmentConstant.MASSAGIST
                 ? massagistInfoItemMapper.getUnassignedItems(objId)
@@ -63,13 +64,13 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
      * @return 响应体
      */
     public Result addAssignment(OperationRequest request) {
-        int type = request.getType();
+        Integer type = request.getType();
         Long objId = request.getObjId();
         List<Long> objIdList = request.getObjIdList();
         List<MassagistInfoItem> assignments;
 
         if (!getExisted(type,objId,objIdList).isEmpty()) {
-            return Result.faild(ServiceCode.MASSAGIST_EXPIRED_DATA);
+            throw new BizException(ServiceCode.MASSAGIST_EXPIRED_DATA.getCode(),ServiceCode.MASSAGIST_EXPIRED_DATA.getMsg());
         }
 
         assignments = getAddition(objId,objIdList,type == AssignmentConstant.MASSAGIST);
@@ -77,7 +78,8 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
         // 批量保存新增关系
         boolean flag = saveBatch(assignments);
         if (!flag) {
-            return Result.faild(ServiceCode.FAILED);
+            log.error("新增分配关系失败");
+            return Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
         }
         return Result.success();
     }
@@ -88,13 +90,13 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
      * @return 响应体
      */
     public Result cancelAssignment(OperationRequest request){
-        int type = request.getType();
-        long objId = request.getObjId();
+        Integer type = request.getType();
+        Long objId = request.getObjId();
         List<Long> objIdList = request.getObjIdList();
         boolean flag;
 
         if (getExisted(type,objId,objIdList).isEmpty()) {
-            return Result.faild(ServiceCode.MASSAGIST_EXPIRED_DATA);
+            throw new BizException(ServiceCode.MASSAGIST_EXPIRED_DATA.getCode(),ServiceCode.MASSAGIST_EXPIRED_DATA.getMsg());
         }
 
         LambdaQueryWrapper<MassagistInfoItem> queryWrapper = new LambdaQueryWrapper<>();
@@ -106,7 +108,7 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
                     .in(MassagistInfoItem::getMasseurId, objIdList);
         }
         if (!remove(queryWrapper)){
-            return Result.faild(ServiceCode.FAILED);
+            return Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
         }
         return Result.success();
     }
@@ -135,7 +137,7 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
      * @param objIdList 操作对象id集合
      * @return 已存在项目集合
      */
-    private List<MassagistInfoItem> getExisted(int type, Long objId, List<Long> objIdList) {
+    private List<MassagistInfoItem> getExisted(Integer type, Long objId, List<Long> objIdList) {
         LambdaQueryWrapper<MassagistInfoItem> queryWrapper = new LambdaQueryWrapper<>();
         if (type == AssignmentConstant.MASSAGIST) {
             queryWrapper.eq(MassagistInfoItem::getMasseurId, objId)
