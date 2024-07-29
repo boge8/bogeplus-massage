@@ -21,5 +21,4 @@ public interface IUserAddressesService extends IService<UserAddresses> {
     boolean updateUserAddress(long addressId, UserAddressesDTO userAddressesDTO);
     List<UserAddressesVO> getUserAddress();
     boolean setUserAddressDefault(long addressId);
-    boolean setUserAddressNotDefault(long addressId);
 }

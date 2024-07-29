@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.UserUtil;
 import com.bogeplus.massage.user.dto.UserAddressesDTO;
@@ -89,12 +90,15 @@ public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, U
     @Override
     public List<UserAddressesVO> getUserAddress() {
         LambdaQueryWrapper<UserAddresses> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        if(StrUtil.isBlank(UserUtil.getId())) {
+            return null;
+        }
         lambdaQueryWrapper.eq(UserAddresses::getUserId, UserUtil.getId());
         final List<UserAddresses> list = this.list(lambdaQueryWrapper);
         List<UserAddressesVO> addressList = new ArrayList<>();
-        list.forEach(userAddresses -> {
+        list.forEach(userAddress -> {
             UserAddressesVO userAddressesVO = new UserAddressesVO();
-            BeanUtil.copyProperties(userAddresses, userAddressesVO);
+            BeanUtil.copyProperties(userAddress, userAddressesVO);
             addressList.add(userAddressesVO);
         });
 
@@ -103,18 +107,14 @@ public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, U
 
     @Override
     public boolean setUserAddressDefault(long addressId) {
-        UserAddresses userAddresses = new UserAddresses();
-        userAddresses.setId(addressId);
-        userAddresses.setIsDefault(true);
-        return this.updateById(userAddresses);
-    }
-
-    @Override
-    public boolean setUserAddressNotDefault(long addressId) {
-        UserAddresses userAddresses = new UserAddresses();
-        userAddresses.setId(addressId);
-        userAddresses.setIsDefault(false);
-        return this.updateById(userAddresses);
+        UserAddresses userAddress = new UserAddresses();
+        LambdaUpdateWrapper<UserAddresses> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.eq(UserAddresses::getIsDefault, true);
+        userAddress.setIsDefault(false);
+        this.update(userAddress, lambdaUpdateWrapper);
+        userAddress.setId(addressId);
+        userAddress.setIsDefault(true);
+        return this.updateById(userAddress);
     }
 
     // 高德地图获取地理编码
@@ -133,25 +133,21 @@ public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, U
             String responseBody = EntityUtils.toString(response.getEntity());
             ObjectMapper objectMapper = new ObjectMapper();
 
-            try {
-                // Parse JSON string
-                JsonNode rootNode = objectMapper.readTree(responseBody);
-                JsonNode geocodesNode = rootNode.path("geocodes").get(0); // Get the first geocode
+            // Parse JSON string
+            JsonNode rootNode = objectMapper.readTree(responseBody);
+            JsonNode geocodesNode = rootNode.path("geocodes").get(0); // Get the first geocode
 
-                // Retrieve formatted_address and location
-                String formattedAddress = geocodesNode.path("formatted_address").asText();
-                String location = geocodesNode.path("location").asText();
+            // Retrieve formatted_address and location
+            String formattedAddress = geocodesNode.path("formatted_address").asText();
+            String location = geocodesNode.path("location").asText();
 
-                Map<String, String> map = new HashMap<>();
-                map.put("formattedAddress", formattedAddress);
-                map.put("location", location);
-                return map;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            Map<String, String> map = new HashMap<>();
+            map.put("formattedAddress", formattedAddress);
+            map.put("location", location);
+            return map;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("userAddress 根据地址调用高德获取GEO信息失败：" + url);
         }
 
         return null;

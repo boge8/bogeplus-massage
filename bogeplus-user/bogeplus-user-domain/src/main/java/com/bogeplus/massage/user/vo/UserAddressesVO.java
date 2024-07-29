@@ -7,6 +7,9 @@ import lombok.Data;
 @Data
 @ApiModel(value = "用户地址响应对象", description = "用户地址响应对象")
 public class UserAddressesVO {
+    @ApiModelProperty("地址id")
+    private Long id;
+
     @ApiModelProperty("联系人姓名")
     private String contactName;
 
