@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 /**
  * <p>
@@ -35,7 +37,19 @@ public class MassagistInfoItemController {
 
     @PostMapping("/changeAssignment")
     @ApiOperation(value = "修改分配关系", notes = "修改分配关系描述")
-    public Result changeAssignment(@RequestBody OperationRequest request){
+    public Result changeAssignment(@Valid @RequestBody OperationRequest request){
         return massagistAssociationService.changeAssignment(request);
+    }
+
+    @PostMapping("/addAssignment")
+    @ApiOperation(value = "建立分配关系", notes = "修改分配关系描述")
+    public Result addAssignment(@Valid @RequestBody OperationRequest request){
+        return massagistAssociationService.addAssignment(request);
+    }
+
+    @PostMapping("/cancelAssignment")
+    @ApiOperation(value = "删除分配关系", notes = "修改分配关系描述")
+    public Result cancelAssignment(@Valid @RequestBody OperationRequest request){
+        return massagistAssociationService.cancelAssignment(request);
     }
 }
