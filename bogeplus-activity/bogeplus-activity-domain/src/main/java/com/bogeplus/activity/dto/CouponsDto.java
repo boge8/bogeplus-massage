@@ -8,6 +8,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -18,12 +22,19 @@ import java.time.LocalDateTime;
 public class CouponsDto {
 
     @ApiModelProperty("用户id")
+    @NotNull(message = "用户不存在")
     private Long userId;
 
     @ApiModelProperty("满减总价")
+    @DecimalMin(value = "1", inclusive = false, message = "满减总价必须大于0")
     private BigDecimal reductionTotalPrice;
 
     @ApiModelProperty("满减金额")
+    @DecimalMin(value = "1", inclusive = false, message = "满减金额必须大于0")
     private BigDecimal reductionPrice;
+
+    @ApiModelProperty("优惠券数量")
+    @Min(value = 1, message = "优惠券数量必须大于0")
+    private Integer number;
 
 }

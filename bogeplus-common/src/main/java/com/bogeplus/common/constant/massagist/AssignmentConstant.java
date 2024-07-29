@@ -13,4 +13,8 @@ public class AssignmentConstant {
     public static final int ASSIGN = 1;
     //取消分配关系操作
     public static final int UNASSIGN = 2;
+    //通过标识
+    public static final boolean PASS = true;
+    //失败标识
+    public static final boolean FAIL = false;
 }

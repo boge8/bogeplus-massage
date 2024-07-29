@@ -1,36 +1,42 @@
-package com.bogeplus.massagist.entity;
+package com.bogeplus.activity.entity;
 
-import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import com.bogeplus.common.util.UserUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * <p>
- * 技师与按摩项目项目关系表
+ * 优惠券历史记录表
  * </p>
  *
  * @author bogeplus
- * @since 2024-07-22
+ * @since 2024-07-25
  */
-@TableName("massage_massagist_info_item")
-@ApiModel(value = "MassagistInfoItem对象", description = "技师与按摩项目项目关系表")
-public class MassagistInfoItem implements Serializable {
+@TableName("message_coupons_history")
+@ApiModel(value = "MessageCouponsHistory对象", description = "优惠券历史记录表")
+public class MessageCouponsHistory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty("主键id")
+    @ApiModelProperty("历史记录ID")
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @ApiModelProperty("技师id")
-    private Long masseurId;
+    @ApiModelProperty("优惠券ID")
+    private Long couponId;
 
-    @ApiModelProperty("项目id")
-    private Long itemId;
+    @ApiModelProperty("用户ID")
+    private Long userId;
+
+    @ApiModelProperty("订单ID")
+    private Long orderId;
+
+    @ApiModelProperty("使用时间")
+    private LocalDateTime useTime;
 
     @ApiModelProperty("创建时间")
     private LocalDateTime createTime;
@@ -47,13 +53,6 @@ public class MassagistInfoItem implements Serializable {
     @ApiModelProperty("逻辑删除 0未删除：1已删除")
     private Boolean isDeleted;
 
-    public MassagistInfoItem() {
-        this.id = IdUtil.getSnowflake(1, 1).nextId();
-        this.createTime = LocalDateTime.now();
-        this.createUser = UserUtil.getAccount();
-        this.updateTime = LocalDateTime.now();
-        this.updateUser = UserUtil.getAccount();}
-
     public Long getId() {
         return id;
     }
@@ -62,20 +61,36 @@ public class MassagistInfoItem implements Serializable {
         this.id = id;
     }
 
-    public Long getMasseurId() {
-        return masseurId;
+    public Long getCouponId() {
+        return couponId;
     }
 
-    public void setMasseurId(Long masseurId) {
-        this.masseurId = masseurId;
+    public void setCouponId(Long couponId) {
+        this.couponId = couponId;
     }
 
-    public Long getItemId() {
-        return itemId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setItemId(Long itemId) {
-        this.itemId = itemId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public LocalDateTime getUseTime() {
+        return useTime;
+    }
+
+    public void setUseTime(LocalDateTime useTime) {
+        this.useTime = useTime;
     }
 
     public LocalDateTime getCreateTime() {
@@ -120,10 +135,12 @@ public class MassagistInfoItem implements Serializable {
 
     @Override
     public String toString() {
-        return "MassagistInfoItem{" +
+        return "MessageCouponsHistory{" +
             "id = " + id +
-            ", masseurId = " + masseurId +
-            ", itemId = " + itemId +
+            ", couponId = " + couponId +
+            ", userId = " + userId +
+            ", orderId = " + orderId +
+            ", useTime = " + useTime +
             ", createTime = " + createTime +
             ", updateTime = " + updateTime +
             ", createUser = " + createUser +

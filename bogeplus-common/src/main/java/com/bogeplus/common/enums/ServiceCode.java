@@ -29,7 +29,6 @@ public enum ServiceCode {
     COUPONS_LESS_THAN_ZERO("优惠券价格小于0,请输入正确的价格",300401),
     COUPONS_LESS_THAN_TODAY("优惠券过期时间小于今天",300402),
     COUPONS_NOT_EXIST("优惠券不存在",300403),
-    COUPONS_NOT_expiryDate("过期时间不存在",300404),
 
     /*优惠券订单关联*/
     ORDER_NOT_EXIST("订单id不存在",300405),
@@ -47,8 +46,8 @@ public enum ServiceCode {
     SMS_SEND_FAILD ("短信发送失败！",200501 ) ,
     //技师相关状态码
     MASSAGIST_NOT_EXIST("技师不存在",300401),
-    MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST("技师头像已存在",300402);
- ;
+    MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST("技师头像已存在",300402),
+    MASSAGIST_EXPIRED_DATA("数据已过期，请刷新",300403);
     private String msg;
     private Integer code;
 
