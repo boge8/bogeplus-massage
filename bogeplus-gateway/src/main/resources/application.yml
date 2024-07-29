@@ -39,10 +39,10 @@ spring:
             - Path=/pay/**
           filters:
             - StripPrefix=1
-        - id: bogeplus-user
-          uri: lb://bogeplus-user
+        - id: bogeplus-massagist
+          uri: lb://bogeplus-massagist
           predicates:
-            - Path=/user/**
+            - Path=/massagist/**
           filters:
             - StripPrefix=1
 

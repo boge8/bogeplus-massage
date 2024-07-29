@@ -5,6 +5,8 @@ import com.bogeplus.massage.user.controller.request.LoginRequest;
 import com.bogeplus.massage.user.controller.request.SendSmsRequest;
 import com.bogeplus.massage.user.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bogeplus.message.dto.UserDto;
+import com.bogeplus.message.vo.UserVo;
 
 import java.util.Map;
 
@@ -25,11 +27,10 @@ public interface UserInfoService extends IService<UserInfo> {
     /**
      * 更新用户信息
      *
-     * @param id       用户ID
-     * @param userInfo 新的用户信息
+     * @param userDto 新的用户信息
      * @return 更新是否成功
      */
-    boolean updateUser(Long id, UserInfo userInfo);
+    boolean updateUser(UserDto userDto);
 
     /**
      * 删除用户
@@ -37,7 +38,7 @@ public interface UserInfoService extends IService<UserInfo> {
      * @param id 用户ID
      * @return 删除是否成功
      */
-    boolean deleteUser(Long id);
+    boolean deleteUseById(Long id);
 
     /**
      * 根据用户ID获取用户信息
@@ -45,7 +46,7 @@ public interface UserInfoService extends IService<UserInfo> {
      * @param id 用户ID
      * @return 用户信息
      */
-    UserInfo getUserById(Long id);
+    UserVo getUserById(Long id);
 
     /**
      * 获取用户分页信息

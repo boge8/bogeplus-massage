@@ -1,6 +1,5 @@
 package com.bogeplus.common.enums;
 
-import javafx.scene.input.KeyCodeCombination;
 import lombok.Data;
 import lombok.Getter;
 
@@ -44,7 +43,11 @@ public enum ServiceCode {
      SMS_SEND_OVERDUE  ("短信发送过于频繁，请明天再试！",100502 ),
      SMS_SEND_REPEAT  ("短信5分钟内有效，1分钟内不可重复发送！",100503 ),
      IMAGE_CODE_NOT_EXIST ("图形验证码不存在",100403 ),
-    SMS_SEND_FAILD ("短信发送失败！",200501 ) ;
+    SMS_SEND_FAILD ("短信发送失败！",200501 ) ,
+    //技师相关状态码
+    MASSAGIST_NOT_EXIST("技师不存在",300401),
+    MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST("技师头像已存在",300402),
+    MASSAGIST_EXPIRED_DATA("数据已过期，请刷新",300403);
     private String msg;
     private Integer code;
 
