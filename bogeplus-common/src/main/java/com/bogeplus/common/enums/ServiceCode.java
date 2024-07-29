@@ -47,8 +47,8 @@ public enum ServiceCode {
     SMS_SEND_FAILD ("短信发送失败！",200501 ) ,
     //技师相关状态码
     MASSAGIST_NOT_EXIST("技师不存在",300401),
-    MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST("技师头像已存在",300402);
- ;
+    MASSAGIST_PROFILE_PICTURE_ALREADY_EXIST("技师头像已存在",300402),
+    MASSAGIST_EXPIRED_DATA("数据已过期，请刷新",300403);
     private String msg;
     private Integer code;
 
