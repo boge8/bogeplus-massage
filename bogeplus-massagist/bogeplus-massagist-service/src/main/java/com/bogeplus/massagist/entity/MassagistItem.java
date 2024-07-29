@@ -1,5 +1,6 @@
 package com.bogeplus.massagist.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -61,6 +62,7 @@ public class MassagistItem implements Serializable {
     private String updateUser;
 
     @ApiModelProperty("逻辑删除 0未删除：1已删除")
+    @TableLogic
     private Boolean isDeleted;
 
     public Long getId() {

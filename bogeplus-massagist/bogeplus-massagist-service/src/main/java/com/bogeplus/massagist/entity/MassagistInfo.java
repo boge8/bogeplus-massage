@@ -77,6 +77,12 @@ public class MassagistInfo implements Serializable {
     @ApiModelProperty("技师所在城市")
     private String location;
 
+    @ApiModelProperty("技师等级")
+    private Long level;
+
+    @ApiModelProperty("城市编码")
+    private String cityCode;
+
     @ApiModelProperty("可预约时间段")
     private String availableTimeSlots;
 
