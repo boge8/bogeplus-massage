@@ -52,10 +52,4 @@ public class UserAddressesController {
     public Result setAddressDefault(@RequestParam("addressId") Long id) {
         return Result.success(userAddressesService.setUserAddressDefault(id));
     }
-
-    @PutMapping("/setAddressNotDefault")
-    @ApiOperation(value = "设置地址为非默认地址", notes = "设置地址为非默认地址")
-    public Result setAddressNotDefault(@RequestParam("addressId") Long id) {
-        return Result.success(userAddressesService.setUserAddressNotDefault(id));
-    }
 }
