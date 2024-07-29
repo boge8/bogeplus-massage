@@ -19,5 +19,5 @@ public class ItemVO {
     private String name;
 
     @ApiModelProperty(value = "项目图片")
-    private String img;
+    private String image;
 }

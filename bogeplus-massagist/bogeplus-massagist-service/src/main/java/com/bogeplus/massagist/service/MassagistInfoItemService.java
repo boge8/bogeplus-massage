@@ -11,11 +11,10 @@ import com.bogeplus.massagist.entity.MassagistInfoItem;
  * @Description 实现技师与项目关系的分配和取消分配
  */
 public interface MassagistInfoItemService extends IService<MassagistInfoItem> {
-    //查询该项目已被分配的技师
-    Result getList(int type, int status, long objId);
 
-    //取消技师与项目分配关系
-    Result changeAssignment(OperationRequest request);
+    Result<?> getAssignedList(int type, Long objId);
+
+    Result<?> getUnassignedList(int type, Long objId);
 
     //建立分配关系
     Result addAssignment(OperationRequest request);

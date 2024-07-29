@@ -1,8 +1,11 @@
 package com.bogeplus.massagist.entity;
 
+import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.bogeplus.common.util.UserUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -43,6 +46,13 @@ public class MassagistInfoItem implements Serializable {
 
     @ApiModelProperty("逻辑删除 0未删除：1已删除")
     private Boolean isDeleted;
+
+    public MassagistInfoItem() {
+        this.id = IdUtil.getSnowflake(1, 1).nextId();
+        this.createTime = LocalDateTime.now();
+        this.createUser = UserUtil.getAccount();
+        this.updateTime = LocalDateTime.now();
+        this.updateUser = UserUtil.getAccount();}
 
     public Long getId() {
         return id;
