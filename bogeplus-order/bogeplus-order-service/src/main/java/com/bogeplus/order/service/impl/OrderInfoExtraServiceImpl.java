@@ -1,9 +1,11 @@
 package com.bogeplus.order.service.impl;
 
+import com.bogeplus.order.dto.MassagistOrderExtraDTO;
 import com.bogeplus.order.entity.OrderInfoExtra;
 import com.bogeplus.order.mapper.OrderInfoExtraMapper;
 import com.bogeplus.order.service.IOrderInfoExtraService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +19,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderInfoExtraServiceImpl extends ServiceImpl<OrderInfoExtraMapper, OrderInfoExtra> implements IOrderInfoExtraService {
 
+    /**
+     * 根据订单id更新订单扩展表
+     * @param massagistOrderExtraDTO
+     */
+    @Override
+    public void updateByOrderId(MassagistOrderExtraDTO massagistOrderExtraDTO) {
+        //构造修改条件
+        OrderInfoExtra orderInfoExtra = new OrderInfoExtra();
+        BeanUtils.copyProperties(massagistOrderExtraDTO,orderInfoExtra);
+        //更新
+        updateById(orderInfoExtra);
+    }
 }

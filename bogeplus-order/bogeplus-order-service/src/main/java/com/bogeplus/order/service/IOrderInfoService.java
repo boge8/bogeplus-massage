@@ -1,5 +1,6 @@
 package com.bogeplus.order.service;
 
+import com.bogeplus.order.dto.MassagistOrderExtraDTO;
 import com.bogeplus.order.dto.MassagistOrderInfoDTO;
 import com.bogeplus.order.entity.OrderInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -34,4 +35,10 @@ public interface IOrderInfoService extends IService<OrderInfo> {
      * @param orderId
      */
     void depart(Long orderId);
+
+    /**
+     * 技师到达
+     * @param massagistOrderExtraDTO
+     */
+    void arrive(MassagistOrderExtraDTO massagistOrderExtraDTO);
 }

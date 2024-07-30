@@ -1,6 +1,7 @@
 package com.bogeplus.order.controller;
 
 import com.bogeplus.common.util.Result;
+import com.bogeplus.order.dto.MassagistOrderExtraDTO;
 import com.bogeplus.order.dto.MassagistOrderInfoDTO;
 import com.bogeplus.order.service.IOrderInfoService;
 import com.bogeplus.order.vo.MassagistOrderInfoVO;
@@ -51,6 +52,14 @@ public class OrderInfoController {
     public Result depart(@PathVariable Long orderId){
         log.info("技师出发：{}", orderId);
         orderInfoService.depart(orderId);
+        return Result.success();
+    }
+
+    @PutMapping("/arrive")
+    @ApiOperation(value = "技师到达", notes = "技师到达接口")
+    public Result arrive(@RequestBody MassagistOrderExtraDTO massagistOrderExtraDTO) {
+        log.info("技师到达：{}", massagistOrderExtraDTO);
+        orderInfoService.arrive(massagistOrderExtraDTO);
         return Result.success();
     }
 

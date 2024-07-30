@@ -1,12 +1,11 @@
 package com.bogeplus.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.bogeplus.order.dto.MassagistOrderExtraDTO;
 import com.bogeplus.order.dto.MassagistOrderInfoDTO;
 import com.bogeplus.order.entity.OrderInfo;
-import com.bogeplus.order.entity.OrderInfoExtra;
-import com.bogeplus.order.entity.OrderItem;
 import com.bogeplus.order.mapper.OrderInfoMapper;
-import com.bogeplus.order.mapper.OrderItemMapper;
+import com.bogeplus.order.service.IOrderInfoExtraService;
 import com.bogeplus.order.service.IOrderInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.order.service.IOrderItemService;
@@ -33,6 +32,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private OrderInfoMapper orderInfoMapper;
     @Autowired
     private IOrderItemService orderItemService;
+    @Autowired
+    private IOrderInfoExtraService orderInfoExtraService;
 
     private OrderInfo orderInfo;
 
@@ -106,5 +107,29 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         //修改订单状态
         orderInfoMapper.updateById(orderInfoUpdate);
+    }
+
+    /**
+     * 技师到达
+     * @param massagistOrderExtraDTO
+     */
+    @Override
+    public void arrive(MassagistOrderExtraDTO massagistOrderExtraDTO) {
+        //校验订单状态,只有已出发的订单才能到达
+        OrderInfo oldOrderInfo = orderInfoMapper.selectById(massagistOrderExtraDTO.getId());
+        if (oldOrderInfo.getStatus() != OrderInfo.DEPARTED) {
+            return; //订单状态不正确
+        }
+
+        //构造修改条件
+        OrderInfo orderInfoUpdate = new OrderInfo();
+        orderInfoUpdate.setId(massagistOrderExtraDTO.getId());
+        orderInfoUpdate.setStatus(OrderInfo.ARRIVED);
+
+        //修改订单表状态
+        orderInfoMapper.updateById(orderInfoUpdate);
+
+        //修改订单扩展表信息
+        orderInfoExtraService.updateByOrderId(massagistOrderExtraDTO);
     }
 }
