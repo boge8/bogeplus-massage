@@ -35,11 +35,4 @@ class BogeplusUserServiceApplicationTests {
             userInfo.setHeadImg("aaabbb.jpg");
             int i = mapper.updateById(userInfo);
     }
-
-    @Test
-    void abcd(){
-        UserInfo userInfo = mapper.getById(5L);
-        userInfo.setHeadImg("xiaochuang.jpg");
-        mapper.updateById(userInfo);
-    }
 }

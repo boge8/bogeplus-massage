@@ -32,8 +32,7 @@ public class LoginController {
      * 发送手机短信验证码接口
      * 入参：
      *
-     * @param String phoneNum手机号
-     * @param String imageCode 滑块验证码
+     * @param sendSmsRequest phoneNum手机号
      */
     @PostMapping("/sendSms")
     @ApiOperation(value = "发送手机短信验证码接口", notes = "发送手机短信验证码接口详细描述")

@@ -32,7 +32,7 @@ public class OrderInfoExtra implements Serializable {
     private String location;
 
     @ApiModelProperty("到达时间")
-    private LocalDate arrivalTime;
+    private LocalDateTime arrivalTime;
 
     @ApiModelProperty("备注")
     private String note;
@@ -77,11 +77,11 @@ public class OrderInfoExtra implements Serializable {
         this.location = location;
     }
 
-    public LocalDate getArrivalTime() {
+    public LocalDateTime getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setArrivalTime(LocalDate arrivalTime) {
+    public void setArrivalTime(LocalDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 

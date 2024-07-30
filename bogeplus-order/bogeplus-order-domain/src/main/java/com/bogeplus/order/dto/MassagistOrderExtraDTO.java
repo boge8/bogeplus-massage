@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * @Auther: xu
@@ -29,7 +30,7 @@ public class MassagistOrderExtraDTO {
     private String location;
 
     //到达时间
-    private LocalDate arrivalTime;
+    private LocalDateTime arrivalTime;
 
     //备注
     private String note;
