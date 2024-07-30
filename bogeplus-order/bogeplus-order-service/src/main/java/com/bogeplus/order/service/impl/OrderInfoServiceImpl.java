@@ -132,4 +132,25 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         //修改订单扩展表信息
         orderInfoExtraService.updateByOrderId(massagistOrderExtraDTO);
     }
+
+    /**
+     * 开始服务
+     * @param orderId
+     */
+    @Override
+    public void startService(Long orderId) {
+        //校验订单状态,只有已到达的订单才能开始服务
+        OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
+        if (oldOrderInfo.getStatus() != OrderInfo.ARRIVED) {
+            return; //订单状态不正确
+        }
+
+        //构造修改条件
+        OrderInfo orderInfoUpdate = new OrderInfo();
+        orderInfoUpdate.setId(orderId);
+        orderInfoUpdate.setStatus(OrderInfo.START_SERVICE);
+
+        //修改订单表状态
+        orderInfoMapper.updateById(orderInfoUpdate);
+    }
 }

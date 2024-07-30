@@ -41,4 +41,10 @@ public interface IOrderInfoService extends IService<OrderInfo> {
      * @param massagistOrderExtraDTO
      */
     void arrive(MassagistOrderExtraDTO massagistOrderExtraDTO);
+
+    /**
+     * 开始服务
+     * @param orderId
+     */
+    void startService(Long orderId);
 }

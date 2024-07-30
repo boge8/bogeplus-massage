@@ -63,4 +63,12 @@ public class OrderInfoController {
         return Result.success();
     }
 
+    @PutMapping("/startService/{orderId}")
+    @ApiOperation(value = "技师开始服务", notes = "技师开始服务接口")
+    public Result startService(@PathVariable Long orderId) {
+        log.info("技师开始服务：{}", orderId);
+        orderInfoService.startService(orderId);
+        return Result.success();
+    }
+
 }
