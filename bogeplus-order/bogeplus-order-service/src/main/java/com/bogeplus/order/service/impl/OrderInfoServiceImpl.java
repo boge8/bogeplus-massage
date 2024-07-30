@@ -74,14 +74,35 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     public void confirm(Long orderId) {
         //校验订单状态,只有未接单的订单才能接单
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
-        if (oldOrderInfo.getStatus() != 3) {
-            return;
+        if (oldOrderInfo.getStatus() != OrderInfo.TO_BE_CONFIRMED) {
+            return;//订单状态不正确
         }
 
         //构造修改条件
         OrderInfo orderInfoUpdate = new OrderInfo();
         orderInfoUpdate.setId(orderId);
         orderInfoUpdate.setStatus(OrderInfo.CONFIRMED);
+
+        //修改订单状态
+        orderInfoMapper.updateById(orderInfoUpdate);
+    }
+
+    /**
+     * 技师出发
+     * @param orderId
+     */
+    @Override
+    public void depart(Long orderId) {
+        //校验订单状态,只有已接单的订单才能出发
+        OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
+        if (oldOrderInfo.getStatus() != OrderInfo.CONFIRMED) {
+            return; //订单状态不正确
+        }
+
+        //构造修改条件
+        OrderInfo orderInfoUpdate = new OrderInfo();
+        orderInfoUpdate.setId(orderId);
+        orderInfoUpdate.setStatus(OrderInfo.DEPARTED);
 
         //修改订单状态
         orderInfoMapper.updateById(orderInfoUpdate);

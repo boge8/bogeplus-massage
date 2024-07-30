@@ -46,4 +46,12 @@ public class OrderInfoController {
         return Result.success();
     }
 
+    @PutMapping("/depart/{orderId}")
+    @ApiOperation(value = "技师出发", notes = "技师出发接口")
+    public Result depart(@PathVariable Long orderId){
+        log.info("技师出发：{}", orderId);
+        orderInfoService.depart(orderId);
+        return Result.success();
+    }
+
 }

@@ -28,4 +28,10 @@ public interface IOrderInfoService extends IService<OrderInfo> {
      * @param orderId
      */
     void confirm(Long orderId);
+
+    /**
+     * 技师出发
+     * @param orderId
+     */
+    void depart(Long orderId);
 }
