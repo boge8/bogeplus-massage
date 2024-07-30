@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -18,6 +21,9 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @TableName("massage_order_massagist_review")
 @ApiModel(value = "OrderMassagistReview对象", description = "技师对客户评价表")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderMassagistReview implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,137 +69,7 @@ public class OrderMassagistReview implements Serializable {
     private String updateUser;
 
     @ApiModelProperty("逻辑删除 0未删除：1已删除")
-    private Boolean isDeleted;
+    private Integer isDeleted;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    public Byte getTiredBodyPart() {
-        return tiredBodyPart;
-    }
-
-    public void setTiredBodyPart(Byte tiredBodyPart) {
-        this.tiredBodyPart = tiredBodyPart;
-    }
-
-    public Byte getForceLevel() {
-        return forceLevel;
-    }
-
-    public void setForceLevel(Byte forceLevel) {
-        this.forceLevel = forceLevel;
-    }
-
-    public Byte getAddressType() {
-        return addressType;
-    }
-
-    public void setAddressType(Byte addressType) {
-        this.addressType = addressType;
-    }
-
-    public Byte getCustomerGender() {
-        return customerGender;
-    }
-
-    public void setCustomerGender(Byte customerGender) {
-        this.customerGender = customerGender;
-    }
-
-    public Integer getEstimatedAge() {
-        return estimatedAge;
-    }
-
-    public void setEstimatedAge(Integer estimatedAge) {
-        this.estimatedAge = estimatedAge;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public LocalDateTime getEvaluationTime() {
-        return evaluationTime;
-    }
-
-    public void setEvaluationTime(LocalDateTime evaluationTime) {
-        this.evaluationTime = evaluationTime;
-    }
-
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public String getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(String updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderMassagistReview{" +
-            "id = " + id +
-            ", orderId = " + orderId +
-            ", tiredBodyPart = " + tiredBodyPart +
-            ", forceLevel = " + forceLevel +
-            ", addressType = " + addressType +
-            ", customerGender = " + customerGender +
-            ", estimatedAge = " + estimatedAge +
-            ", remarks = " + remarks +
-            ", evaluationTime = " + evaluationTime +
-            ", createTime = " + createTime +
-            ", updateTime = " + updateTime +
-            ", createUser = " + createUser +
-            ", updateUser = " + updateUser +
-            ", isDeleted = " + isDeleted +
-        "}";
-    }
 }

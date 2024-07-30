@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Controller;
  * @author bogeplus
  * @since 2024-07-22
  */
-@Controller
+@RestController
 @Api(value = "技师对客户评", tags = "技师对客户评价")
 @RequestMapping("/order/orderMassagistReview")
 public class OrderMassagistReviewController {
