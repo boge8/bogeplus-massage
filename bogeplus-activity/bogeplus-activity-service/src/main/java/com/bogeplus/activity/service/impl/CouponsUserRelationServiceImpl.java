@@ -123,10 +123,12 @@ public class CouponsUserRelationServiceImpl extends ServiceImpl<CouponsUserRelat
         List<CouponsUserRelation> relationList = couponsUserRelationMapper.selectList(new LambdaQueryWrapper<CouponsUserRelation>()
                 .eq(CouponsUserRelation::getUserId, UserUtil.getId())
                 .eq(CouponsUserRelation::getStatus, ActivityConstant.AVAIABLE)
-                .eq(CouponsUserRelation::getStatus,ActivityConstant.VO_AVAIABLE)
                 .eq(CouponsUserRelation::getIsDeleted, ActivityConstant.NOT_DELETED)
                 .ge(CouponsUserRelation::getExpiryDate, LocalDateTime.now())  // 过期时间大于当前时间
         );
+        if (relationList.isEmpty()) {
+            return Result.success();
+        }
         List<Long> couponsIds = relationList.stream().map(CouponsUserRelation::getCouponId).collect(Collectors.toList());
         List<CouponsBaseInfo> couponsList = getCouponsByIds(couponsIds);
         return Result.success(getVOList(couponsList,ActivityConstant.AVAIABLE));
@@ -142,6 +144,9 @@ public class CouponsUserRelationServiceImpl extends ServiceImpl<CouponsUserRelat
                 .eq(CouponsUserRelation::getStatus, ActivityConstant.USED)
                 .eq(CouponsUserRelation::getIsDeleted, ActivityConstant.NOT_DELETED)
         );
+        if (relationList.isEmpty()) {
+            return Result.success();
+        }
         List<Long> couponsIds = relationList.stream().map(CouponsUserRelation::getCouponId).collect(Collectors.toList());
         List<CouponsBaseInfo> couponsList = getCouponsByIds(couponsIds);
         return Result.success(getVOList(couponsList,ActivityConstant.USED));
@@ -157,6 +162,9 @@ public class CouponsUserRelationServiceImpl extends ServiceImpl<CouponsUserRelat
                 .eq(CouponsUserRelation::getStatus, ActivityConstant.AVAIABLE)
                 .le(CouponsUserRelation::getExpiryDate, LocalDateTime.now())  // 过期时间小于当前时间
         );
+        if (relationList.isEmpty()) {
+            return Result.success();
+        }
         List<Long> couponsIds = relationList.stream().map(CouponsUserRelation::getCouponId).collect(Collectors.toList());
         List<CouponsBaseInfo> couponsList = getCouponsByIds(couponsIds);
         return Result.success(getVOList(couponsList,ActivityConstant.EXPIRED));

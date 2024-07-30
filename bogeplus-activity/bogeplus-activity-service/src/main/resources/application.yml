@@ -1,7 +1,5 @@
 server:
   port: 8502
-  servlet:
-    context-path: /activity
 spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
