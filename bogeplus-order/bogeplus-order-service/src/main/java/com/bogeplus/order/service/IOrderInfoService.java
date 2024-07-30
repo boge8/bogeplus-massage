@@ -13,4 +13,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOrderInfoService extends IService<OrderInfo> {
 
+    /**
+     * 修改订单状态
+     * @param orderNum
+     * @param status
+     */
+    boolean updateOrderStatus(String orderNum, Integer status);
 }

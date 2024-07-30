@@ -4,6 +4,7 @@ import com.bogeplus.order.entity.OrderMassagistReview;
 import com.bogeplus.order.mapper.OrderMassagistReviewMapper;
 import com.bogeplus.order.service.IOrderMassagistReviewService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,5 +17,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderMassagistReviewServiceImpl extends ServiceImpl<OrderMassagistReviewMapper, OrderMassagistReview> implements IOrderMassagistReviewService {
+    @Autowired
+    OrderMassagistReviewMapper orderMassagistReviewMapper;
 
+    /**
+     * 新增技师对客户评
+     * @param orderMassagistReview
+     */
+    @Override
+    public void insertMassagistReview(OrderMassagistReview orderMassagistReview) {
+        orderMassagistReviewMapper.insert(orderMassagistReview);
+    }
 }

@@ -13,4 +13,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IOrderMassagistReviewService extends IService<OrderMassagistReview> {
 
+    /**
+     * 新增技师对客户评
+     * @param orderMassagistReview
+     */
+    void insertMassagistReview(OrderMassagistReview orderMassagistReview);
 }

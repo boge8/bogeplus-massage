@@ -1,4 +1,4 @@
-package com.bogeplus.massagist.dto;
+package com.bogeplus.order.dto;
 
 import lombok.Data;
 

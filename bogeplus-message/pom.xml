@@ -12,6 +12,7 @@
         <modules>
             <module>bogeplus-message-api</module>
             <module>bogeplus-message-domain</module>
+            <module>bogeplus-message-service</module>
         </modules>
     <artifactId>bogeplus-message</artifactId>
 

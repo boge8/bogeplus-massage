@@ -16,4 +16,5 @@
         <module>bogeplus-order-domain</module>
         <module>bogeplus-order-service</module>
     </modules>
+
 </project>
