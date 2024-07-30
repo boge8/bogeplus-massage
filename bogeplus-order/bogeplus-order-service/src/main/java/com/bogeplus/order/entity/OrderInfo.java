@@ -1,5 +1,6 @@
 package com.bogeplus.order.entity;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -99,6 +100,7 @@ public class OrderInfo implements Serializable {
     @ApiModelProperty("更新者")
     private String updateUser;
 
+    @TableLogic
     @ApiModelProperty("逻辑删除 0未删除：1已删除")
     private Boolean isDeleted;
 

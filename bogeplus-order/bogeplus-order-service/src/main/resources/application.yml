@@ -7,4 +7,42 @@ spring:
     nacos:
       discovery:
         server-addr: localhost
+  # mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://119.3.230.36:3306/massage_order?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    username: rw_user
+    password: Qq123123
+  # redis
+  redis:
+    host: 119.3.230.36
+    port: 6379
+    password: Aa123123123 # 如果 Redis 没有设置密码，可以省略这一行
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 0
+        max-wait: -1ms
+    timeout: 3000ms
+# 配置openfeign 调用超时时间
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 10000
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: is_deleted # 全局逻辑删除字段名
+      logic-delete-value: 1 # 逻辑已删除值
+      logic-not-delete-value: 0 # 逻辑未删除值
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    com.bogeplus.order.mapper: debug
+
 

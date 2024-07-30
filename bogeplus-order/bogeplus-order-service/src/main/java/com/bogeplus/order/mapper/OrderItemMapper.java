@@ -2,6 +2,7 @@ package com.bogeplus.order.mapper;
 
 import com.bogeplus.order.entity.OrderItem;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.mapstruct.Mapper;
 
 /**
  * <p>
