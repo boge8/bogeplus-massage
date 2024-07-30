@@ -2,6 +2,7 @@ package com.bogeplus.activity.controller;
 
 import com.bogeplus.activity.entity.CouponsUserRelation;
 import com.bogeplus.activity.service.CouponsUserRelationService;
+import com.bogeplus.activity.vo.CouponsVO;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.common.util.UserUtil;
 import io.swagger.annotations.Api;
@@ -33,8 +34,6 @@ public class CouponsUserRelationController {
     @Resource
     private CouponsUserRelationService couponsUserRelationService;
 
-
-
     @ApiOperation(value = "用户领取优惠券",notes = "用户领取优惠券(用户模块进行调用)")
     @PostMapping("/{id}")
     public Result dispatchForUser(@ApiParam(value = "优惠券id") @Valid @PathVariable("id")Long id){
@@ -55,5 +54,25 @@ public class CouponsUserRelationController {
         List<CouponsUserRelation> list = couponsUserRelationService.listCoupons(Long.valueOf(userId));
         return Result.success(list);
     }
+
+    @ApiOperation(value = "用户端查询当前用户所有可用优惠券",notes = "用户端查询当前用户所有可用优惠券")
+    @GetMapping("/getAvailable")
+    public Result<List<CouponsVO>> getAvailable(){
+        return couponsUserRelationService.getAvailableCoupons();
+    }
+
+    @ApiOperation(value = "用户端查询当前用户所有已使用优惠券",notes = "用户端查询当前用户所有已使用优惠券")
+    @GetMapping("/getUsed")
+    public Result<List<CouponsVO>> getUsed(){
+        return couponsUserRelationService.getUsedCoupons();
+
+    }
+
+    @ApiOperation(value = "用户端查询当前用户所有已使用优惠券",notes = "用户端查询当前用户所有已使用优惠券")
+    @GetMapping("/getExpired")
+    public Result<List<CouponsVO>> getExpired(){
+        return couponsUserRelationService.getExpiredCoupons();
+    }
+
 
 }

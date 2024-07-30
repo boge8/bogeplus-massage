@@ -9,7 +9,12 @@ import com.bogeplus.activity.mapper.CouponsUserRelationMapper;
 import com.bogeplus.activity.service.CouponsUserRelationService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.activity.vo.CouponsExpiryDateNumber;
+import com.bogeplus.activity.vo.CouponsVO;
+import com.bogeplus.common.constant.activity.ActivityConstant;
+import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.Result;
+import com.bogeplus.common.util.UserUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,6 +95,7 @@ public class CouponsUserRelationServiceImpl extends ServiceImpl<CouponsUserRelat
         CouponsUserRelation couponsUserRelation = new CouponsUserRelation();
         couponsUserRelation.setCouponId(id);
         couponsUserRelation.setUserId(Long.valueOf(userId));
+        couponsUserRelation.setStatus(ActivityConstant.AVAIABLE);
         couponsUserRelation.setReceiveTime(LocalDateTime.now());
         couponsUserRelation.setExpiryDate(expiryDateTime);
 
@@ -107,6 +113,93 @@ public class CouponsUserRelationServiceImpl extends ServiceImpl<CouponsUserRelat
 
 
         return Result.faild("优惠券领取失败,请重试");
+    }
+
+    /**
+     * 获取当前用户的可用优惠券
+     * @return
+     */
+    public Result<List<CouponsVO>> getAvailableCoupons(){
+        List<CouponsUserRelation> relationList = couponsUserRelationMapper.selectList(new LambdaQueryWrapper<CouponsUserRelation>()
+                .eq(CouponsUserRelation::getUserId, UserUtil.getId())
+                .eq(CouponsUserRelation::getStatus, ActivityConstant.AVAIABLE)
+                .eq(CouponsUserRelation::getStatus,ActivityConstant.VO_AVAIABLE)
+                .eq(CouponsUserRelation::getIsDeleted, ActivityConstant.NOT_DELETED)
+                .ge(CouponsUserRelation::getExpiryDate, LocalDateTime.now())  // 过期时间大于当前时间
+        );
+        List<Long> couponsIds = relationList.stream().map(CouponsUserRelation::getCouponId).collect(Collectors.toList());
+        List<CouponsBaseInfo> couponsList = getCouponsByIds(couponsIds);
+        return Result.success(getVOList(couponsList,ActivityConstant.AVAIABLE));
+    }
+
+    /**
+     * 获取当前用户已使用的优惠券
+     * @return
+     */
+    public Result<List<CouponsVO>> getUsedCoupons(){
+        List<CouponsUserRelation> relationList = couponsUserRelationMapper.selectList(new LambdaQueryWrapper<CouponsUserRelation>()
+                .eq(CouponsUserRelation::getUserId, UserUtil.getId())
+                .eq(CouponsUserRelation::getStatus, ActivityConstant.USED)
+                .eq(CouponsUserRelation::getIsDeleted, ActivityConstant.NOT_DELETED)
+        );
+        List<Long> couponsIds = relationList.stream().map(CouponsUserRelation::getCouponId).collect(Collectors.toList());
+        List<CouponsBaseInfo> couponsList = getCouponsByIds(couponsIds);
+        return Result.success(getVOList(couponsList,ActivityConstant.USED));
+    }
+
+    /**
+     * 获取当前用户已过期的优惠券
+     * @return
+     */
+    public Result<List<CouponsVO>> getExpiredCoupons(){
+        List<CouponsUserRelation> relationList = couponsUserRelationMapper.selectList(new LambdaQueryWrapper<CouponsUserRelation>()
+                .eq(CouponsUserRelation::getUserId, UserUtil.getId())
+                .eq(CouponsUserRelation::getStatus, ActivityConstant.AVAIABLE)
+                .le(CouponsUserRelation::getExpiryDate, LocalDateTime.now())  // 过期时间小于当前时间
+        );
+        List<Long> couponsIds = relationList.stream().map(CouponsUserRelation::getCouponId).collect(Collectors.toList());
+        List<CouponsBaseInfo> couponsList = getCouponsByIds(couponsIds);
+        return Result.success(getVOList(couponsList,ActivityConstant.EXPIRED));
+    }
+
+    /**
+     * 根据传入优惠券id获取优惠券
+     * @param ids
+     * @return
+     */
+    private List<CouponsBaseInfo> getCouponsByIds(List<Long> ids){
+        return couponsBaseInfoMapper.selectList(new LambdaQueryWrapper<CouponsBaseInfo>()
+                .in(CouponsBaseInfo::getId, ids));
+    }
+
+    /**
+     * 封装响应数据
+     * @param couponsList
+     * @param status
+     * @return
+     */
+    private List<CouponsVO> getVOList(List<CouponsBaseInfo> couponsList, Integer status) {
+        String statusDescription;
+        switch (status) {
+            case ActivityConstant.AVAIABLE:
+                statusDescription = ActivityConstant.VO_AVAIABLE;
+                break;
+            case ActivityConstant.USED:
+                statusDescription = ActivityConstant.VO_USED;
+                break;
+            case ActivityConstant.EXPIRED:
+                statusDescription = ActivityConstant.VO_EXPIRED;
+                break;
+            default:
+                throw new BizException("优惠券状态参数错误");
+        }
+        return couponsList.stream()
+                .map(couponsBaseInfo -> {
+                    CouponsVO couponsVO = new CouponsVO();
+                    BeanUtils.copyProperties(couponsBaseInfo, couponsVO);
+                    couponsVO.setStatus(statusDescription);
+                    return couponsVO;
+                }).collect(Collectors.toList());
     }
 
 }

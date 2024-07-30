@@ -2,6 +2,7 @@ package com.bogeplus.activity.service;
 
 import com.bogeplus.activity.entity.CouponsUserRelation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bogeplus.activity.vo.CouponsVO;
 import com.bogeplus.common.util.Result;
 
 import java.util.List;
@@ -17,6 +18,12 @@ import java.util.List;
 public interface CouponsUserRelationService extends IService<CouponsUserRelation> {
 
     List<CouponsUserRelation> listCoupons(Long aLong);
+
+    Result<List<CouponsVO>> getAvailableCoupons();
+
+    Result<List<CouponsVO>> getUsedCoupons();
+
+    Result<List<CouponsVO>> getExpiredCoupons();
 
     Result dispatchForUser(Long id, String userId);
 }

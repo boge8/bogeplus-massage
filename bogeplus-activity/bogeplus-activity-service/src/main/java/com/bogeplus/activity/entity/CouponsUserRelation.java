@@ -33,6 +33,9 @@ public class CouponsUserRelation implements Serializable {
     @ApiModelProperty("用户ID")
     private Long userId;
 
+    @ApiModelProperty("优惠券状态: 1-待使用 2-已使用 3-已过期")
+    private Integer status;
+
     @ApiModelProperty("领取时间")
     private LocalDateTime receiveTime;
 
