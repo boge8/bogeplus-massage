@@ -22,4 +22,10 @@ public interface IOrderInfoService extends IService<OrderInfo> {
      * @return
      */
     List<MassagistOrderInfoVO> listbyMassagistId(MassagistOrderInfoDTO massagistOrderInfoDTO);
+
+    /**
+     * 技师接单
+     * @param orderId
+     */
+    void confirm(Long orderId);
 }

@@ -34,6 +34,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Autowired
     private IOrderItemService orderItemService;
 
+    private OrderInfo orderInfo;
+
     /**
      * 获取技师订单信息
      * @return
@@ -62,5 +64,26 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         }
 
         return list;
+    }
+
+    /**
+     * 技师接单
+     * @param orderId
+     */
+    @Override
+    public void confirm(Long orderId) {
+        //校验订单状态,只有未接单的订单才能接单
+        OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
+        if (oldOrderInfo.getStatus() != 3) {
+            return;
+        }
+
+        //构造修改条件
+        OrderInfo orderInfoUpdate = new OrderInfo();
+        orderInfoUpdate.setId(orderId);
+        orderInfoUpdate.setStatus(OrderInfo.CONFIRMED);
+
+        //修改订单状态
+        orderInfoMapper.updateById(orderInfoUpdate);
     }
 }

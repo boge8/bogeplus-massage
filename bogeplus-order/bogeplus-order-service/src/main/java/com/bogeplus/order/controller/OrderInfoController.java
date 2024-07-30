@@ -38,4 +38,12 @@ public class OrderInfoController {
         return Result.success();
     }
 
+    @PutMapping("/confirm/{orderId}")
+    @ApiOperation(value = "技师接单", notes = "技师接单接口")
+    public Result confirm(@PathVariable Long orderId){
+        log.info("技师接单：{}", orderId);
+        orderInfoService.confirm(orderId);
+        return Result.success();
+    }
+
 }

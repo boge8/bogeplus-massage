@@ -7,6 +7,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>
@@ -16,9 +20,30 @@ import io.swagger.annotations.ApiModelProperty;
  * @author bogeplus
  * @since 2024-07-22
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("massage_order_info")
 @ApiModel(value = "OrderInfo对象", description = "订单信息表")
 public class OrderInfo implements Serializable {
+
+    /**
+     * 订单状态码：1-待支付，2-支付超时，3-待接单，4-已接单，5-技师出发，6-技师到达，7-开始服务，8-服务完成，9-用户评价，10-售后中，11-售后结束，12-订单已关闭，13-订单已取消
+     */
+    public static final Byte PENDING_PAYMENT = 1;
+    public static final Byte PAY_TIMEOUT = 2;
+    public static final Byte TO_BE_CONFIRMED = 3;
+    public static final Byte CONFIRMED = 4;
+    public static final Byte DEPARTED = 5;
+    public static final Byte ARRIVED = 6;
+    public static final Byte START_SERVICE = 7;
+    public static final Byte COMPLETED = 8;
+    public static final Byte EVALUATED = 9;
+    public static final Byte AFTER_SALES = 10;
+    public static final Byte AFTER_SALES_COMPLETED = 11;
+    public static final Byte CLOSED = 12;
+    public static final Byte CANCELLED = 13;
+
 
     private static final long serialVersionUID = 1L;
 
