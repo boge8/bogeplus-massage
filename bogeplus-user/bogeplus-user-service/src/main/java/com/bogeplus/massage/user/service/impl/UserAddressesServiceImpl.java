@@ -4,13 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.bogeplus.common.constant.user.UserConstant;
 import com.bogeplus.common.exception.BizException;
+import com.bogeplus.common.util.Result;
 import com.bogeplus.common.util.UserUtil;
 import com.bogeplus.massage.user.dto.UserAddressesDTO;
 import com.bogeplus.massage.user.entity.UserAddresses;
 import com.bogeplus.massage.user.mapper.UserAddressesMapper;
 import com.bogeplus.massage.user.service.IUserAddressesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bogeplus.massage.user.vo.DefaultAddressVO;
 import com.bogeplus.massage.user.vo.UserAddressesVO;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,10 +41,15 @@ import java.util.Map;
  */
 @Service
 public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, UserAddresses> implements IUserAddressesService {
+    private final UserAddressesMapper userAddressesMapper;
     @Value(value = "${gaode.key}")
     private String key;
     @Value(value = "${gaode.url}")
     private String baseUrl;
+
+    public UserAddressesServiceImpl(UserAddressesMapper userAddressesMapper) {
+        this.userAddressesMapper = userAddressesMapper;
+    }
 
     public boolean addUserAddress(UserAddressesDTO userAddressesDTO) {
         UserAddresses userAddresses = new UserAddresses();
@@ -116,6 +124,29 @@ public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, U
         userAddresses.setIsDefault(false);
         return this.updateById(userAddresses);
     }
+
+    /**
+     * 获取默认地址
+     * @return 响应体
+     */
+    @Override
+    public Result<DefaultAddressVO> getDefaultAddress() {
+        List<UserAddresses> defaultAddressList = userAddressesMapper.selectList(
+                new LambdaQueryWrapper<UserAddresses>()
+                        .eq(UserAddresses::getUserId, UserUtil.getId())
+                        .eq(UserAddresses::getIsDefault, UserConstant.IS_DEFAULT));
+        log.debug(UserUtil.getId());
+        UserAddressesVO userAddressesVO = new UserAddressesVO();
+        if (defaultAddressList.size() > 1) {
+            throw new BizException("该用户设置了多个默认地址");
+        }
+        if (defaultAddressList.isEmpty()) {
+            return Result.success(null); // 确保返回类型一致
+        }
+        BeanUtil.copyProperties(defaultAddressList.get(0), userAddressesVO);
+        return Result.success(userAddressesVO);
+    }
+
 
     // 高德地图获取地理编码
     public Map<String, String> getGeoCode(String address) {

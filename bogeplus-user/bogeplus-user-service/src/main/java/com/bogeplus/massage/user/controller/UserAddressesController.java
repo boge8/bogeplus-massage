@@ -3,6 +3,7 @@ package com.bogeplus.massage.user.controller;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massage.user.dto.UserAddressesDTO;
 import com.bogeplus.massage.user.service.IUserAddressesService;
+import com.bogeplus.massage.user.vo.DefaultAddressVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,11 @@ public class UserAddressesController {
     @ApiOperation(value = "设置地址为非默认地址", notes = "设置地址为非默认地址")
     public Result setAddressNotDefault(@RequestParam("addressId") Long id) {
         return Result.success(userAddressesService.setUserAddressNotDefault(id));
+    }
+
+    @GetMapping("/getDefaultAddress")
+    @ApiOperation(value = "获取用户默认地址", notes = "获取用户默认地址")
+    public Result<DefaultAddressVO> getDefaultAddress(){
+        return userAddressesService.getDefaultAddress();
     }
 }

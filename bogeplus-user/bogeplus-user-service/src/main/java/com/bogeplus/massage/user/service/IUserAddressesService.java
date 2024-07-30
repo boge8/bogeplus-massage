@@ -1,8 +1,10 @@
 package com.bogeplus.massage.user.service;
 
+import com.bogeplus.common.util.Result;
 import com.bogeplus.massage.user.dto.UserAddressesDTO;
 import com.bogeplus.massage.user.entity.UserAddresses;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bogeplus.massage.user.vo.DefaultAddressVO;
 import com.bogeplus.massage.user.vo.UserAddressesVO;
 
 import java.util.List;
@@ -22,4 +24,6 @@ public interface IUserAddressesService extends IService<UserAddresses> {
     List<UserAddressesVO> getUserAddress();
     boolean setUserAddressDefault(long addressId);
     boolean setUserAddressNotDefault(long addressId);
+
+    Result<DefaultAddressVO> getDefaultAddress();
 }
