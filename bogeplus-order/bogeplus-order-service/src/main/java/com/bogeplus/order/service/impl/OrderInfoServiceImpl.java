@@ -10,6 +10,8 @@ import com.bogeplus.order.service.IOrderInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.order.service.IOrderItemService;
 import com.bogeplus.order.vo.MassagistOrderInfoVO;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +48,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         //构造查询条件
         QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<OrderInfo>()
                 .eq("massagist_id",massagistOrderInfoDTO.getMassagistId())
-                .eq("status",massagistOrderInfoDTO.getStatus());
+                //根据状态过滤,传入参数为空不参与条件查询
+                .eq(ObjectUtils.isNotEmpty(massagistOrderInfoDTO.getStatus()),"status",massagistOrderInfoDTO.getStatus());
 
         //查询
         List<OrderInfo> orderInfoList = orderInfoMapper.selectList(queryWrapper);

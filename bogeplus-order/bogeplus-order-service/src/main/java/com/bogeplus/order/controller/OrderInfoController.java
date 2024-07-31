@@ -36,7 +36,7 @@ public class OrderInfoController {
     public Result<List<MassagistOrderInfoVO>> getMassagistOrderInfo(@RequestBody MassagistOrderInfoDTO massagistOrderInfoDTO){
         log.info("获取技师订单信息：{}", massagistOrderInfoDTO);
         List<MassagistOrderInfoVO> list = orderInfoService.listbyMassagistId(massagistOrderInfoDTO);
-        return Result.success();
+        return Result.success(list);
     }
 
     @PutMapping("/confirm/{orderId}")
