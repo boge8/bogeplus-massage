@@ -22,6 +22,9 @@ public class UserAddressesVO {
     @ApiModelProperty("地址扩展信息")
     private String addressExtra;
 
+    @ApiModelProperty("经纬度")
+    private String longitudeLatitude;
+
     @ApiModelProperty("是否为默认地址")
     private Boolean isDefault;
 }

@@ -3,6 +3,7 @@ package com.bogeplus.massage.user.controller;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massage.user.dto.UserAddressesDTO;
 import com.bogeplus.massage.user.service.IUserAddressesService;
+import com.bogeplus.massage.user.vo.UserAddressesVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,12 @@ public class UserAddressesController {
     @ApiOperation(value = "获取用户地址", notes = "获取用户地址")
     public Result getUserAddress() {
         return Result.success(userAddressesService.getUserAddress());
+    }
+
+    @GetMapping("/getDefaultUserAddress")
+    @ApiOperation(value = "获取默认地址", notes = "获取默认地址")
+    public UserAddressesVO getDefaultUserAddress(@RequestParam("userId") long userId) {
+        return userAddressesService.getDefaultUserAddress(userId);
     }
 
     @DeleteMapping("/deleteUserAddress")

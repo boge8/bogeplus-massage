@@ -39,5 +39,9 @@
         where not exists(select 1 from massage_massagist_info_item b where a.id = b.item_id and b.masseur_id = #{massagistId} and a.is_deleted = 0)
         and a.is_deleted = 0
     </select>
+    <select id="getMassagists" resultType="com.bogeplus.massagist.entity.MassagistInfo">
+        select m.id, m.name, m.profile_picture, m.longtitude_latitude, m.vaccinated, m.completed_orders, m.comment, m.likes from massage_massagist_info_item as i left join massage_massagist_info as m on i.masseur_id = m.id
+        where i.item_id = #{itemId} and m.city_code = #{cityCode}
+    </select>
 
 </mapper>

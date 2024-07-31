@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 
@@ -54,6 +55,13 @@ public class MassagistInfoItemController {
                                        @NotNull(message = "对象id不能为空")
                                        @RequestParam Long objId) {
         return massagistAssociationService.getUnassignedList(type, objId);
+    }
+
+    @GetMapping("/getMassagist")
+    @ApiOperation(value = "根据服务项目和地域获取技师", notes = "根据服务项目和地域获取技师")
+    public Result getMassagists(@NotNull @RequestParam long itemId,
+                                @NotBlank @RequestParam String cityCode) {
+        return Result.success(massagistAssociationService.getMassagists(itemId, cityCode));
     }
 
     @PostMapping("/addAssignment")

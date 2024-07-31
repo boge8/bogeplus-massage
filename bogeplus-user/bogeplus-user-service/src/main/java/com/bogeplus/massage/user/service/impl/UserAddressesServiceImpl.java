@@ -106,6 +106,17 @@ public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, U
     }
 
     @Override
+    public UserAddressesVO getDefaultUserAddress(long userId) {
+        LambdaQueryWrapper<UserAddresses> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(UserAddresses::getUserId, userId);
+        lambdaQueryWrapper.eq(UserAddresses::getIsDefault, true);
+        UserAddresses userAddress = this.getOne(lambdaQueryWrapper);
+        UserAddressesVO userAddressesVO = new UserAddressesVO();
+        BeanUtil.copyProperties(userAddress, userAddressesVO);
+        return userAddressesVO;
+    }
+
+    @Override
     public boolean setUserAddressDefault(long addressId) {
         UserAddresses userAddress = new UserAddresses();
         LambdaUpdateWrapper<UserAddresses> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();

@@ -45,7 +45,11 @@
             <artifactId>tianai-captcha-springboot-starter</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.bogeplus</groupId>
+            <artifactId>bogeplus-user-api</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.bogeplus</groupId>
             <artifactId>bogeplus-common</artifactId>
@@ -87,11 +91,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.bogeplus</groupId>
-            <artifactId>bogeplus-massagist-api</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -117,6 +117,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
 
     </dependencies>
 
