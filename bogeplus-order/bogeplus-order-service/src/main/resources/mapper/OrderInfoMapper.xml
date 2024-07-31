@@ -34,35 +34,35 @@
     </resultMap>
 
     <select id="getOrderDetail" resultMap="OrderDetailResultMap">
-        SELECT oinfo.*, oiextra.arrival_time, oiextra.note AS remark, uaddr.contact_name, uaddr.contact_phone, uaddr.address, uaddr.danger_level
-        FROM massage_order_info oinfo
-                 LEFT JOIN massage_order_info_extra oiextra ON oinfo.id = oiextra.id
-                 LEFT JOIN massage_user_addresses uaddr ON oinfo.address_id = uaddr.id
+        SELECT oinfo.*, oiextra.arrival_time, oiextra.note AS remark, uaddr.contact_name, uaddr.contact_phone, uaddr.address
+        FROM massage_order.massage_order_info oinfo
+                 LEFT JOIN massage_order.massage_order_info_extra oiextra ON oinfo.id = oiextra.id
+                 LEFT JOIN massage_user.massage_user_addresses uaddr ON oinfo.address_id = uaddr.id
         WHERE oinfo.id = #{orderId}
     </select>
 
     <select id="getOrderItems" resultType="com.bogeplus.order.vo.OrderItemVO">
         SELECT oitem.item_id AS id, oitem.order_id, mitem.name, mitem.current_price AS price, oitem.quantity, mitem.duration
-        FROM massage_order_info_item oitem
-                 LEFT JOIN massage_massagist_item mitem ON oitem.item_id = mitem.id
+        FROM massage_order.massage_order_info_item oitem
+                 LEFT JOIN massage_massagist.massage_massagist_item mitem ON oitem.item_id = mitem.id
         WHERE oitem.order_id = #{orderId}
     </select>
 
     <select id="getUserAddresses" resultType="com.bogeplus.order.vo.UserAddressVO">
         SELECT uaddr.id, uaddr.user_id, uaddr.contact_name, uaddr.contact_phone, uaddr.longitude_latitude, uaddr.address, uaddr.address_extra, uaddr.is_default
-        FROM massage_user_addresses uaddr
+        FROM massage_user.massage_user_addresses uaddr
         WHERE uaddr.user_id = #{userId}
     </select>
 
     <select id="getUserHistories" resultType="com.bogeplus.order.vo.UserHistoryVO">
         SELECT uhisto.id, uhisto.user_id, uhisto.danger_level, uhisto.remarks
-        FROM massage_user_user_history uhisto
+        FROM massage_user.massage_user_user_history uhisto
         WHERE uhisto.user_id = #{userId}
     </select>
 
     <select id="getHistoryStatuses" resultType="java.time.LocalDateTime">
         SELECT oinfo.create_time
-        FROM massage_order_info oinfo
+        FROM massage_order.massage_order_info oinfo
         WHERE oinfo.id = #{orderId}
     </select>
 
