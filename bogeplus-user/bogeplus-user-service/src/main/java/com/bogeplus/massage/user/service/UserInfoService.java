@@ -56,4 +56,6 @@ public interface UserInfoService extends IService<UserInfo> {
      * @return 用户分页信息
      */
     Object getUserPage(int page, int size);
+
+
 }

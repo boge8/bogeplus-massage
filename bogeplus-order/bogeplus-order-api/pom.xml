@@ -26,6 +26,12 @@
             <artifactId>spring-web</artifactId>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83</version> <!-- 或者使用最新版本 -->
+        </dependency>
+
     </dependencies>
 
     <properties>

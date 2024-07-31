@@ -56,14 +56,15 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
         }
 
+        orderInfo.setTravelDistance(getTravelDistance());
+        orderInfo.setTravelCost(getTravelCost(request.getMassagistId(),request.getAddressId()));
         orderInfo.setOutTradeNo("default");
         orderInfo.setPayTime(LocalDateTime.now());
         return Result.success();
     }
 
     public BigDecimal getTravelDistance() {
-
-        return null;
+        return BigDecimal.valueOf(111);
     }
 
     private BigDecimal getTravelCost(Long massagistId,Long addressId) {
@@ -73,11 +74,13 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         Result<AddressLocationVO> userResult = userAddressFeign.getAddressLocation(addressId);
         checkFeignResult(userResult);
         String longitudeLatitude = userResult.getData().getLongitudeLatitude();
-        return null;
+        //稍后完善高德接口
+        return BigDecimal.valueOf(111);
     }
 
-    public BigDecimal getTotalPrice() {
-        return null;
+    private BigDecimal getTotalPrice() {
+        //稍后完善高德接口
+        return BigDecimal.valueOf(111);
     }
 
     private void checkFeignResult(Result<?> result){

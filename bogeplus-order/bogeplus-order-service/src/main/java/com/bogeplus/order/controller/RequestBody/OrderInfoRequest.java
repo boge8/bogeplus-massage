@@ -19,6 +19,9 @@ public class OrderInfoRequest {
     @ApiModelProperty("技师ID")
     private Long massagistId;
 
+    @ApiModelProperty("用户地址ID")
+    private Long addressId;
+
     @ApiModelProperty("服务时间")
     private LocalDateTime serviceTime;
 
