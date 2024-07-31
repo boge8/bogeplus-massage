@@ -20,15 +20,15 @@ import org.springframework.stereotype.Service;
 public class OrderInfoExtraServiceImpl extends ServiceImpl<OrderInfoExtraMapper, OrderInfoExtra> implements IOrderInfoExtraService {
 
     /**
-     * 根据订单id更新订单扩展表
+     * 根据订单id新增订单扩展表
      * @param massagistOrderExtraDTO
      */
     @Override
-    public void updateByOrderId(MassagistOrderExtraDTO massagistOrderExtraDTO) {
+    public void insertByOrderId(MassagistOrderExtraDTO massagistOrderExtraDTO) {
         //构造修改条件
         OrderInfoExtra orderInfoExtra = new OrderInfoExtra();
         BeanUtils.copyProperties(massagistOrderExtraDTO,orderInfoExtra);
         //更新
-        updateById(orderInfoExtra);
+        save(orderInfoExtra);
     }
 }

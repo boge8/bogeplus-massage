@@ -129,8 +129,8 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
         //修改订单表状态
         orderInfoMapper.updateById(orderInfoUpdate);
 
-        //修改订单扩展表信息
-        orderInfoExtraService.updateByOrderId(massagistOrderExtraDTO);
+        //根据订单id新增订单扩展表
+        orderInfoExtraService.insertByOrderId(massagistOrderExtraDTO);
     }
 
     /**
