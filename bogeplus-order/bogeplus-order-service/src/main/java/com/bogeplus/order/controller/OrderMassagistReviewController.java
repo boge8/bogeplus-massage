@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(value = "技师对客户评", tags = "技师对客户评价")
-@RequestMapping("/order/orderMassagistReview")
+@RequestMapping("/orderMassagistReview")
 public class OrderMassagistReviewController {
     @Autowired
     IOrderMassagistReviewService iOrderMassagistReviewService;

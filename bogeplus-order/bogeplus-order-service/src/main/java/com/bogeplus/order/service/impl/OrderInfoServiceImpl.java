@@ -48,9 +48,10 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             // 获取当前时间
             LocalDateTime currentTime = LocalDateTime.now();
 
+            // mysql 该字段用 INT 更方便
             // 获取所需服务时间 (存入的是 年-月-日-时:分:秒  需要忽略年月日 仅得出项目多所需时长，此为所需服务时长)
             LocalDateTime serviceTime = orderInfo.getServiceTime();
-            // 使用工具类 根据 时：分：秒，获取 所需服务时长，单位毫秒
+            // 使用工具类 根据 时：分：秒，获取 所需服务时长，单位毫秒，0点为起点。例:2024-7-31 01:45:00 服务时长为 105分钟
             Long serviceDurationMillis = DurationUtil.getDuration(serviceTime);
 
             // 查询订单上一次修改时间
