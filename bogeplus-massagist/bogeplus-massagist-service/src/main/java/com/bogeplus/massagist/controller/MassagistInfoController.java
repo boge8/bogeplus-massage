@@ -9,7 +9,10 @@ import com.bogeplus.massagist.vo.MassagistInfoVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/massagistInfo")
 @Api(value = "技师信息", tags = "技师信息")
+@Validated
 public class MassagistInfoController {
 
     @Autowired
@@ -50,7 +54,7 @@ public class MassagistInfoController {
 
     @ApiOperation(value = "根据id查询技师")
     @GetMapping("/getById")
-    public Result<MassagistInfoVO> getById(Long id) {
+    public Result<MassagistInfoVO> getById(@NotNull(message = "对象id不能为空") @RequestParam Long id) {
         MassagistInfoVO massagistInfoVO = massagistInfoService.selectById(id);
         return Result.success(massagistInfoVO);
     }

@@ -4,6 +4,7 @@ import com.bogeplus.common.util.Result;
 import com.bogeplus.massage.user.dto.UserAddressesDTO;
 import com.bogeplus.massage.user.entity.UserAddresses;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.bogeplus.massage.user.vo.AddressLocationVO;
 import com.bogeplus.massage.user.vo.DefaultAddressVO;
 import com.bogeplus.massage.user.vo.UserAddressesVO;
 
@@ -26,4 +27,6 @@ public interface IUserAddressesService extends IService<UserAddresses> {
     boolean setUserAddressNotDefault(long addressId);
 
     Result<DefaultAddressVO> getDefaultAddress();
+
+    Result<AddressLocationVO> getAddressLocation(long addressId);
 }

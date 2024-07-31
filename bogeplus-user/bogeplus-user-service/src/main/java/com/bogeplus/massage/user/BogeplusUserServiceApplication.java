@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.bogeplus"})
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"com.bogeplus.massage.user.mapper"})
-@EnableFeignClients(basePackages = {"com.bogeplus.message.feign"})
+@EnableFeignClients(basePackages = {"com.bogeplus.message.feign","com.bogeplus.massage.user.feign"})
 public class BogeplusUserServiceApplication {
 
     public static void main(String[] args) {

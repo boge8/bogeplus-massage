@@ -3,11 +3,15 @@ package com.bogeplus.massage.user.controller;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.massage.user.dto.UserAddressesDTO;
 import com.bogeplus.massage.user.service.IUserAddressesService;
+import com.bogeplus.massage.user.vo.AddressLocationVO;
 import com.bogeplus.massage.user.vo.DefaultAddressVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/userAddresses")
 @Api(tags = "用户地址管理")
+@Validated
 public class UserAddressesController {
     @Autowired
     private IUserAddressesService userAddressesService;
@@ -64,5 +69,11 @@ public class UserAddressesController {
     @ApiOperation(value = "获取用户默认地址", notes = "获取用户默认地址")
     public Result<DefaultAddressVO> getDefaultAddress(){
         return userAddressesService.getDefaultAddress();
+    }
+
+    @GetMapping("/getAddressLocation")
+    @ApiOperation(value = "获取地址经纬度", notes = "获取地址经纬度")
+    public Result<AddressLocationVO> getAddressLocation(@NotNull(message = "地址ID不能为空") @RequestParam("addressId") Long addressId) {
+        return userAddressesService.getAddressLocation(addressId);
     }
 }

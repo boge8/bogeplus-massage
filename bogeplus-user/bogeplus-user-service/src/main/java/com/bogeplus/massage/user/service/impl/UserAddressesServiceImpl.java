@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.bogeplus.common.constant.user.UserConstant;
+import com.bogeplus.common.enums.ServiceCode;
 import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.common.util.UserUtil;
@@ -13,6 +14,7 @@ import com.bogeplus.massage.user.entity.UserAddresses;
 import com.bogeplus.massage.user.mapper.UserAddressesMapper;
 import com.bogeplus.massage.user.service.IUserAddressesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bogeplus.massage.user.vo.AddressLocationVO;
 import com.bogeplus.massage.user.vo.DefaultAddressVO;
 import com.bogeplus.massage.user.vo.UserAddressesVO;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -148,6 +150,7 @@ public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, U
     }
 
 
+
     // 高德地图获取地理编码
     public Map<String, String> getGeoCode(String address) {
         String url = baseUrl + "?address=" + address + "&key=" + key;
@@ -186,5 +189,17 @@ public class UserAddressesServiceImpl extends ServiceImpl<UserAddressesMapper, U
         }
 
         return null;
+    }
+
+    @Override
+    public Result<AddressLocationVO> getAddressLocation(long addressId) {
+        List<UserAddresses> addressList = list(new LambdaQueryWrapper<UserAddresses>().eq(UserAddresses::getId, addressId));
+        if (addressList.isEmpty()) {
+            throw new BizException("地址不存在");
+        }
+        if (addressList.size()>1) {
+            Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
+        }
+        return Result.success(addressList.get(0));
     }
 }

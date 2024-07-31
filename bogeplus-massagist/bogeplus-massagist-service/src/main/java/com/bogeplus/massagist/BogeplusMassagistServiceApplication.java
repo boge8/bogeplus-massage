@@ -3,6 +3,7 @@ package com.bogeplus.massagist;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -15,6 +16,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @EnableDiscoveryClient
 @ComponentScan(basePackages = {"com.bogeplus"})
 @MapperScan("com.bogeplus.massagist.mapper")
+@EnableFeignClients(basePackages = {"com.bogeplus.massagist.feign"})
 public class BogeplusMassagistServiceApplication {
 
     public static void main(String[] args) {

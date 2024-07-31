@@ -13,7 +13,7 @@ spring:
     nacos:
       discovery:
         server-addr: localhost
-  # mysql
+# mysql
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://119.3.230.36:3306/massage_user?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
