@@ -1,6 +1,8 @@
 package com.bogeplus.order.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.bogeplus.common.enums.ServiceCode;
+import com.bogeplus.common.util.Result;
 import com.bogeplus.order.dto.MassagistOrderExtraDTO;
 import com.bogeplus.order.dto.MassagistOrderInfoDTO;
 import com.bogeplus.order.entity.OrderInfo;
@@ -11,7 +13,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.order.service.IOrderItemService;
 import com.bogeplus.order.vo.MassagistOrderInfoVO;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,10 +38,9 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Autowired
     private IOrderInfoExtraService orderInfoExtraService;
 
-    private OrderInfo orderInfo;
 
     /**
-     * 获取技师订单信息
+     * 查询技师订单信息
      * @return
      */
     @Override
@@ -72,14 +72,16 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
     /**
      * 技师接单
+     *
      * @param orderId
+     * @return
      */
     @Override
-    public void confirm(Long orderId) {
+    public Result confirm(Long orderId) {
         //校验订单状态,只有未接单的订单才能接单
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
         if (oldOrderInfo.getStatus() != OrderInfo.TO_BE_CONFIRMED) {
-            return;//订单状态不正确
+            return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
@@ -89,18 +91,21 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         //修改订单状态
         orderInfoMapper.updateById(orderInfoUpdate);
+        return Result.success();
     }
 
     /**
      * 技师出发
+     *
      * @param orderId
+     * @return
      */
     @Override
-    public void depart(Long orderId) {
+    public Result depart(Long orderId) {
         //校验订单状态,只有已接单的订单才能出发
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
         if (oldOrderInfo.getStatus() != OrderInfo.CONFIRMED) {
-            return; //订单状态不正确
+            return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
@@ -110,18 +115,21 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         //修改订单状态
         orderInfoMapper.updateById(orderInfoUpdate);
+        return Result.success();
     }
 
     /**
      * 技师到达
+     *
      * @param massagistOrderExtraDTO
+     * @return
      */
     @Override
-    public void arrive(MassagistOrderExtraDTO massagistOrderExtraDTO) {
+    public Result arrive(MassagistOrderExtraDTO massagistOrderExtraDTO) {
         //校验订单状态,只有已出发的订单才能到达
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(massagistOrderExtraDTO.getId());
         if (oldOrderInfo.getStatus() != OrderInfo.DEPARTED) {
-            return; //订单状态不正确
+            return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
@@ -134,18 +142,21 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         //根据订单id新增订单扩展表
         orderInfoExtraService.insertByOrderId(massagistOrderExtraDTO);
+        return Result.success();
     }
 
     /**
      * 开始服务
+     *
      * @param orderId
+     * @return
      */
     @Override
-    public void startService(Long orderId) {
+    public Result startService(Long orderId) {
         //校验订单状态,只有已到达的订单才能开始服务
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
         if (oldOrderInfo.getStatus() != OrderInfo.ARRIVED) {
-            return; //订单状态不正确
+            return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
@@ -155,5 +166,6 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
 
         //修改订单表状态
         orderInfoMapper.updateById(orderInfoUpdate);
+        return Result.success();
     }
 }

@@ -1,5 +1,6 @@
 package com.bogeplus.order.service;
 
+import com.bogeplus.common.util.Result;
 import com.bogeplus.order.dto.MassagistOrderExtraDTO;
 import com.bogeplus.order.dto.MassagistOrderInfoDTO;
 import com.bogeplus.order.entity.OrderInfo;
@@ -19,32 +20,40 @@ import java.util.List;
 public interface IOrderInfoService extends IService<OrderInfo> {
 
     /**
-     * 获取技师订单信息
+     * 查询技师订单信息
      * @return
      */
     List<MassagistOrderInfoVO> listbyMassagistId(MassagistOrderInfoDTO massagistOrderInfoDTO);
 
     /**
      * 技师接单
+     *
      * @param orderId
+     * @return
      */
-    void confirm(Long orderId);
+    Result confirm(Long orderId);
 
     /**
      * 技师出发
+     *
      * @param orderId
+     * @return
      */
-    void depart(Long orderId);
+    Result depart(Long orderId);
 
     /**
      * 技师到达
+     *
      * @param massagistOrderExtraDTO
+     * @return
      */
-    void arrive(MassagistOrderExtraDTO massagistOrderExtraDTO);
+    Result arrive(MassagistOrderExtraDTO massagistOrderExtraDTO);
 
     /**
      * 开始服务
+     *
      * @param orderId
+     * @return
      */
-    void startService(Long orderId);
+    Result startService(Long orderId);
 }

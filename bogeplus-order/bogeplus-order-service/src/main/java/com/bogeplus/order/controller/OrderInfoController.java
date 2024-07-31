@@ -32,9 +32,9 @@ public class OrderInfoController {
     private IOrderInfoService orderInfoService;
 
     @GetMapping("/getMassagistOrderInfo")
-    @ApiOperation(value = "获取技师订单信息", notes = "获取技师订单信息接口")
-    public Result<List<MassagistOrderInfoVO>> getMassagistOrderInfo(@RequestBody MassagistOrderInfoDTO massagistOrderInfoDTO){
-        log.info("获取技师订单信息：{}", massagistOrderInfoDTO);
+    @ApiOperation(value = "查询技师订单信息", notes = "查询技师订单信息接口")
+    public Result getMassagistOrderInfo(@RequestBody MassagistOrderInfoDTO massagistOrderInfoDTO){
+        log.info("查询技师订单信息：{}", massagistOrderInfoDTO);
         List<MassagistOrderInfoVO> list = orderInfoService.listbyMassagistId(massagistOrderInfoDTO);
         return Result.success(list);
     }
@@ -43,32 +43,28 @@ public class OrderInfoController {
     @ApiOperation(value = "技师接单", notes = "技师接单接口")
     public Result confirm(@PathVariable Long orderId){
         log.info("技师接单：{}", orderId);
-        orderInfoService.confirm(orderId);
-        return Result.success();
+        return orderInfoService.confirm(orderId);
     }
 
     @PutMapping("/depart/{orderId}")
     @ApiOperation(value = "技师出发", notes = "技师出发接口")
     public Result depart(@PathVariable Long orderId){
         log.info("技师出发：{}", orderId);
-        orderInfoService.depart(orderId);
-        return Result.success();
+        return orderInfoService.depart(orderId);
     }
 
     @PutMapping("/arrive")
     @ApiOperation(value = "技师到达", notes = "技师到达接口")
     public Result arrive(@RequestBody MassagistOrderExtraDTO massagistOrderExtraDTO) {
         log.info("技师到达：{}", massagistOrderExtraDTO);
-        orderInfoService.arrive(massagistOrderExtraDTO);
-        return Result.success();
+        return orderInfoService.arrive(massagistOrderExtraDTO);
     }
 
     @PutMapping("/startService/{orderId}")
     @ApiOperation(value = "技师开始服务", notes = "技师开始服务接口")
     public Result startService(@PathVariable Long orderId) {
         log.info("技师开始服务：{}", orderId);
-        orderInfoService.startService(orderId);
-        return Result.success();
+        return orderInfoService.startService(orderId);
     }
 
 }
