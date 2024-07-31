@@ -32,6 +32,12 @@
             <version>1.2.83</version> <!-- 或者使用最新版本 -->
         </dependency>
 
+        <dependency>
+            <groupId>com.bogeplus</groupId>
+            <artifactId>bogeplus-order-domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <properties>

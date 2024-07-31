@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -36,4 +37,7 @@ public class OrderInfoRequest {
 
     @ApiModelProperty("备注信息")
     private String remark;
+
+    @ApiModelProperty("结算总价")
+    private BigDecimal totalPrice;
 }

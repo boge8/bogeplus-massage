@@ -6,7 +6,9 @@ import com.bogeplus.common.util.Result;
 import com.bogeplus.massage.user.vo.AddressLocationVO;
 import com.bogeplus.massagist.feign.MassagistFeign;
 import com.bogeplus.massagist.vo.MassagistInfoVO;
+import com.bogeplus.order.OrderGaodeAPI;
 import com.bogeplus.order.controller.RequestBody.OrderInfoRequest;
+import com.bogeplus.order.dto.OrderGaodeDTO;
 import com.bogeplus.order.dto.OrderItemDTO;
 import com.bogeplus.order.entity.OrderInfo;
 import com.bogeplus.order.mapper.OrderInfoMapper;
@@ -56,31 +58,32 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
         }
 
-        orderInfo.setTravelDistance(getTravelDistance());
-        orderInfo.setTravelCost(getTravelCost(request.getMassagistId(),request.getAddressId()));
+
+        OrderGaodeDTO distanceAndCost = getDistanceAndCost(request.getMassagistId(), request.getAddressId());
+        orderInfo.setTravelDistance(distanceAndCost.getDistance());
+        orderInfo.setTravelCost(distanceAndCost.getCost());
+        orderInfo.setTotalPrice(request.getTotalPrice());
         orderInfo.setOutTradeNo("default");
         orderInfo.setPayTime(LocalDateTime.now());
+        if (!save(orderInfo)) {
+            return Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
+        }
         return Result.success();
     }
 
-    public BigDecimal getTravelDistance() {
-        return BigDecimal.valueOf(111);
-    }
-
-    private BigDecimal getTravelCost(Long massagistId,Long addressId) {
+    private OrderGaodeDTO getDistanceAndCost(Long massagistId, Long addressId) {
         Result<MassagistInfoVO> massagistResult = massagistFeign.getById(massagistId);
         checkFeignResult(massagistResult);
         String massagistLocation = massagistResult.getData().getLongtitudeLatitude();
         Result<AddressLocationVO> userResult = userAddressFeign.getAddressLocation(addressId);
         checkFeignResult(userResult);
-        String longitudeLatitude = userResult.getData().getLongitudeLatitude();
+        String userLocation = userResult.getData().getLongitudeLatitude();
         //稍后完善高德接口
-        return BigDecimal.valueOf(111);
-    }
-
-    private BigDecimal getTotalPrice() {
-        //稍后完善高德接口
-        return BigDecimal.valueOf(111);
+        try {
+            return OrderGaodeAPI.getGaodeTaxiDTO(massagistLocation, userLocation);
+        } catch (Exception e) {
+            throw new BizException("调用高德地图API失败");
+        }
     }
 
     private void checkFeignResult(Result<?> result){
