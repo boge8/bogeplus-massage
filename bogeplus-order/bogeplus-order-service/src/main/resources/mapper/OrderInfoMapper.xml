@@ -2,4 +2,68 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bogeplus.order.mapper.OrderInfoMapper">
 
+    <resultMap id="OrderDetailResultMap" type="com.bogeplus.order.vo.OrderDetailVO">
+        <id column="id" property="orderId" />
+        <result column="order_num" property="orderNum" />
+        <result column="user_id" property="userId" />
+        <result column="address_id" property="addressId" />
+        <result column="massagist_id" property="massagistId" />
+        <result column="coupon_id" property="couponId" />
+        <result column="status" property="status" />
+        <result column="expected_income" property="expectedIncome" />
+        <result column="travel_mode" property="travelMode" />
+        <result column="travel_distance" property="travelDistance" />
+        <result column="travel_cost" property="travelCost" />
+        <result column="service_time" property="serviceTime" />
+        <result column="total_price" property="totalPrice" />
+        <result column="pay_type" property="payType" />
+        <result column="reservation_time" property="reservationTime" />
+        <result column="take_time" property="takeTime" />
+        <result column="departure_time" property="departureTime" />
+        <result column="arrival_time" property="arrivalTime" />
+        <result column="service_start_time" property="serviceStartTime" />
+        <result column="service_end_time" property="serviceEndTime" />
+        <result column="contact_name" property="contactName" />
+        <result column="contact_phone" property="contactPhone" />
+        <result column="address" property="address" />
+        <result column="danger_level" property="dangerLevel" />
+        <collection property="orderItems" column="order_id" select="getOrderItems" />
+        <collection property="userAddresses" column="user_id" select="getUserAddresses" />
+        <collection property="userHistories" column="user_id" select="getUserHistories" />
+        <collection property="historicalPaymentTimes" column="order_id" select="getHistoryStatuses" />
+    </resultMap>
+
+    <select id="getOrderDetail" resultMap="OrderDetailResultMap">
+        SELECT oinfo.*, oiextra.arrival_time, oiextra.note AS remark, uaddr.contact_name, uaddr.contact_phone, uaddr.address, uaddr.danger_level
+        FROM massage_order_info oinfo
+                 LEFT JOIN massage_order_info_extra oiextra ON oinfo.id = oiextra.id
+                 LEFT JOIN massage_user_addresses uaddr ON oinfo.address_id = uaddr.id
+        WHERE oinfo.id = #{orderId}
+    </select>
+
+    <select id="getOrderItems" resultType="com.bogeplus.order.vo.OrderItemVO">
+        SELECT oitem.item_id AS id, oitem.order_id, mitem.name, mitem.current_price AS price, oitem.quantity, mitem.duration
+        FROM massage_order_info_item oitem
+                 LEFT JOIN massage_massagist_item mitem ON oitem.item_id = mitem.id
+        WHERE oitem.order_id = #{orderId}
+    </select>
+
+    <select id="getUserAddresses" resultType="com.bogeplus.order.vo.UserAddressVO">
+        SELECT uaddr.id, uaddr.user_id, uaddr.contact_name, uaddr.contact_phone, uaddr.longitude_latitude, uaddr.address, uaddr.address_extra, uaddr.is_default
+        FROM massage_user_addresses uaddr
+        WHERE uaddr.user_id = #{userId}
+    </select>
+
+    <select id="getUserHistories" resultType="com.bogeplus.order.vo.UserHistoryVO">
+        SELECT uhisto.id, uhisto.user_id, uhisto.danger_level, uhisto.remarks
+        FROM massage_user_user_history uhisto
+        WHERE uhisto.user_id = #{userId}
+    </select>
+
+    <select id="getHistoryStatuses" resultType="java.time.LocalDateTime">
+        SELECT oinfo.create_time
+        FROM massage_order_info oinfo
+        WHERE oinfo.id = #{orderId}
+    </select>
+
 </mapper>
