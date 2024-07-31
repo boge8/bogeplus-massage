@@ -1,5 +1,6 @@
 package com.bogeplus.order.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.bogeplus.common.enums.ServiceCode;
 import com.bogeplus.common.util.Result;
@@ -47,10 +48,10 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     @Override
     public List<MassagistOrderInfoVO> listbyMassagistId(MassagistOrderInfoDTO massagistOrderInfoDTO) {
         //构造查询条件
-        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<OrderInfo>()
-                .eq("massagist_id",massagistOrderInfoDTO.getMassagistId())
+        LambdaQueryWrapper<OrderInfo> queryWrapper = new LambdaQueryWrapper<OrderInfo>()
+                .eq(OrderInfo::getMassagistId,massagistOrderInfoDTO.getMassagistId())
                 //根据状态过滤,传入参数为空不参与条件查询
-                .eq(ObjectUtils.isNotEmpty(massagistOrderInfoDTO.getStatus()),"status",massagistOrderInfoDTO.getStatus());
+                .eq(ObjectUtils.isNotEmpty(massagistOrderInfoDTO.getStatus()),OrderInfo::getStatus,massagistOrderInfoDTO.getStatus());
 
         //查询
         List<OrderInfo> orderInfoList = orderInfoMapper.selectList(queryWrapper);

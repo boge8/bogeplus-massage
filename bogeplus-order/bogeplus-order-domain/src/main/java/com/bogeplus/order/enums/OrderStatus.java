@@ -16,6 +16,7 @@ public enum OrderStatus {
     /**
      * 订单状态码：1-待支付，2-支付超时，3-待接单，4-已接单，5-技师出发，6-技师到达，7-开始服务，8-服务完成，9-用户评价，10-售后中，11-售后结束，12-订单已关闭，13-订单已取消
      */
+    NO_STATUS((byte) 0,"无状态"),
     PENDING_PAYMENT((byte) 1,"待支付"),
     PAY_TIMEOUT((byte) 2,"支付超时"),
     TO_BE_CONFIRMED((byte) 3,"待接单"),
