@@ -1,5 +1,6 @@
 package com.bogeplus.order.vo;
 
+import com.bogeplus.order.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,7 +27,7 @@ public class MassagistOrderInfoVO {
     private Long userId;
 
     //订单状态码
-    private Byte status;
+    private OrderStatus status;
 
     //出行费用
     private BigDecimal travelCost;

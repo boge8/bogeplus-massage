@@ -6,6 +6,7 @@ import com.bogeplus.common.util.Result;
 import com.bogeplus.order.dto.MassagistOrderExtraDTO;
 import com.bogeplus.order.dto.MassagistOrderInfoDTO;
 import com.bogeplus.order.entity.OrderInfo;
+import com.bogeplus.order.enums.OrderStatus;
 import com.bogeplus.order.mapper.OrderInfoMapper;
 import com.bogeplus.order.service.IOrderInfoExtraService;
 import com.bogeplus.order.service.IOrderInfoService;
@@ -80,14 +81,14 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     public Result confirm(Long orderId) {
         //校验订单状态,只有未接单的订单才能接单
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
-        if (oldOrderInfo.getStatus() != OrderInfo.TO_BE_CONFIRMED) {
+        if (oldOrderInfo.getStatus() != OrderStatus.TO_BE_CONFIRMED) {
             return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
         OrderInfo orderInfoUpdate = new OrderInfo();
         orderInfoUpdate.setId(orderId);
-        orderInfoUpdate.setStatus(OrderInfo.CONFIRMED);
+        orderInfoUpdate.setStatus(OrderStatus.CONFIRMED);
 
         //修改订单状态
         orderInfoMapper.updateById(orderInfoUpdate);
@@ -104,14 +105,14 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     public Result depart(Long orderId) {
         //校验订单状态,只有已接单的订单才能出发
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
-        if (oldOrderInfo.getStatus() != OrderInfo.CONFIRMED) {
+        if (oldOrderInfo.getStatus() != OrderStatus.CONFIRMED) {
             return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
         OrderInfo orderInfoUpdate = new OrderInfo();
         orderInfoUpdate.setId(orderId);
-        orderInfoUpdate.setStatus(OrderInfo.DEPARTED);
+        orderInfoUpdate.setStatus(OrderStatus.DEPARTED);
 
         //修改订单状态
         orderInfoMapper.updateById(orderInfoUpdate);
@@ -128,14 +129,14 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     public Result arrive(MassagistOrderExtraDTO massagistOrderExtraDTO) {
         //校验订单状态,只有已出发的订单才能到达
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(massagistOrderExtraDTO.getId());
-        if (oldOrderInfo.getStatus() != OrderInfo.DEPARTED) {
+        if (oldOrderInfo.getStatus() != OrderStatus.DEPARTED) {
             return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
         OrderInfo orderInfoUpdate = new OrderInfo();
         orderInfoUpdate.setId(massagistOrderExtraDTO.getId());
-        orderInfoUpdate.setStatus(OrderInfo.ARRIVED);
+        orderInfoUpdate.setStatus(OrderStatus.ARRIVED);
 
         //修改订单表状态
         orderInfoMapper.updateById(orderInfoUpdate);
@@ -155,14 +156,14 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     public Result startService(Long orderId) {
         //校验订单状态,只有已到达的订单才能开始服务
         OrderInfo oldOrderInfo = orderInfoMapper.selectById(orderId);
-        if (oldOrderInfo.getStatus() != OrderInfo.ARRIVED) {
+        if (oldOrderInfo.getStatus() != OrderStatus.ARRIVED) {
             return Result.faild(ServiceCode.PARAM_ERROR);//订单状态不正确
         }
 
         //构造修改条件
         OrderInfo orderInfoUpdate = new OrderInfo();
         orderInfoUpdate.setId(orderId);
-        orderInfoUpdate.setStatus(OrderInfo.START_SERVICE);
+        orderInfoUpdate.setStatus(OrderStatus.START_SERVICE);
 
         //修改订单表状态
         orderInfoMapper.updateById(orderInfoUpdate);

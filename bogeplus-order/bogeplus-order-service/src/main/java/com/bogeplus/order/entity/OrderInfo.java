@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
+import com.bogeplus.order.enums.OrderStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -27,24 +29,6 @@ import lombok.NoArgsConstructor;
 @ApiModel(value = "OrderInfo对象", description = "订单信息表")
 public class OrderInfo implements Serializable {
 
-    /**
-     * 订单状态码：1-待支付，2-支付超时，3-待接单，4-已接单，5-技师出发，6-技师到达，7-开始服务，8-服务完成，9-用户评价，10-售后中，11-售后结束，12-订单已关闭，13-订单已取消
-     */
-    public static final Byte PENDING_PAYMENT = 1;
-    public static final Byte PAY_TIMEOUT = 2;
-    public static final Byte TO_BE_CONFIRMED = 3;
-    public static final Byte CONFIRMED = 4;
-    public static final Byte DEPARTED = 5;
-    public static final Byte ARRIVED = 6;
-    public static final Byte START_SERVICE = 7;
-    public static final Byte COMPLETED = 8;
-    public static final Byte EVALUATED = 9;
-    public static final Byte AFTER_SALES = 10;
-    public static final Byte AFTER_SALES_COMPLETED = 11;
-    public static final Byte CLOSED = 12;
-    public static final Byte CANCELLED = 13;
-
-
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty("订单ID")
@@ -63,7 +47,7 @@ public class OrderInfo implements Serializable {
     private Long couponId;
 
     @ApiModelProperty("订单状态码：1-待支付，2-支付超时，3-待接单，4-已接单，5-技师出发，6-技师到达，7-开始服务，8-服务完成，9-用户评价，10-售后中，11-售后结束，12-订单已关闭，13-订单已取消")
-    private Byte status;
+    private OrderStatus status;
 
     @ApiModelProperty("是否已评价，1表示已评价，0表示未评价")
     private Boolean evaluated;
@@ -169,11 +153,11 @@ public class OrderInfo implements Serializable {
         this.couponId = couponId;
     }
 
-    public Byte getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
