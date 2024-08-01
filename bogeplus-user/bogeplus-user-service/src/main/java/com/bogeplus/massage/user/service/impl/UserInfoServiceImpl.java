@@ -2,7 +2,6 @@ package com.bogeplus.massage.user.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.bogeplus.common.constant.RedisConstant;
 import com.bogeplus.common.enums.ServiceCode;
@@ -18,7 +17,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bogeplus.massage.user.util.JWTUtil;
 import com.bogeplus.message.dto.SmsDTO;
 import com.bogeplus.message.dto.UserDto;
-import com.bogeplus.message.feign.SmsFeign;
 import com.bogeplus.message.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
