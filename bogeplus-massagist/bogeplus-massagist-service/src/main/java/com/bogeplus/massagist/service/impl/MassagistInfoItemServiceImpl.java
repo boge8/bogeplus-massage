@@ -10,7 +10,6 @@ import com.bogeplus.common.enums.ServiceCode;
 import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.Result;
 import com.bogeplus.common.util.UserUtil;
-import com.bogeplus.massage.user.vo.UserAddressesVO;
 import com.bogeplus.massagist.api.MassagistAppointmentFeign;
 import com.bogeplus.massagist.controller.requestBody.OperationRequest;
 
@@ -118,9 +117,13 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
         String userId = UserUtil.getId();
         double distance = 0.0;
         if (StrUtil.isNotBlank(userId)) {
-            UserAddressesVO userAddressesVO = userAddressFeign.getDefaultUserAddress(Long.parseLong(userId));
-            if (StrUtil.isNotBlank(userAddressesVO.getLongitudeLatitude()) && StrUtil.isNotBlank(massagist.getLongtitudeLatitude())) {
-                distance = GeoUtil.calculateDistance(userAddressesVO.getLongitudeLatitude(), massagist.getLongtitudeLatitude());
+            Result<Map<String, String>> result = userAddressFeign.getDefaultUserAddress(Long.parseLong(userId));
+            if (result.getCode() == 200 && result.getData() != null) {
+                Map<String, String> map = result.getData();
+                String userLongitudeLatitude = map.get("longitudeLatitude");
+                if (StrUtil.isNotBlank(userLongitudeLatitude) && StrUtil.isNotBlank(massagist.getLongtitudeLatitude())) {
+                    distance = GeoUtil.calculateDistance(userLongitudeLatitude, massagist.getLongtitudeLatitude());
+                }
             }
         }
         return distance;

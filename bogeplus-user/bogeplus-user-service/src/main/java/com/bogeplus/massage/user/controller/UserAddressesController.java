@@ -44,8 +44,13 @@ public class UserAddressesController {
 
     @GetMapping("/getDefaultUserAddress")
     @ApiOperation(value = "获取默认地址", notes = "获取默认地址")
-    public UserAddressesVO getDefaultUserAddress(@RequestParam("userId") long userId) {
-        return userAddressesService.getDefaultUserAddress(userId);
+    public Result getDefaultUserAddress(@RequestParam("userId") long userId) {
+        UserAddressesVO userAddressesVO = userAddressesService.getDefaultUserAddress(userId);
+        if (userAddressesVO == null) {
+            return Result.faild("没有默认地址");
+        } else {
+            return Result.success(userAddressesVO);
+        }
     }
 
     @DeleteMapping("/deleteUserAddress")
