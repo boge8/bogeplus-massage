@@ -53,7 +53,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
         //2、校验验证码是否正确
         if (code != null) {
-            String codeStr = (String) code;
+            String codeStr = code.toString();
             if (!codeStr.equals(loginRequest.getSmsCode())) {
                 return Result.faild(ServiceCode.SMS_CODE_ERROR.getMsg(), ServiceCode.SMS_CODE_ERROR.getCode());
 

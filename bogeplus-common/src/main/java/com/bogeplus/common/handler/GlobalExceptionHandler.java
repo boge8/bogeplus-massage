@@ -76,6 +76,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public Result<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
         String errorMessage = "请求体格式错误或参数类型不匹配";
-        return Result.faild(errorMessage, 400);
+        return Result.faild(ex.getMessage(), 400);
     }
 }

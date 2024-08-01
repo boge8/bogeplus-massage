@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.bogeplus.common.util.UserUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -62,6 +63,7 @@ public class OrderInfo implements Serializable {
     @ApiModelProperty("出行费用 单位元")
     private BigDecimal travelCost;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @ApiModelProperty("服务时间")
     private LocalDateTime serviceTime;
 
@@ -92,6 +94,7 @@ public class OrderInfo implements Serializable {
     @ApiModelProperty("支付时间")
     private LocalDateTime payTime;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone="GMT+8")
     @ApiModelProperty("接单时间")
     private LocalDateTime takeTime;
 

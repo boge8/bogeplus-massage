@@ -40,6 +40,9 @@ public class UserAddresses implements Serializable {
     @ApiModelProperty("经纬度")
     private String longitudeLatitude;
 
+    @ApiModelProperty("城市编码")
+    private String cityCode;
+
     @ApiModelProperty("服务地址")
     private String address;
 

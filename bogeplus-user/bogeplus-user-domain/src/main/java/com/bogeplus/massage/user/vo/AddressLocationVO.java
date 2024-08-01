@@ -8,4 +8,9 @@ import lombok.Data;
 @ApiModel(value = "用户地址坐标响应对象", description = "用户地址坐标响应对象")
 public class AddressLocationVO {
     @ApiModelProperty("经纬度")
-    private String longitudeLatitude;}
+    private String longitudeLatitude;
+
+    @ApiModelProperty("城市代码")
+    private String cityCode;
+
+}

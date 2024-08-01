@@ -54,7 +54,7 @@ public class MassagistInfoController {
 
     @ApiOperation(value = "根据id查询技师")
     @GetMapping("/getById")
-    public Result<MassagistInfoVO> getById(@NotNull(message = "对象id不能为空") @RequestParam Long id) {
+    public Result<MassagistInfoVO> getById(@NotNull(message = "对象id不能为空") @RequestParam("id") Long id) {
         MassagistInfoVO massagistInfoVO = massagistInfoService.selectById(id);
         return Result.success(massagistInfoVO);
     }

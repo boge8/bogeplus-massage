@@ -1,13 +1,16 @@
 package com.bogeplus.order.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.bogeplus.common.enums.ServiceCode;
 import com.bogeplus.common.exception.BizException;
 import com.bogeplus.common.util.Result;
+import com.bogeplus.common.util.UserUtil;
 import com.bogeplus.massage.user.vo.AddressLocationVO;
 import com.bogeplus.massagist.feign.MassagistFeign;
 import com.bogeplus.massagist.vo.MassagistInfoVO;
-import com.bogeplus.order.OrderGaodeAPI;
+import com.bogeplus.order.api.OrderGaodeAPI;
 import com.bogeplus.order.controller.RequestBody.OrderInfoRequest;
+import com.bogeplus.order.dto.GaodeParamDTO;
 import com.bogeplus.order.dto.OrderGaodeDTO;
 import com.bogeplus.order.dto.OrderItemDTO;
 import com.bogeplus.order.entity.OrderInfo;
@@ -19,6 +22,7 @@ import com.bogeplus.user.feign.UserAddressFeign;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -44,7 +48,13 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
     private UserAddressFeign userAddressFeign;
 
     @Override
+    @Transactional
     public Result saveOrder(OrderInfoRequest request) {
+        //该写个拦截器
+        if (ObjectUtil.isNull(UserUtil.getId())) {
+            throw new BizException("登录过期，请重新登录");
+        }
+        //初始化订单信息
         OrderInfo orderInfo = OrderInfo.nil();
         BeanUtils.copyProperties(request,orderInfo);
 
@@ -58,30 +68,45 @@ public class OrderInfoServiceImpl extends ServiceImpl<OrderInfoMapper, OrderInfo
             Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
         }
 
-
-        OrderGaodeDTO distanceAndCost = getDistanceAndCost(request.getMassagistId(), request.getAddressId());
+        //获取交通距离以及花费
+        OrderGaodeDTO distanceAndCost = getDistanceAndCost(request.getMassagistId(), request.getAddressId(), request.getTravelMode());
         orderInfo.setTravelDistance(distanceAndCost.getDistance());
         orderInfo.setTravelCost(distanceAndCost.getCost());
-        orderInfo.setTotalPrice(request.getTotalPrice());
-        orderInfo.setOutTradeNo("default");
-        orderInfo.setPayTime(LocalDateTime.now());
+
+        //封装订单基本信息
+        orderInfo.setOrderNum("114514");                           //订单编号
+        orderInfo.setUserId(Long.valueOf(UserUtil.getId()));       //用户id
+        orderInfo.setStatus((byte) 1);                             //订单状态
+        orderInfo.setOutTradeNo("default");                        //外部交易号
+        orderInfo.setPayTime(LocalDateTime.now());                 //服务时间
+        orderInfo.setTotalPrice(request.getTotalPrice());           //结算金额
+        //提交订单
         if (!save(orderInfo)) {
             return Result.faild(ServiceCode.FAILED.getMsg(),ServiceCode.FAILED.getCode());
         }
         return Result.success();
     }
 
-    private OrderGaodeDTO getDistanceAndCost(Long massagistId, Long addressId) {
+    private OrderGaodeDTO getDistanceAndCost(Long massagistId, Long addressId, String travelMode) {
         Result<MassagistInfoVO> massagistResult = massagistFeign.getById(massagistId);
         checkFeignResult(massagistResult);
         String massagistLocation = massagistResult.getData().getLongtitudeLatitude();
         Result<AddressLocationVO> userResult = userAddressFeign.getAddressLocation(addressId);
         checkFeignResult(userResult);
         String userLocation = userResult.getData().getLongitudeLatitude();
+        String userCityCode = userResult.getData().getCityCode();
         //稍后完善高德接口
         try {
-            return OrderGaodeAPI.getGaodeTaxiDTO(massagistLocation, userLocation);
+            GaodeParamDTO gaodeParamDTO = new GaodeParamDTO();
+            gaodeParamDTO.setOrigin(massagistLocation)
+                         .setDestination(userLocation)
+                         .setCityCode(userCityCode)
+                         .setTravelMode(travelMode);
+            return OrderGaodeAPI.getGaodeTaxiDTO(gaodeParamDTO);
+        } catch (BizException e) {
+            throw new BizException(e.getMsg());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BizException("调用高德地图API失败");
         }
     }
