@@ -145,8 +145,6 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
         } else {
             queryWrapper.eq(MassagistInfoItem::getItemId, objId)
                     .in(MassagistInfoItem::getMasseurId, objIdList);
-            System.out.println("我在这里加了东西");
-            System.out.println("我在这里加了东西");
         }
         return list(queryWrapper);
     }
