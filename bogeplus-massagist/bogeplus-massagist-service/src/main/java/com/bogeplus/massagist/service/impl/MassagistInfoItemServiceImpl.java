@@ -146,6 +146,12 @@ public class MassagistInfoItemServiceImpl extends ServiceImpl<MassagistInfoItemM
             queryWrapper.eq(MassagistInfoItem::getItemId, objId)
                     .in(MassagistInfoItem::getMasseurId, objIdList);
             System.out.println("测试tag");
+            System.out.println("测试tag");
+            System.out.println("测试tag");
+            System.out.println("测试tag");
+            System.out.println("测试tag");
+            System.out.println("测试tag");
+            System.out.println("测试tag");
         }
         return list(queryWrapper);
     }
